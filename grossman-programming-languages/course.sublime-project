@@ -1,0 +1,13 @@
+{
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": "hw0"
+		},
+		{
+			"follow_symlinks": true,
+			"path": "hw1"
+		}
+	]
+}
