@@ -8,6 +8,14 @@
 		{
 			"follow_symlinks": true,
 			"path": "hw1"
+		},
+		{
+			"follow_symlinks": true,
+			"path": "hw2"
+		},
+		{
+			"follow_symlinks": true,
+			"path": "hw3"
 		}
 	]
 }

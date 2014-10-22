@@ -72,7 +72,7 @@ fun remove_card(cs, c, e) =
     fun remove_internal([], accumulator) =
       accumulator
     | remove_internal(x::xs, (found, lst)) =
-      if x = c
+      if x = c andalso found = false
       then remove_internal(xs, (true, lst))
       else remove_internal(xs, (found, lst @ [x]))
   in
@@ -120,46 +120,3 @@ fun officiate(cards, moves, goal) =
   in
     score(run(moves, cards, []), goal)
   end
-
-fun card_value_challenge(c) =
-  case c of
-      (_, Ace) => 1
-    | (_, _)   => card_value(c)
-
-fun sum_cards_challenge(cs) =
-  let
-    fun compute_sum(lst, result) =
-      case lst of
-          []    => result
-        | x::xs => compute_sum(xs, result + card_value(x))
-  in
-    compute_sum(cs, 0)
-  end
-
-fun score_challenge(held_cards, goal) =
-  let
-    val sum = sum_cards(held_cards)
-    val preliminary_score = if sum > goal then (3 * (sum - goal)) else (goal - sum)
-  in
-    if all_same_color(held_cards)
-    then preliminary_score div 2
-    else preliminary_score
-  end
-
-fun officiate_challenge(cards, moves, goal) =
-  let
-    fun run(ms, cs, result) =
-      case (ms, cs) of
-          ([], _)              => result
-        | ((Discard c)::ms, _) => run(ms, cs, remove_card(result, c, IllegalMove))
-        | (Draw::ms, [])       => result
-        | (Draw::ms, c::left)  => if (card_value_challenge(c) + sum_cards_challenge(result)) > goal
-                                  then c::result
-                                  else run(ms, left, c::result)
-  in
-    score_challenge(run(moves, cards, []), goal)
-  end
-
-fun careful_player(cards, goal) =
-  []
-
