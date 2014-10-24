@@ -1,0 +1,12 @@
+6,7c6
+< old: 0.  new: 1
+< old: 1.  new: 2
+---
+> old: 0.  new: 2
+9,11c8,9
+< old: 0.  new: 1
+< old: 1.  new: 2
+< old: 2.  new: 29
+---
+> 1
+> 29

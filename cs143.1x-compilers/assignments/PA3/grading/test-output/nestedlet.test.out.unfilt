@@ -1,0 +1,4 @@
+"./nestedlet.test", line 4: syntax error at or near ','
+"./nestedlet.test", line 4: syntax error at or near IN
+"./nestedlet.test", line 6: syntax error at or near IN
+Compilation halted due to lex and parse errors

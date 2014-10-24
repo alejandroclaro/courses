@@ -1,0 +1,8 @@
+	-1 (hairyscary)	 hairy-scary program from examples directory
+	-1 (init-order-super)	 Evaluation order of superclass vs subclass attribute initializers
+	-1 (multiple-static-dispatch)	 Nested static dispatches
+	-1 (new-self-dispatch)	 Dispatch on a "new"d object
+	-1 (new-self-init)	 Checking evaluation of attribute initialization exprs on a "new"d object
+	-1 (scoping)	 Scoping test
+	-1 (selftypeattribute)	 Attribute of type SELF_TYPE
+	-5 (lam-gc)	 Lambda example with garbage collection [submission looped infinitely on this input]
