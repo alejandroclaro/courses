@@ -1,0 +1,190 @@
+%======================================================================
+%----------------------------------------------------------------------
+%               XX                              X
+%                                               X
+%               XX    XXX   XXX   XXX      XXX  X  XXXX
+%                X   X   X X   X X   X    X   X X X
+%                X   XXXXX XXXXX XXXXX    X     X  XXX
+%                X   X     X     X     XX X   X X     X
+%               XXX   XXX   XXX   XXX  XX  XXX  X XXXX
+%----------------------------------------------------------------------
+%  	         A SKELETON FILE FOR IEEE PAPER GENERATION
+%----------------------------------------------------------------------
+%======================================================================
+
+% first, uncomment the desired options:
+\documentclass[%
+        %draft,
+        %submission,
+        %compressed,
+        final,
+        %
+        %technote,
+        %internal,
+        %submitted,
+        %inpress,
+        %reprint,
+        %
+        %titlepage,
+        notitlepage,
+        %anonymous,
+        narroweqnarray,
+        inline,
+        twoside,
+        ]{ieee}
+%
+% some standard modes are:
+%
+% \documentclass[draft,narroweqnarray,inline]{ieee}
+% \documentclass[submission,anonymous,narroweqnarray,inline]{ieee}
+% \documentclass[final,narroweqnarray,inline]{ieee}
+
+% Use the `endfloat' package to move figures and tables to the end
+% of the paper. Useful for `submission' mode.
+%\usepackage {endfloat}
+
+% Use the `times' package to use Helvetica and Times-Roman fonts
+% instead of the standard Computer Modern fonts. Useful for the
+% IEEE Computer Society transactions.
+% (Note: If you have the commercial package `mathtime,' it is much
+% better, but the `times' package works too).
+%\usepackage {times}
+
+% In order to use the figure-defining commands in ieeefig.sty...
+\usepackage{ieeefig}
+\usepackage[spanish]{babel}
+\usepackage[latin1]{inputenc}
+
+\begin{document}
+
+%----------------------------------------------------------------------
+% Title Information, Abstract and Keywords
+%----------------------------------------------------------------------
+\title[Renderizado ilustrativo de datos sísmicos]{ Renderizado ilustrativo de datos sísmicos }
+
+% format author this way for journal articles.
+\author[CLARO ALEJANDRO]{%
+      Alejandro Claro Mosqueda
+      \authorinfo{ email: \mbox{alejandro.claro@gmail.com} }
+ }
+
+% specifiy the journal name
+\journal{Tópicos Avanzados en Computación Gráfica I, 2009}
+
+% Or, when the paper is a preprint, try this...
+%\journal{IEEE Transactions on Something, 1997, TN\#9999.}
+
+% Or, specify the conference place and date.
+%\confplacedate{Ottawa, Canada, May 19--21, 1997}
+
+% make the title
+\maketitle
+
+% do the abstract
+\begin{abstract}
+En este reporte se presenta una técnica de renderizado ilustrativo de data sísmica interpretada basada en las publicaciones de Daniel Patel~\cite{patel07}\cite{patel08}. La idea es mejorar la representación gráfica de estructuras sísmicas al aplicar un algoritmo de renderizado ilustrativo, de tal manera que se vea reducido el trabajo necesario por los interpretes e ilustradores de datos sísmicos.
+\end{abstract}
+
+% do the keywords
+\begin{keywords}
+renderizado ilustrativo, sísmica
+\end{keywords}
+
+%----------------------------------------------------------------------
+% SECTION I: Introduction
+%----------------------------------------------------------------------
+\section{Introducción}
+
+\PARstart En geología, los horizontes y las fallas son estructuras de gran importancia. En el subsuelo se observan estructuras en forma de capas y los horizontes están definidos por las superficies que separan una capa de la otra. Además, las fuerzas que actúan en la corteza terrestre deforman estas capas a través del tiempo y en ocasiones crean quiebres (fallas) causando discontinuidad en las capas. En los libros de geología se observa como se intenta representar las estructuras en el subsuelo utilizando distintas técnicas artísticas como las mostradas en la figura \ref{fig1}.
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[scale=0.5]{fig1.eps}
+\caption {Imagen ilustrativa comúnmente encontrada en libros de geología.}
+\label{fig1}
+\end{figure}
+
+Para la identificación de dichas estructuras se recurre a la generación de imágenes en 3-dimensiones del subsuelo. Este proceso se conoce como adquisición de área sísmica y consisten en producir perturbaciones (ondas) en la corteza del área de adquisición deseada y almacenar la respuesta del subsuelo (ecos). Luego del proceso de adquisición, los resultados son procesados para obtener la imagen en 3-dimensiones en lo que es conocido como cubo de amplitud sísmica. Una vez obtenido este conjuntos de datos, son identificados manualmente los horizontes y las fallas por un interprete.
+
+Las ilustraciones no sólo son utilizadas de forma educativa. También son utilizadas cuando se desea comunicar de forma simple ciertos aspectos de una imagen compleja durante el proceso de interpretación. Además, el renderizado ilustrativo simplifica la visualización y hace énfasis en los elementos de interés. Crear buenas imágenes ilustrativas consume  un tiempo considerable. Ser capaces de rederizar ``ilustraciones geológicas'' es ventajoso tanto para la creación de imágenes para libros como para la comunicación y toma de decisiones  en la industria durante la fase de interpretación de la data sísmica.
+
+%----------------------------------------------------------------------
+% SECTION II: Proceso de renderizado
+%----------------------------------------------------------------------
+\section{Proceso de renderizado}
+
+Los patrones utilizados en imágenes ilustrativas en geología representan información de interés para los geólogos. Existen cientos de patrones sísmicos y cada uno representa diferentes características de formaciones rocosas (litologias). Los patrones son diseñados en grupos de forma que sub-grupos son representados con patrones similares. De esta manera, incluso si un geólogo no reconoce exactamente el significado litologico del patrón, debería ser capaz de identificar a que grupo pertenece. Además, la forma en que los patrones se mezclan es una información crucial para los geólogos.
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[scale=0.4]{figpattern.eps}
+\caption {Ejemplo de patrones litologicos.}
+\label{fig:texure}
+\end{figure}
+
+En el método propuesto por Daniel Patel~\cite{patel07}, las texturas son generadas en la parte exterior de los cortes del volumen sísmico. Para cada capa, el usuario debe asignar una textura que se repite un número dado de veces tanto horizontalmente como verticalmente (textura de capa). Para representar los datos sísmico el usuario también puede asignar texturas y opacidades a ciertos intervalos de amplitudes del cubo sísmico (textura de atributo sísmico). Además, si se desea resaltar aún mas el cubo de amplitudes, se considera también una función de transferencia de color de los datos sísmicos (capa de color). Este proceso completo es representado gráficamente en la figura \ref{figtexure}.
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[scale=0.5]{figpara.eps}
+\caption {Parametrización de los estratos (capas).}
+\label{fig:para}
+\end{figure}
+
+Para el renderizado de las texturas es necesario generar primero coordenadas de textura a las distintas capas. Esto implica un proceso de parametrización de los ``compartimentos'' definidos por las áreas encerradas entre horizontes, fallas y los limites del cubo sísmico. Patel propone dos maneras diferentes de realizar la paremetrización en~\cite{patel07}~\cite{patel08}, sin embargo ambas presentan inconvenientes en casos limites. Quizás partiendo del método de parametrización propuesto por Floater~\cite{floater03} sea posible obtener mejores resultados. Para la implentación realizada previo a este reporte, por simplicidad, no se utilizó ninguno de los métodos mencionados anteriormente. En su lugar se procede a realizar la intersección de los horizontes, que definen una capa, con el plano de dibujado. Luego, se genera un polígono con los puntos resultantes de la intersección de los dos horizontes para finalmente hacer uso del algoritmo \textit{vtkTextureMapToPlane} disponible en la biblioteca de clases VTK, la cual re-parametriza y calcula las coordenadas de textura del polígono sobre un rectángulo~\cite{vtkug}.
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[scale=0.65]{figtex.eps}
+\caption {Proceso de texturizado.}
+\label{figtexure}
+\end{figure}
+
+Luego de generar las coordenadas de textura, es posible definir la función de transferencia de textura (TTF) para la ``textura de capa'' que fue mencionada al comienzo de la esta sección. Al igual que como se describe en~\cite{patel07}, en nuestra implementación, se utilizan texturas 2D RGB con filtro bilineal y ``wrap-around''. Estas texturas son patrones litologicos ilustrativos que son mapeados sobre cada capa litologica según sea el caso. Así como la ``textura de capa'' representa los horizontes interpretados como textura, la ``textura de atributo sísmico'' representa los atributos sísmicos no-interpretados también como una textura. Esta capa de textura es igual a la primera con la excepción de que las amplitudes del cubo sísmico son utilizadas para asignar los valores. Esto hace posible  controlar la apariencia en regiones del plano de dibujado que tienen amplitudes sísmicas en ciertos rangos. En nuestra implementación aun no se ha llevado a cabo el proceso de generación de esta capa de textura.
+
+Por otro lado, para permitir la inspección de las amplitudes del cubo sísmico sobre el plano de dibujado se puede aplicar una ``capa de color'' que representa los valores de amplitud del atributo sísmico. Este además permite, introducir la idea de transición suave y continua entre datos no interpretados (visualizar únicamente la ``capa de color'') y los datos interpretados (visualizar únicamente ``textura de capa'' y  ``textura de atributo''). Esta funcionalidad esta aun incompleta en nuestra implementación.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.60]{figr1.eps}
+\includegraphics[scale=0.605]{figr2.eps}
+\caption {Resultados.}
+\label{fig:result}
+\end{figure}
+
+%----------------------------------------------------------------------
+% SECTION III: Conclusiones
+%----------------------------------------------------------------------
+\section{Conclusiones}
+
+En este reporte se ha presentado una técnica de renderizado ilustrativo de datos sísmicos interpretados. Las técnicas de renderizado ilustrativo pueden agilizar el análisis e interpretación de los datos sísmicos en la industria del petroleo, así como mejorar la comunicación entre los interpretes y las personas que toman decisiones en los proyectos en dicha industria.
+
+% do the biliography:
+\bibliographystyle{IEEEbib}
+\bibliography{my-bibliography-file}
+
+\begin{thebibliography}{1}
+
+\bibitem{patel07}
+Daniel Patel, Christopher Giertsen, John Thurmond, John Gjelberg, and M. Eduard Gröller.
+\newblock {\em The Seismic Analyzer: Interpretingand Illustrating 2D Seismic Data}.
+\newblock IEEE TRANSACTIONS ON VISUALIZATION AND COMPUTER GRAPHICS, VOL. 14, NO. 6, NOVEMBER/DECEMBER 2008.
+
+\bibitem{patel08}
+Daniel Patel, Christopher Giertsen, John Thurmond, Eduard Gröller.
+\newblock {\em Illustrative Rendering of Seismic Data }.
+\newblock Proc. Vision, Modeling, and Visualization Conf. 2007 (VMV 2007), (Eds.) H.P.A. Lensch, B. Rosenhahn, H.-P. Seidel, P. Slusallek, J. Weickert. Aka GmbH, Berlin 2007.
+
+\bibitem{floater03}
+M. Floater.
+\newblock {\em Parametrization and smooth approximation of surface triangulations}.
+\newblock Computer Aided Geometric Design, 14(3):231–250, April 1997.
+
+\bibitem{vtkug}
+Will Schroeder, Ken Martin, Bill Lorensen.
+\newblock {\em VTK User's Guide}.
+\newblock Kitware Inc.
+
+\end{thebibliography}
+
+\end{document}

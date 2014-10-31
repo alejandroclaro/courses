@@ -1,0 +1,568 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"cou",
+				"count_some_var"
+			],
+			[
+				"fi",
+				"first_answer"
+			],
+			[
+				"C",
+				"Const"
+			],
+			[
+				"Un",
+				"UnitP"
+			],
+			[
+				"fl",
+				"foldl"
+			],
+			[
+				"lst",
+				"longest_string1"
+			],
+			[
+				"is",
+				"isUpper"
+			],
+			[
+				"D",
+				"Discard"
+			],
+			[
+				"d",
+				"Draw"
+			],
+			[
+				"va",
+				"values"
+			],
+			[
+				"date",
+				"date2"
+			],
+			[
+				"da",
+				"dates"
+			],
+			[
+				"n",
+				"number_in_month"
+			],
+			[
+				"r",
+				"rhs_days"
+			],
+			[
+				"lh",
+				"lhs_days"
+			],
+			[
+				"lhs",
+				"lhs_date"
+			],
+			[
+				"M",
+				"Member"
+			],
+			[
+				"Me",
+				"standard-menu"
+			],
+			[
+				"def",
+				"default"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"contents": "* communication.xml\n* id de la boleta como metadata para nombre de archivo.\n* autodiagnostico (validacion region blanca)\ni",
+			"settings":
+			{
+				"buffer_size": 122,
+				"line_ending": "Windows",
+				"name": "* communication.xml"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 352.0,
+		"selected_items":
+		[
+			[
+				"git st",
+				"Git: Status"
+			],
+			[
+				"repl",
+				"SublimeREPL: SML"
+			],
+			[
+				"repls",
+				"SublimeREPL: SML"
+			],
+			[
+				"replsml",
+				"SublimeREPL: SML"
+			],
+			[
+				"repl sml",
+				"SublimeREPL: SML"
+			],
+			[
+				"repl sm",
+				"SublimeREPL: SML"
+			],
+			[
+				"REPL SM",
+				"SublimeREPL: SML"
+			],
+			[
+				"REPLS",
+				"SublimeREPL: SML"
+			],
+			[
+				"REPL S",
+				"SublimeREPL: SML"
+			],
+			[
+				"SMP",
+				"SublimeREPL: SML"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"inste",
+				"Package Control: Install Package"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"list",
+				"Package Control: List Packages"
+			],
+			[
+				"Package Control: ",
+				"Package Control: List Packages"
+			],
+			[
+				"Packa",
+				"Package Control: List Packages"
+			],
+			[
+				"package",
+				"Package Control: List Packages"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"rmeove",
+				"Package Control: Remove Package"
+			],
+			[
+				"rem",
+				"Package Control: Remove Package"
+			],
+			[
+				"Package Control: instal",
+				"Package Control: Install Package"
+			],
+			[
+				"control",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 526.0
+	},
+	"console":
+	{
+		"height": 226.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+	],
+	"file_history":
+	[
+		"/home/aclaro64/SourceCode/github/courses/grossman-programming-languages/hw3/hw3test.sml",
+		"/home/aclaro64/SourceCode/github/courses/grossman-programming-languages/hw3/hw3provided.sml",
+		"/tmp/device-configuration.xml",
+		"/home/aclaro64/SourceCode/github/courses/grossman-programming-languages/hw2/hw2test.sml",
+		"/home/aclaro64/SourceCode/github/courses/grossman-programming-languages/hw2/hw2provided.sml",
+		"/home/aclaro64/SourceCode/github/courses/grossman-programming-languages/course.sublime-project",
+		"/home/aclaro64/election.xml",
+		"/home/aclaro64/election.1.xml",
+		"/home/aclaro64/Desktop/1800/EMS/xsd/410Saes.xsd",
+		"/home/aclaro64/Desktop/1800/EMS/DocumentacionSLI/station-tally-package-Sample.xml",
+		"/home/aclaro64/SourceCode/github/courses/grossman-programming-languages/hw1/hw1.sml",
+		"/tmp/b67c7c80548611e4bfd68fe92e41e0e0.sml",
+		"/home/aclaro64/SourceCode/pl-course/hw0/hw0provided.sml",
+		"/home/aclaro64/SourceCode/pl-course/hw0/hw0test.sml",
+		"/home/aclaro64/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+		"/home/aclaro64/SourceCode/SAES_6_Linux/applications/election/share/SAES/voting-device.xml",
+		"/home/aclaro64/.config/sublime-text-3/Packages/User/Anaconda.sublime-settings",
+		"/home/aclaro64/.config/sublime-text-3/Packages/User/Side Bar.sublime-settings",
+		"/home/aclaro64/.config/sublime-text-3/Packages/User/Base File.sublime-settings",
+		"/home/aclaro64/.config/sublime-text-3/Packages/User/trailing_spaces.sublime-settings",
+		"/home/aclaro64/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap",
+		"/home/aclaro64/.config/sublime-text-3/Packages/TrailingSpaces/README.md",
+		"/home/aclaro64/SourceCode/pl-course/hw0test.sml",
+		"/home/aclaro64/SourceCode/pl-course/hw0provided.sml",
+		"/home/aclaro64/.cache/.fr-1WmRBz/sample-xml.xml",
+		"/home/aclaro64/.cache/.fr-4o2NKq/SAES/voting-device.xml",
+		"/home/aclaro64/Desktop/Bulgaria/BitmapVoteCodec.cs",
+		"/home/aclaro64/Desktop/Bulgaria/QRSignature.cs",
+		"/home/aclaro64/SourceCode/esbu_dev_cpp_custom_test/andres_sanchez/assisted-verification-tool/Data/UP_100000/MV_104800002.01.1/voting-device.xml",
+		"/home/aclaro64/.cache/.fr-o1AJ78/SAES/voting-device.xml",
+		"/home/aclaro64/.cache/.fr-itnLxQ/SAES/election.xml",
+		"/home/aclaro64/.cache/.fr-7litJQ/xsd_release 30sept/voting-device.xsd",
+		"/home/aclaro64/.cache/.fr-HJmfG3/xsd_release 30sept/contingency-key-machine.xsd",
+		"/home/aclaro64/.cache/.fr-F3EHX4/xsd_release 30sept/contingency-key-flash.xsd",
+		"/home/aclaro64/.cache/.fr-FJTTp1/xsd_release 30sept/config-properties.xsd",
+		"/home/aclaro64/.cache/.fr-30SDMi/xsd_release 30sept/signatures.xsd",
+		"/home/aclaro64/SourceCode/SAES_6_Linux/applications/election/share/SAES/Templates/local-returns-tally-report.xsl",
+		"/home/aclaro64/Desktop/1800/CCS 4.5/DocumentacionSLI/EML-ENCRYPTED-Sample.xml",
+		"/home/aclaro64/Desktop/1800/EMS/Voting-Device/voting-device.xsd",
+		"/home/aclaro64/Desktop/1800/EMS/Voting-Device/voting-experience-package.xsd",
+		"/home/aclaro64/SourceCode/SAES_6_Linux/applications/election/share/etc/election/logger.xml",
+		"/home/aclaro64/.cache/.fr-ErCG2x/USB_ROOT/Election/exceptions-string-resources.xml",
+		"/home/aclaro64/.cache/.fr-yyou1k/USB_ROOT/Data/UP_010101/MV_010101001.01.2/production-key.xml",
+		"/home/aclaro64/.cache/.fr-jaDm2E/USB_ROOT/Election/machine-signatures.xml",
+		"/home/aclaro64/.cache/.fr-Kl0I37/transmission-package.xsd",
+		"/home/aclaro64/.cache/.fr-qPnTvQ/USB_ROOT/Election/machine-config.xml",
+		"/home/aclaro64/.cache/.fr-Ne2rNN/510-count-v5-0.xsd",
+		"/home/aclaro64/.cache/.fr-rr4fud/emlcore-v5-0.xsd",
+		"/home/aclaro/SourceCode/SAES_6_C#2010/SAESCommon/Security/SecretKeys/SecretKeys/MachineSecretKey.cs",
+		"/home/aclaro/SourceCode/SAES_6_C#2010/SAESCommon/Security/SecretKeys/SecretKeyProviders/MachineSecretKeyAutoGeneratedProvider.cs",
+		"/home/aclaro/SourceCode/SAES_6_C#2010/SAESCommon/Security/SecretKeys/SecretKeyProviders/DefaultSecretKeyProvider.cs",
+		"/home/aclaro/SourceCode/SAES_6_C#2010/SAESCommon/Security/SecretKeys/Base/SecretKeyBase.cs",
+		"/home/aclaro/SourceCode/SAES_6_C#2010/SAESCommon/Security/ContingencyKey.cs",
+		"/home/aclaro/SourceCode/SAES_6_C#2010/SAESCommon/Security/ContingencyKeyReplacement.cs",
+		"/home/aclaro/SourceCode/SAES_6_C#2010/SAESCommon/Security/SecretKeys/SecretKeyProviders/PartySecretKeyProvider.cs",
+		"/home/aclaro/SourceCode/SAES_6_C#2010/Smartmatic.AFIS.Services/CodeSecurity/Permissions/SmartmaticAFISServicesPermission.cs",
+		"/home/aclaro/SourceCode/SAES_6_C#2010/Smartmatic.AFIS.Services/CodeSecurity/SMTTCodeSecurityValidator.cs",
+		"/home/aclaro/SourceCode/SAES_6_C#2010/Smartmatic.AFIS.Services/CodeSecurity/Permissions/SmartmaticAFISServicesKeyPermission.cs",
+		"/home/aclaro/SourceCode/SAES_6_C#2010/SAESCommon/Security/SecretKeys/SecurityEncryption.cs",
+		"/home/aclaro64/SourceCode/SAES_A3_API/CMakeLists.txt",
+		"/etc/apt/sources.list",
+		"/opt/neurotechnology/Bin/Linux_x86_64/Activation/run_license_activation.sh",
+		"/etc/schroot/schroot.conf",
+		"/home/aclaro64/SourceCode/SAES_A3_API/scripts/clean.sh",
+		"/home/aclaro64/SourceCode/SAES_A3_API/scripts/install-gccfilter-dependencies.sh",
+		"/home/aclaro64/SourceCode/SAES_A3_API/scripts/create-debug-makefiles.sh",
+		"/home/aclaro64/SourceCode/SAES_A3_API/scripts/create-release-makefiles.sh",
+		"/home/aclaro64/SourceCode/SAES_A3_API/scripts/create-eclipse-project.sh",
+		"/home/aclaro64/SourceCode/esbu_dev_cpp_custom_test/alejandro_claro/libnbis/src/bz_io.c",
+		"/home/aclaro64/SourceCode/esbu_dev_cpp_custom_test/alejandro_claro/libnbis/src/NbisFingerprint.cpp",
+		"/home/aclaro64/SourceCode/esbu_dev_cpp_custom_test/alejandro_claro/libnbis/src/bozorth.h",
+		"/home/aclaro64/SourceCode/esbu_dev_cpp_custom_test/alejandro_claro/libnbis/NbisFingerprint.cpp",
+		"/home/aclaro64/SourceCode/esbu_dev_cpp_custom_test/alejandro_claro/libnbis/src/bz_sort.c",
+		"/home/aclaro64/SourceCode/esbu_dev_cpp_custom_test/alejandro_claro/libnbis/bz_sort.c",
+		"/media/aclaro64/BOOT/uEnv.txt",
+		"/media/aclaro64/BOOT/nfs-uEnv.txt",
+		"/media/aclaro64/c97d776e-6e3e-45d7-96a5-f1cb66ab2dd4/boot/uEnv.txt",
+		"/media/aclaro64/rootfs/boot/uEnv.txt",
+		"/home/aclaro64/Desktop/1800/BBB/BOOT/nfs-uEnv.txt",
+		"/home/aclaro64/Desktop/1800/BBB/BOOT/uEnv.txt",
+		"/home/aclaro64/Desktop/1800/lcd_version4/FW_LCD_V4/keypad.txt",
+		"/home/aclaro64/Downloads/transmission-package_v7.0.7.xsd",
+		"/media/aclaro64/BOOT/scripts/setup-ubuntu-armhf-3.8.13-bone30.sh",
+		"/home/aclaro/Desktop/1800/LCD/LCDLib.h",
+		"/home/aclaro/Desktop/1800/LCD/LCDLib.c",
+		"/home/aclaro64/.cache/.fr-x2eR5S/VIU110_PROTOTYPE_EN_V1.0_20140813/Configuration/Citizens/citizens-info.xml",
+		"/home/aclaro64/.cache/.fr-khwkJI/SAES1800PLUS+VIU-v0.11/etc/election/SAES1800+/close-election.xml",
+		"/media/aclaro64/MOC001VIU/SAES/TransmissionPackages/transmission-package.xml",
+		"/home/aclaro64/Downloads/StatusReport_bin file",
+		"/home/aclaro64/SourceCode/SAES_6_Linux/applications/election/share/SAES/election.xml",
+		"/home/aclaro64/SourceCode/SAES_6_Linux/build/debug/election/SAES/Votes/yBJ3Rk",
+		"/home/aclaro64/SourceCode/SAES_6_Linux/build/debug/election/SAES/ballot-information.xml",
+		"/home/aclaro64/SourceCode/SAES_6_Linux/build/debug/election/SAES/election.xml",
+		"/home/aclaro64/SourceCode/SAES_6_Linux/build/debug/etc/election/SAES1800+/voting-experience.xml",
+		"/home/aclaro64/SourceCode/SAES_6_Linux/build/debug/election/mirror/SAES/ballot-information.xml",
+		"/home/aclaro64/Downloads/SAES y example-ballot-V8/SAES/ballot-information.xml",
+		"/home/aclaro64/SourceCode/SAES_6_Linux/build/debug/election/SAES/workflows-status.xml",
+		"/home/aclaro64/SourceCode/esbu_dev_cpp_custom_test/alejandro_claro/election-1800/src/Processing/BallotInformation.cpp",
+		"/home/aclaro64/SourceCode/SAES_6_Linux/build/debug/election/SAES/Votes/dAp17i",
+		"/home/aclaro64/SourceCode/SAES_6_Linux/build/debug/election/SAES/machine-state.xml",
+		"/home/aclaro64/SourceCode/SAES_6_Linux/build/debug/election/SAES/Votes/gxto14",
+		"/home/aclaro64/SourceCode/esbu_dev_cpp_custom_test/alejandro_claro/election-1800/src/Processing/BallotInformation.h",
+		"/home/aclaro64/SourceCode/esbu_dev_cpp_custom_test/alejandro_claro/election-1800/src/Processing/BallotProcessing.cpp",
+		"/home/aclaro64/SourceCode/esbu_dev_cpp_custom_test/alejandro_claro/election-1800/src/Processing/BallotProcessing.h",
+		"/home/aclaro64/SourceCode/esbu_dev_cpp_custom_test/alejandro_claro/election-1800/src/Processing/InvalidBallotException.h",
+		"/home/aclaro64/.cache/.fr-hJg9gO/adc_v1/prucode_adc.p",
+		"/opt/arm-rootfs/etc/ld.so.conf",
+		"/tmp/no-viu/SAES/voting-device.xml",
+		"/media/aclaro64/comelec/SAES/voting-device.xml",
+		"/tmp/viu/etc/election/SAES1800+/activation.xml",
+		"/tmp/viu/etc/election/SAES1800+/close-election.xml",
+		"/tmp/viu/etc/election/SAES1800+/devices.xml",
+		"/tmp/viu/etc/election/SAES1800+/open-election.xml",
+		"/tmp/viu/etc/election/SAES1800+/reprint-local-returns-report.xml",
+		"/tmp/viu/etc/election/SAES1800+/reprint-national-returns-report.xml",
+		"/tmp/viu/etc/election/SAES1800+/rezero.xml",
+		"/tmp/viu/etc/election/SAES1800+/standard-menu.xml",
+		"/tmp/viu/etc/election/SAES1800+/statistical-report.xml",
+		"/tmp/viu/etc/election/SAES1800+/voting-experience.xml",
+		"/tmp/viu/etc/election/SAES1800+/workspace.xml",
+		"/tmp/no-viu/etc/election/SAES1800+/activation.xml",
+		"/tmp/no-viu/etc/election/SAES1800+/close-election.xml",
+		"/tmp/no-viu/etc/election/SAES1800+/devices.xml",
+		"/tmp/no-viu/etc/election/SAES1800+/open-election.xml",
+		"/tmp/no-viu/etc/election/SAES1800+/reprint-local-returns-report.xml",
+		"/tmp/no-viu/etc/election/SAES1800+/reprint-national-returns-report.xml",
+		"/tmp/no-viu/etc/election/SAES1800+/rezero.xml",
+		"/tmp/no-viu/etc/election/SAES1800+/standard-menu.xml"
+	],
+	"find":
+	{
+		"height": 36.0
+	},
+	"find_in_files":
+	{
+		"height": 87.0,
+		"where_history":
+		[
+			"/home/aclaro64/SourceCode/esbu_dev_cpp_custom_test/alejandro_claro/election-1800/src/Processing",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"has_duplications",
+			"operations",
+			"	",
+			"		",
+			"test8_4",
+			"get_nth_element",
+			"tl ",
+			"hd ",
+			"year_day",
+			" ",
+			"list",
+			" ",
+			"rhs_days",
+			"lhs_days",
+			"rhs_date",
+			");",
+			"lhs_date",
+			"indent_to_bracket",
+			"https",
+			"flake8",
+			"\"Z\"",
+			"GenerateFlashKey",
+			"GetMachineSecretKey",
+			"CleanSecretKey",
+			"CleanMachineSecretKey",
+			"_protectedSecretKey",
+			"default",
+			"sort_x",
+			"/home/aclaro64/SAES1800PLUS-v0.11/",
+			"min-votes",
+			"Saes::VotingExperience::BallotProcessing::",
+			"} /* namespace BallotProcessing */\n} /* namespace VotingExperience */",
+			"namespace VotingExperience\n{\nnamespace BallotProcessing\n{",
+			"ELECTION_BALLOTPROCESSING_",
+			"SAES_VOTINGEXPERIENCE_BALLOTPROCESSING_",
+			"№",
+			"unbl",
+			"Only",
+			"aps",
+			"m_secondsUpdateInterval",
+			"    ",
+			"64",
+			",",
+			"0",
+			",",
+			"64",
+			"0",
+			"PooledThread"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"  ",
+			"    ",
+			"",
+			"Saes::Election::",
+			"} /* namespace Election */",
+			"namespace Election\n{",
+			"ELECTION_",
+			"ELECTION_BALLOTPROCESSING_",
+			"No",
+			"m_updateInterval",
+			"  ",
+			" 64",
+			", ",
+			"  0",
+			", ",
+			" 64",
+			"  0"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 122,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								122,
+								122
+							]
+						],
+						"settings":
+						{
+							"auto_name": "* communication.xml",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 28.0
+	},
+	"input":
+	{
+		"height": 34.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.git-commit":
+	{
+		"height": 136.0
+	},
+	"project": "course.sublime-project",
+	"replace":
+	{
+		"height": 66.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 450.0,
+		"selected_items":
+		[
+		],
+		"width": 342.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
