@@ -1,0 +1,271 @@
+% ********************************************** %
+% *                                            * %
+% * Autor : Claro Mosqueda Alejandro           * %
+% *                                            * %
+% * e-mail: alejandro.claro@gmail.com          * %
+% *                                            * %
+% * Teoria de algoritmos, USB                  * %
+% *                                            * %
+% * Tarea No  5                                * %
+% *                                            * %
+% ********************************************** %
+
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage[spanish]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage{pifont}
+\usepackage{mathrsfs}
+\usepackage{stmaryrd, manfnt,marvosym,yhmath}
+\usepackage{amsmath, amsthm, amssymb}
+%\usepackage{amsfonts}
+%\usepackage{graphicx}
+%\usepackage{concmath}
+
+\headheight 0.2truecm \headsep 0.5truecm \topmargin -0.54truecm
+\topskip 0pt \textheight 22.49truecm \footskip 0.75truecm
+\oddsidemargin 0.46truecm \evensidemargin 0.46truecm
+\marginparwidth 0pt \marginparsep 0pt \textwidth 16.59truecm
+\parindent 2em
+\fboxsep 1ex \fboxrule 0.15ex \setlength{\jot}{0.2truecm}
+\flushbottom
+
+% Use $$\Braket{\phi | {\partial^2}\over {\partial t^2} | \psi}$$
+
+\def\bra#1{\mathinner{\langle{#1}|}}
+\def\ket#1{\mathinner{|{#1}\rangle}}
+\def\braket#1{\mathinner{\langle{#1}\rangle}}
+\def\Bra#1{\left<#1\right|}
+\def\Ket#1{\left|#1\right>}
+{\catcode`\|=\active 
+  \gdef\Braket#1{\left<\mathcode`\|"8000\let|\bravert {#1}\right>}}
+\def\bravert{\egroup\,\vrule\,\bgroup}
+
+\newcommand{\pderiv}[2]{\frac{\partial #1}{\partial #2}}      % derivada parcial
+\newcommand{\deriv}[2]{\frac{\mathrm{d} #1}{\mathrm{d} #2}}      % derivada parcial
+\newcommand{\comm}[2]{\left[\,#1\;,\;#2\,\right]}                 % [ , ]
+%\newcommand{\qed}{\hfill \ensuremath{\Box}}
+
+%\newtheorem{theorem}{Theorem}[section]
+%\newtheorem{lemma}[theorem]{Lemma}
+%\newtheorem{proposition}[theorem]{Proposition}
+%\newtheorem{corollary}[theorem]{Corollary}
+
+%\newenvironment{proof}[1][Proof]{\begin{trivlist}
+%\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+%\newenvironment{definition}[1][Definition]{\begin{trivlist}
+%\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+%\newenvironment{example}[1][Example]{\begin{trivlist}
+%\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+%\newenvironment{remark}[1][Remark]{\begin{trivlist}
+%\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+
+%%%%%%%%%%%%%%% Comienzo del documento %%%%%%%%%%%%%%
+
+\begin{document}
+
+  \setlength{\unitlength}{1truecm}\thicklines%
+
+  \begin{flushleft}
+    \bf {\small UNIVERSIDAD SIMÓN BOLIVAR\hfill \today} \\
+    \bf {\small CI-7521 - Matemáticas para la computación\hfill Lic. Alejandro Claro Mosqueda} \\
+  \end{flushleft}
+
+  \bigskip
+
+	\begin{center}
+	\noindent \Large \bf Tarea \#5
+	\end{center}
+
+  \bigskip
+
+\noindent {\bf Problema \#1:} Evalué $\sum_{0<k<n} \frac{1}{k(n - k)}$ de dos formas diferentes:
+
+\begin{enumerate}
+	\item [a)] Expandiendo en fracciones parciales.
+	\item [b)] Tratando la suma como una convolución y utilizando funciones generatrices.
+\end{enumerate}
+\smallskip
+
+\noindent {\bf Solución}\\
+\smallskip
+
+\noindent a) Primero se deben determinar las fracciones parciales.
+
+\begin{eqnarray*}
+  \frac{1}{k(n - k)} & = & \frac{a}{k} + \frac{b}{n - k} \\
+                     & = & \frac{a(n-k) + b\,k}{k(n - k)} \\
+                     & = & \frac{(b-a)k + a\,n}{k(n - k)}
+\end{eqnarray*}
+
+\noindent Para que se cumpla la igualdad $(b-a)k + a\,n = 1$. Esto se cumple si $a = b = \frac{1}{n}$. De esta manera se obtiene:
+
+\begin{eqnarray*}
+	\sum_{k=1}^{n-1} \frac{1}{k(n - k)} &=& \frac{1}{n}\sum_{k=1}^{n-1} \frac{1}{k} + \frac{1}{n}\sum_{k=1}^{n-1} \frac{1}{n - k} \\
+	                                    &=& \frac{1}{n}\mathcal{H}_{n-1} + \frac{1}{n}\left( \frac{1}{n - 1} + \frac{1}{n - 2} + \frac{1}{n - 3} + \ldots + \frac{1}{2} + 1 \right) \\
+	                                    &=& \frac{1}{n}\mathcal{H}_{n-1} + \frac{1}{n}\sum_{h=1}^{n-1} \frac{1}{h} \\
+	                                    &=& \frac{1}{n}\mathcal{H}_{n-1} + \frac{1}{n}\mathcal{H}_{n-1} \\
+	                                    &=& \frac{2}{n}\mathcal{H}_{n-1}
+\end{eqnarray*}
+\smallskip
+
+\begin{equation}
+\boxed
+{
+\sum_{k=1}^{n-1} \frac{1}{k(n - k)} = \frac{2}{n}\mathcal{H}_{n-1}
+}
+\end{equation}
+\smallskip
+
+\noindent b) La expresión $\sum_{0<k<n} \frac{1}{k(n - k)}$ se puede ver como la convolución de $\Braket{\mathcal{G}_k} = \Braket{1, \frac{1}{2},\frac{1}{3},\ldots}$ consigo mismo
+
+\begin{equation*}
+\sum_{k=1}^{n-1} \mathcal{G}_k\,\mathcal{G}_{n-k} = \left[z^n\right]\mathcal{G}(z)^2
+\end{equation*}
+\smallskip
+
+\noindent donde $\mathcal{G}(z)$ es la función generatriz de $\Braket{\mathcal{G}_k}$. La forma cerrada de esta función generatriz se encuentra en la tabla 335 de \cite[pp. 335]{ConcreteMath}:
+
+\begin{equation*}
+	\mathcal{G}(z) = \ln\left(\frac{1}{1-z}\right)
+\end{equation*}
+\smallskip
+
+\noindent Ahora, utilizando la ecuación 7.50 de \cite[pp. 351]{ConcreteMath} se obtiene
+
+\begin{eqnarray*}
+	\sum_{k=1}^{n-1} \frac{1}{k(n - k)} &=& \left[z^n\right]\mathcal{G}(z)^2 \\
+	                                    &=& \left[z^n\right]\left\{\ln\left(\frac{1}{1-z}\right)\right\}^2 \\
+	                                    &=& \frac{2}{n!}\left[\begin{array}{c}  n \\ 2 \end{array}\right]
+\end{eqnarray*}
+\smallskip
+
+\noindent Finalmente, para obtener la solución en la misma forma que en la parte (a), solo se debe remplazar la identidad
+
+\begin{equation*}
+	\left[\begin{array}{c}  n \\ 2 \end{array}\right] = (n-1)! \, \mathcal{H}_{n-1} \quad\quad\quad \text{\cite[eq. 6.58]{ConcreteMath}}
+\end{equation*}
+\smallskip
+
+\noindent en la expresión anterior.
+
+\begin{equation}
+\boxed
+{
+\sum_{k=1}^{n-1} \frac{1}{k(n - k)} = \frac{2}{n}\mathcal{H}_{n-1}
+}
+\end{equation}
+\bigskip
+
+\noindent {\bf Problema \#3:} Proporcione una formula asintotica para el coeficiente trinomial ``medio'' $\binom{3n}{n,n,n}$ con un error relativo $O(n^{-3})$.\\
+
+\noindent {\bf Solución}\\
+
+Al remplazar la aproximación de Stirling \cite[eq. 9.91]{ConcreteMath}
+
+\begin{equation*}
+	\ln\left(z!\right) = \frac{1}{2}\ln\left(2\pi\right) + \left(z+\frac{1}{2}\right)\ln\left(z\right) - z + \frac{1}{12}z^{-1} + O(z^{-3})
+\end{equation*}
+\smallskip
+
+\noindent en el logaritmo neperaino de la formula del coeficiente trinomial
+
+\begin{eqnarray*}
+	\ln\binom{3n}{n,n,n} &=& \ln\left[\frac{(3n)!}{(n!)^3}\right] \\
+	                     &=& \ln\left[(3n)!\right] - 3\ln\left[n!\right]
+\end{eqnarray*}
+\smallskip
+
+\noindent se obtiene
+
+\begin{eqnarray*}
+	\ln\binom{3n}{n,n,n} &=& \;\;\, \frac{1}{2}\ln\left(2\pi\right) + \left(3n+\frac{1}{2}\right)\ln\left(3n\right) - 3n + \frac{1}{12}(3n)^{-1} \\
+	                     & & - \frac{3}{2}\ln\left(2\pi\right) - 3\left(n+\frac{1}{2}\right)\ln\left(n\right) + 3n - \frac{3}{12}n^{-1} + O(n^{-3}) \\
+	                     &=& - \ln\left(2\pi\right) + \left(3n+\frac{1}{2}\right)\ln\left(3\right) + \left(3n+\frac{1}{2}\right)\ln\left(n\right) - \left(3n+\frac{3}{2}\right)\ln\left(n\right) \\
+	                     & & + \left(\frac{1}{36} - \frac{1}{4}\right)n^{-1} + O(n^{-3}) \\
+ 	                     &=& - \ln\left(2\pi\right) + \left(3n+\frac{1}{2}\right)\ln\left(3\right) - \ln\left(n\right) + \left(\frac{1}{36} - \frac{1}{4}\right)n^{-1} + O(n^{-3}) \\
+ 	                     &=& \;\;\, \ln\left(\frac{3^{3n+\frac{1}{2}}}{2\pi\,n}\right) - \frac{2}{9}n^{-1} + O(n^{-3})
+\end{eqnarray*}
+\smallskip
+
+\noindent Luego, al hacer uso de la función exponencial en ambos lados de la ecuación 
+
+\begin{eqnarray*}
+	\binom{3n}{n,n,n} &=& \frac{3^{3n+\frac{1}{2}}}{2\pi\,n}\exp\left(-\frac{2}{9}n^{-1} + O(n^{-3})\right)
+\end{eqnarray*}
+\smallskip
+
+\noindent y utilizar la aproximación asintotica de la función exponencial \cite[eq. 9.32]{ConcreteMath} 
+
+\begin{eqnarray*}
+	\exp(z) &=&  1 + z + \frac{1}{2}z^2 + O(z^{3})
+\end{eqnarray*}
+\smallskip
+
+\noindent se obtiene finalmente
+
+\begin{equation}
+\boxed
+{
+	\binom{3n}{n,n,n} = \frac{3^{3n+\frac{1}{2}}}{2\pi\,n}\left[1 - \frac{2}{9}n^{-1} + \frac{2}{81}n^{-2} + O(n^{-3})\right]
+}
+\end{equation}
+\smallskip
+
+\noindent {\bf Problema \#2:} Sea $U(n,m)$ el número de maneras distintas de sentar $n$ alumnos en una fila de $m$ pupitres dejando al menos un pupitre vacío entre alumnos.
+
+\begin{enumerate}
+	\item [a)] Determine la función generatriz de la secuencia $U(n,0)$, $U(n,1)$, $U(n,2)$, $\ldots$
+	\item [b)] Halle una forma cerrada para $U(n,m)$.
+\end{enumerate}
+\smallskip
+
+\noindent {\bf Solución}\\
+
+\noindent a) Primero se debe construir la relación de recurrencia para la función $U(n,m)$. Es sencillo notar que $U(n,m)$ es el numero de maneras de sentar $n$ alumnos en una fila $m-1$ [$U(n, m-1)$], más el numero de de maneras de sentarlos dejando un alumno sentado en el ultimo pupitre [$K(n,m)$].
+
+\begin{equation*}
+	U(n,m) = U(n, m-1) + K(n,m)
+\end{equation*}
+\smallskip
+
+\noindent Al final un alumno en el ultimo pupitre, se deben acomodar $n-1$ estudiantes en $m-1$ pupitres. Sin embargo, debido a la restricción, el penúltimo pupitre debe estar vacío, y por lo tanto realmente se deben acomodar los $n-1$ estudiantes restantes en $m-2$ pupitres.
+
+\begin{equation*}
+	K(n,m) = nU(n-1, m-2)
+\end{equation*}
+\smallskip
+
+\noindent Considerando los casos base se tiene que la relación de recurrencia esta dada por,
+
+\begin{equation*}
+	U(n,m) = \begin{cases}
+	  0 & \text{si } n = 0 \vee m < 2n,\\
+	  m & \text{si } n = 1,\\ 
+	  U(n, m-1) + n\, U(n-1, m-2) & \text{en el resto de los casos}
+	\end{cases}
+\end{equation*}
+\smallskip
+
+\noindent Luego, al remplazar la relación de recurrencia en la función generatriz se obtiene
+
+\begin{eqnarray*}
+  G(z;n) & = & \sum_{m=0}^{\infty} U(n,m)z^m \\
+         & = & 0 + nz + \sum_{m=2}^{\infty} U(n,m)z^m \\
+         & = & nz + \sum_{m=2}^{\infty} U(n,m-1)z^m + n\sum_{m=2}^{\infty} U(n-1,m-2)z^m \\
+         & = & nz + \left(\sum_{m=1}^{\infty} U(n,m-1)z^m - U(n,0)z \right) + n\sum_{m=2}^{\infty} U(n-1,m-2)z^m \\
+         & = & nz + \sum_{m=1}^{\infty} U(n,m-1)z^m + n\sum_{m=2}^{\infty} U(n-1,m-2)z^m \\
+         & = & nz + \sum_{k=0}^{\infty} U(n,k)z^{k+1} + n\sum_{k=0}^{\infty} U(n-1,k)z^{k+2} \\
+         & = & nz + zG(z;n) + nz^{2}G(z;n-1) \\
+         & = & \frac{nz^{2}}{1 - z}G(z;n-1) + \frac{nz}{1 - z} \\
+         & = & \frac{nz}{1 - z}\left[zG(z;n-1) + 1\right] 
+\end{eqnarray*}
+\bigskip
+
+\begin{thebibliography}{99}
+
+\bibitem{ConcreteMath}
+R.L. Graham, D.E. Knuth, and O. Patashnik, \emph{Concrete Mathematics}, Addison-Wesley, Reading, MA, 1989.
+\end{thebibliography}
+
+\end{document} 

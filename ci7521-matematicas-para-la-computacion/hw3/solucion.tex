@@ -1,0 +1,345 @@
+% ********************************************** %
+% *                                            * %
+% * Autor : Claro Mosqueda Alejandro           * %
+% *                                            * %
+% * e-mail: alejandro.claro@gmail.com          * %
+% *                                            * %
+% * Teoria de algoritmos, USB                  * %
+% *                                            * %
+% * Tarea No  3                                * %
+% *                                            * %
+% ********************************************** %
+
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage[spanish]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage{pifont}
+\usepackage{mathrsfs}
+\usepackage{stmaryrd, manfnt,marvosym,yhmath}
+\usepackage{amsmath, amsthm, amssymb}
+%\usepackage{amsfonts}
+%\usepackage{graphicx}
+%\usepackage{concmath}
+
+\headheight 0.2truecm \headsep 0.5truecm \topmargin -0.54truecm
+\topskip 0pt \textheight 22.49truecm \footskip 0.75truecm
+\oddsidemargin 0.46truecm \evensidemargin 0.46truecm
+\marginparwidth 0pt \marginparsep 0pt \textwidth 16.59truecm
+\parindent 2em
+\fboxsep 1ex \fboxrule 0.15ex \setlength{\jot}{0.2truecm}
+\flushbottom
+
+% Use $$\Braket{\phi | {\partial^2}\over {\partial t^2} | \psi}$$
+
+\def\bra#1{\mathinner{\langle{#1}|}}
+\def\ket#1{\mathinner{|{#1}\rangle}}
+\def\braket#1{\mathinner{\langle{#1}\rangle}}
+\def\Bra#1{\left<#1\right|}
+\def\Ket#1{\left|#1\right>}
+{\catcode`\|=\active 
+  \gdef\Braket#1{\left<\mathcode`\|"8000\let|\bravert {#1}\right>}}
+\def\bravert{\egroup\,\vrule\,\bgroup}
+
+\newcommand{\pderiv}[2]{\frac{\partial #1}{\partial #2}}      % derivada parcial
+\newcommand{\deriv}[2]{\frac{\mathrm{d} #1}{\mathrm{d} #2}}      % derivada parcial
+\newcommand{\comm}[2]{\left[\,#1\;,\;#2\,\right]}                 % [ , ]
+%\newcommand{\qed}{\hfill \ensuremath{\Box}}
+
+%\newtheorem{theorem}{Theorem}[section]
+%\newtheorem{lemma}[theorem]{Lemma}
+%\newtheorem{proposition}[theorem]{Proposition}
+%\newtheorem{corollary}[theorem]{Corollary}
+
+%\newenvironment{proof}[1][Proof]{\begin{trivlist}
+%\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+%\newenvironment{definition}[1][Definition]{\begin{trivlist}
+%\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+%\newenvironment{example}[1][Example]{\begin{trivlist}
+%\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+%\newenvironment{remark}[1][Remark]{\begin{trivlist}
+%\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+
+%%%%%%%%%%%%%%% Comienzo del documento %%%%%%%%%%%%%%
+
+\begin{document}
+
+  \setlength{\unitlength}{1truecm}\thicklines%
+
+  \begin{flushleft}
+    \bf {\small UNIVERSIDAD SIMÓN BOLIVAR\hfill \today} \\
+    \bf {\small CI-7521 - Matemáticas para la computación\hfill Lic. Alejandro Claro Mosqueda} \\
+  \end{flushleft}
+
+  \bigskip
+
+	\begin{center}
+	\noindent \Large \bf Tarea \#3
+	\end{center}
+
+  \bigskip
+
+\noindent {\bf Problema \#1a:} Halle una interpretación combinatoria del factorial ascendente \\
+$m^{\overline{n}} = m(m+1) \ldots (m+n-1)$. \\
+
+\noindent {\bf Solución}\\
+\smallskip
+
+Al reordenar los términos en $m^{\overline{n}}$, 
+
+\begin{equation*}
+m^{\overline{n}} = (m+n-1)(m+n-2) \ldots (m+1)m
+\end{equation*}
+\smallskip
+
+\noindent se observa que es igual al número de formas que se puede construir una secuencia $S$ de $n$ elementos, a partir de un conjunto $A$ de cardinalidad $m+n-1$,
+
+\begin{equation*}
+	m^{\overline{n}} = P_{n}^{m+n-1} = n!\binom{m+n-1}{n}
+\end{equation*}
+\smallskip
+
+\noindent Esto es bastante claro puesto que, hay $m+n-1$ formas de escoger el primer elemento en la secuencia, luego $m+n-2$ para el segundo elemento; y así sucesivamente, hasta $m$ formas de escoger el $n$-simo elemento.\\
+
+\noindent {\bf Problema \#1b:} Determinar el número de patrones correspondientes a las funciones de un conjunto $A$ de $n$ elementos del tipo $1^{\lambda_1}2^{\lambda_2}\ldots n^{\lambda_n}$ a un conjunto $B$ de $m$ elementos del tipo $1^m$. Aplique los principios elementales de conteo para determinar a que otro tipo de configuración equivale un patrón, y luego determinar el número de esas configuraciones. (Que $A$ sea del tipo $1^{\lambda_1}2^{\lambda_2}\ldots n^{\lambda_n}$, significa que hay $\lambda_i$ subconjuntos de elementos de $A$ con $i$ elementos indistinguibles entre si) \\
+
+\noindent {\bf Solución}\\
+
+El numero de patrones del tipo $1^m$ es equivalente a contar el numero de forma que se pueden acomodar $m$ objetos en $n$ particiones (\{1,2,\ldots,n\}) distinguibles con las cantidades $\{\lambda_1,\lambda_2,\ldots,\lambda_n\}$ en cada partición:
+
+\begin{equation*}
+	P(1^m) = \frac{m!}{\lambda_1!\lambda_2!\ldots\lambda_n!} \qquad \text{en el caso } BIY(A,B)
+\end{equation*}
+\smallskip
+
+\noindent donde $P(1^m)$ es el numero de patrones.
+\bigskip
+
+\noindent {\bf Problema \#2:} Muestre que un análogo al teorema binomial es válido para potencias factoriales. Esto es, demuestre las siguientes identidades \cite[problema 5.37]{ConcreteMath}:
+
+\begin{eqnarray}
+  (x + y)^{\underline{n}} &=& \sum_k \binom{n}{k} x^{\underline{k}} y^{\underline{n-k}} \label{p37-falling} \\
+  (x + y)^{\overline{n}} &=& \sum_k \binom{n}{k} x^{\overline{k}} y^{\overline{n-k}} \label{p37-rising}
+\end{eqnarray}
+\smallskip
+
+\noindent para todo entero no negativo $n$.\\
+
+\noindent {\bf Solución}\\
+
+\begin{proof}
+Es sencillo demostrar (\ref{p37-rising}) transformando esta expresión en (\ref{p37-falling}) utilizando la fórmula recíproca,
+
+\begin{equation*}
+	z^{\overline{n}} = (-1)^n(-z)^{\underline{n}}
+\end{equation*}
+\smallskip
+
+\noindent y reacomodando los términos de cada lado de la expresión con sigue,
+
+\begin{eqnarray*}
+  (r + z)^{\overline{n}} &=& \sum_k \binom{n}{k} r^{\overline{k}} z^{\overline{n-k}} \\
+  (-1)^n (-(r + z))^{\underline{n}} &=& \sum_k \binom{n}{k} (-1)^k\,(-r)^{\underline{k}}\,(-1)^{n-k}\,(-z)^{\underline{n-k}} \\
+  (-1)^n (-r -z)^{\underline{n}} &=& (-1)^n\sum_k \binom{n}{k} (-r)^{\underline{k}}(-z)^{\underline{n-k}} \\
+  (x + y)^{\underline{n}} &=& \sum_k \binom{n}{k} x^{\underline{k}}y^{\underline{n-k}} \\
+\end{eqnarray*}
+\smallskip
+
+\noindent Ahora, sólo resta demostrar (\ref{p37-falling}). Para ello se divide ambos lados de la expresión (\ref{p37-falling}) por $n!$,
+
+\begin{eqnarray}
+  \frac{(x + y)^{\underline{n}}}{n!} &=& \frac{1}{n!}\sum_k \binom{n}{k} x^{\underline{k}} y^{\underline{n-k}} \\
+    \binom{x+y}{n} &=& \frac{1}{n!}\sum_k \frac{n^{\underline{k}}}{k!} x^{\underline{k}} y^{\underline{n-k}} \label{p37-4}
+\end{eqnarray}
+\smallskip
+
+\noindent Al reacomodar los términos del lado derecho en (\ref{p37-4}),
+
+\begin{eqnarray}
+    \binom{x+y}{n} &=& \sum_k \frac{n^{\underline{k}}}{n!} \frac{x^{\underline{k}}}{k!} y^{\underline{n-k}} \\
+                   &=& \sum_k \frac{1}{(n-k)!} \binom{x}{k} y^{\underline{n-k}} \\
+                   &=& \sum_k  \binom{x}{k} \frac{y^{\underline{n-k}}}{(n-k)!} \\
+                   &=& \sum_k  \binom{x}{k} \binom{y}{n-k}
+\end{eqnarray}
+\smallskip
+
+\noindent se obtiene una forma de la  convolución de Vandermonde \cite[5.27]{ConcreteMath}. La demostración de esta expresión se encuentra en \cite[pp. 170]{ConcreteMath}.\\
+\end{proof}
+
+\noindent {\bf Problema \#3:} Encuentre la forma cerrada de 
+
+\begin{equation}
+  \sum_{k=0}^{n} \binom{\binom{k}{2}}{2}\binom{2n-k}{n} \label{p67-1}
+\end{equation}
+
+\noindent donde $n$ es un entero no-negativo. \cite[problema 5.67]{ConcreteMath}\\
+
+\noindent {\bf Solución}\\
+
+Desarrollando el coeficiente $\binom{\binom{k}{2}}{2}$, se observa que
+
+\begin{eqnarray*}
+    \binom{\binom{k}{2}}{2} &=& \binom{k(k-1)/2}{2} \\
+                            &=& \frac{1}{2}\left\{\frac{k(k-1)}{2}\left[\frac{k(k-1)}{2} - 1\right]\right\} \\
+                            &=& \frac{1}{4\,2}\left\{k(k-1)\left[k^2 - k - 2\right]\right\} \\
+                            &=& \frac{3}{4\,3\,2}\left\{k(k-1)(k+1)(k-2)\right\}  \\
+                            &=& \frac{3}{4!}\left\{(k+1)k(k-1)(k-2)\right\}  \\
+                            &=& 3\frac{(k+1)^{\underline{4}}}{4!} \\
+                            &=& 3\binom{k+1}{4}
+\end{eqnarray*}
+\smallskip
+
+\noindent al sustituir en (\ref{p67-1}), se obtiene
+
+\begin{equation}
+  \sum_{k=0}^{n} \binom{\binom{k}{2}}{2}\binom{2n-k}{n} = 3\sum_{k} \binom{2n-k}{n}\binom{k+1}{4}
+\end{equation}
+\smallskip
+
+\noindent Finalmente, al  hacer uso de la identidad 
+
+\begin{equation*}
+  \sum_{k} \binom{l' - k}{m'}\binom{q'+k}{n'} = \binom{l'+q'+1}{m'+n'+1}
+\end{equation*}
+\smallskip
+
+\noindent encontrada en la tabla 169 de \cite[pp. 169]{ConcreteMath}, con 
+
+\begin{eqnarray*}
+l' = 2n \\
+m' = n \\
+q' = 1 \\
+n' = 4
+\end{eqnarray*}
+\smallskip
+
+\noindent se obtiene
+
+\begin{equation}
+  \boxed{\sum_{k=0}^{n} \binom{\binom{k}{2}}{2}\binom{2n-k}{n} = 3\binom{2n+2}{n+5}}
+\end{equation}
+\bigskip
+
+\noindent {\bf Problema \#4:} Demuestre que
+
+\begin{equation}
+  \sum_{k} \binom{l}{m+k}\binom{s+k}{n}(-1)^{k} = (-1)^{l+m}\binom{s-m}{n-l} \label{p4-1}
+\end{equation}
+
+\noindent donde $l$ es un entero no-negativo y $m,n$ son enteros.\\
+
+\noindent {\bf Solución}
+
+\begin{proof}
+La idea para realizar la demostración consiste en convertir la expresión en la convolución de Vandermonde. Para esto, primero se utiliza la ley de simetría,
+
+\begin{equation*}
+  \binom{n}{k} = \binom{n}{n-k}
+\end{equation*}
+
+\noindent para bajar las $k$ al índice inferior en los coeficientes en (\ref{p4-1}),
+
+\begin{equation}
+  \sum_{k} \binom{l}{l-m-k}\binom{s+k}{s+k-n}(-1)^{k}
+\end{equation}
+
+
+\noindent luego utilizando la propiedad de ``negación superior'',
+
+\begin{equation*}
+  \binom{n}{k} = (-1)^{k}\binom{k-n-1}{k}
+\end{equation*}
+
+\noindent se obtiene
+
+\begin{equation}
+  \sum_{k} \binom{l}{l-m-k}(-1)^{s+k-n}\binom{-1-n}{s+k-n}(-1)^{k} = (-1)^{s-n}\sum_{k} \binom{l}{l-m-k}\binom{-1-n}{s+k-n}
+\end{equation}
+
+\noindent La sumatoria en el lado derecho de la expresión es una forma de la convolución de Vandermonde \cite[pp. 169]{ConcreteMath},
+
+\begin{equation}
+  \sum_{k} \binom{l}{l-m-k}\binom{-1-n}{s+k-n} = \binom{l-n-1}{l-m-n+s}
+\end{equation}
+
+\noindent Finalmente, luego de sustituir, aplicar la propiedad de ``negación superior'' y la propiedad de simetría de nuevo, se obtiene que
+
+\begin{eqnarray}
+  (-1)^{s-n}\binom{l-n-1}{l-m-n+s} &=& (-1)^{s-n}(-1)^{l-m-n+s}\binom{s-m}{l-m-n+s} \\
+                                   &=& (-1)^{l-m}\binom{s-m}{l-m-n+s} \\
+                                   &=& (-1)^{l-m}\binom{s-m}{n-l} 
+\end{eqnarray}
+
+\noindent Por último, se debe notar que,
+
+\begin{eqnarray*}
+  (-1)^{l-m} &=& \frac{(-1)^l(-1)^m}{(-1)^m(-1)^m} \\
+             &=& \frac{(-1)^l(-1)^m}{(-1)^{2m}} \\
+             &=& (-1)^{l+m} 
+\end{eqnarray*}
+
+\noindent En conclusión, luego de sustituir, queda demostrada (\ref{p4-1}).
+
+\begin{equation}
+  \boxed{\sum_{k} \binom{l}{m+k}\binom{s+k}{n}(-1)^{k} = (-1)^{l+m}\binom{s-m}{n-l}}
+\end{equation}
+
+\end{proof}
+
+\noindent {\bf Problema \#5:} Mostrar que $\forall n$ entero se cumple:
+
+\begin{equation}
+  \sum_{k \geq 0} \binom{r - tk}{k}\binom{s - t(n-k)}{n-k}\frac{r}{r-tk} = \binom{r+s-tn}{n} \label{p5-1}
+\end{equation}
+
+\noindent {\bf Solución}\\
+
+\begin{proof}
+Es posible realizar esta demostración por inducción Noetheriana. Para ello primero se debe remplazar $s$ por $m+n-r+tn$ en (\ref{p5-1})
+
+\begin{eqnarray*}
+A(r,m,n,t) &=&\sum_{k\geqslant 0}\binom{r-tk}{k}\binom{m+n-r+tn-tn+tk}{n-k}\frac{r}{r-tk} \\
+           &=&\sum_{k\geqslant 0}\binom{r-tk}{k}\binom{m+n-r+tk}{n-k}\frac{r}{r-tk}
+\end{eqnarray*}
+\smallskip
+
+\noindent donde $r\neq tk$ de manera que este definida la expresión. A partir de esto, se observa que para $m=0$,$n=0$,$k=0$, 
+
+\begin{eqnarray*}
+A(r,m,n,t) &=& \sum_{k\geqslant 0}\binom{r}{0}\binom{-r}{0}\frac{r}{r} \\
+           &=& 0
+\end{eqnarray*}
+\smallskip
+
+\noindent se cumple claramente el caso base. Ahora, para realizar el paso inductivo, es necesario probar que se cumple para todo antecesor de $m$ y $n$. Al aplicar la fórmula de adición a $\binom{m+n-r+tk}{n-k}$ se obtiene
+
+\begin{eqnarray*}
+A(r,m,n,t) &=& \sum_{k\geqslant 0}\binom{r-tk}{k}\binom{m-1+n-r+tn-tn+tk}{n-k}\frac{r}{r-tk}\\
+           &+& \sum_{k\geqslant 0}\binom{r-tk}{k}\binom{m-1+n-r+tn-tn+tk}{n-k-1}\frac{r}{r-tk}
+\end{eqnarray*}
+\smallskip
+
+\noindent Al remplazar por la hipótesis inductiva se observa
+
+\begin{equation*}
+A(r,m-1,n,t) + A(r,m,n-1,t) = \binom{m-1+n}{n}+\binom{m+n-1}{n-1}
+\end{equation*}
+\smallskip
+
+\noindent Luego, al aplicar nuevamente la fórmula de adicción en el segundo termino, se obtiene
+
+\begin{equation*}
+A(r,m,n,t) = \binom{m+n}{n}
+\end{equation*}
+\smallskip
+
+\noindent quedando así, demostrado el paso inductivo.\\
+\end{proof}
+
+\begin{thebibliography}{99}
+
+\bibitem{ConcreteMath}
+R.L. Graham, D.E. Knuth, and O. Patashnik, \emph{Concrete Mathematics}, Addison-Wesley, Reading, MA, 1989.
+\end{thebibliography}
+
+\end{document} 

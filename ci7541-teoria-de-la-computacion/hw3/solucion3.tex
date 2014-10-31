@@ -1,0 +1,406 @@
+% *************************************************************** %
+% *                                                             * %
+% * Autores : Angarita Arocha Rafael & Claro Mosqueda Alejandro * %
+% *                                                             * %
+% * Tarea #3                                                    * %
+% *                                                             * %
+% *************************************************************** %
+
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage[spanish]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{mathrsfs}
+\usepackage{amsthm}
+
+\headheight 0.2truecm \headsep 0.5truecm \topmargin -0.54truecm
+\topskip 0pt \textheight 22.49truecm \footskip 0.75truecm
+\oddsidemargin 0.46truecm \evensidemargin 0.46truecm
+\marginparwidth 0pt \marginparsep 0pt \textwidth 16.59truecm
+\parindent 2em
+\fboxsep 1ex \fboxrule 0.15ex \setlength{\jot}{0.2truecm}
+\flushbottom
+
+\def\braket#1{\mathinner{\langle{#1}\rangle}}
+
+%%%%%%%%%%%%%%% Comienzo del documento %%%%%%%%%%%%%%
+
+\begin{document}
+
+\setlength{\unitlength}{1truecm}\thicklines%
+
+\begin{flushleft}
+\bf {\scriptsize UNIVERSIDAD SIMON BOLIVAR \hfill \today} \\
+\bf {\scriptsize DEPARTAMENTO DE COMPUTACION }    \\
+\bf {\scriptsize MAESTRIA EN CIENCIAS DE LA COMPUTACION \hfill Ing. Angarita Arocha Rafael}    \\
+\bf {\scriptsize ASIGNATURA: CI-7541 - Teoria de la computación. \hfill Lic. Claro Mosqueda Alejandro} \\
+\end{flushleft}
+
+\bigskip
+
+\begin{center}
+\large \bf TAREA N${}^{o}\; 3$
+\end{center}
+
+\bigskip
+
+%%%%%%%%%%%%%%% Ejercicio 8.8%%%%%%%%%%%%%%
+
+\noindent {\bf Ejercicio 8.8:} Sea  $EQ_{\mathrm{REX}} = \{ \braket{R, S} |  \text{ $R$ y $S$ son expresiones regulares equivalentes} \}$. Muestre que $EQ_{\mathrm{REX}} \in PSPACE$.\\
+
+\medskip
+
+\noindent{\bf Solución:} En el teorema 1.54 \cite[p. 66]{sipser06} se muestra como convertir una expresión regular en tiempo lineal en una $\mathsf{NFA}$ que es lineal en tamaño de la expresión regular. Por lo tanto, podemos transformar las expresiones regulares $R$ y $S$ de $EQ_{\mathrm{REX}}$ en $NFA$s $N_{R}$ y $N_{S}$ tal que,
+
+\begin{equation*}
+EQ_{\mathsf{NFA}} = \{ \braket{N_R, N_S} |  \text{ $N_R$ y $N_S$ son $\mathsf{NFA}$s tales que  $L(N_R) = L(N_S)$} \}
+\end{equation*}
+
+\smallskip
+
+\noindent Por otro lado, observe que la siguiente máquina de Turing no-determinista $M$,\\
+
+\noindent $M = $ ``En entrada $\braket{N_R, N_S}$ donde $N_{R}$ y $N_{S}$ son $\mathsf{NFA}$s:
+\begin{enumerate}
+  \setlength\itemsep{-3pt}
+  \setlength\itemindent{0.8cm}
+
+  \item Colocar una marca en los estados iniciales de $N_{R}$ y $N_{S}$.
+  \item Repetir $2^{n_r + n_s}$ veces. Donde $n_r$ y $n_s$ son el número de estados de $N_{R}$ y $N_{S}$.
+  \item   \quad Seleccionar un símbolo $s$ de forma no-determinista.
+  \item   \quad Mover el marcador en $N_{R}$ y $N_{S}$ de acuerdo con las reglas dadas por las
+  \item[] \quad respectivas funciones de transición y $s$.
+  \item   \quad Si el marcador de $N_{R}$ llega a un estado de aceptación y el marcador de $N_{S}$ no,
+  \item[] \quad entonces \textbf{\emph{rechazar}}.
+  \item   \quad Si el marcador de $N_{S}$ llega a un estado de aceptación y el marcador de $N_{R}$ no,
+  \item[] \quad entonces \textbf{\emph{rechazar}}.
+  \item   \quad Si el marcador de $N_{R}$ llega a un estado de aceptación y el marcador de $N_{S}$
+  \item[] \quad también llega a un estado de aceptación, entonces \textbf{\emph{aceptar}}.
+  \item \textbf{\emph{rechazar}}.''
+\end{enumerate}
+\smallskip
+
+\noindent decide $EQ_{\mathsf{NFA}}$. El limite $2^{n_r + n_s}$ en el paso $2$ se debe a que la longitud de una cadena, que es rechazada o aceptada por $N_{R}$ y $N_{S}$, es a lo sumo esta cantidad, ya que sólo hay $2^{n_r + n_s}$ formas diferentes de colocar las dos marcas. Esta máquina no almacena la cadena que se va generando, en su lugar mantiene en memoria únicamente el símbolo que se va procesando durante la simulación de $N_{R}$ y $N_{S}$. Por lo tanto $EQ_{\mathsf{NFA}} \in NPSPACE$. Además, como se comentó inicialmente, la construcción de $N_{R}$ y $N_{S}$ requiere espacio lineal. En consecuencia, $EQ_{\mathrm{REX}} \in NPSPACE$. Finalmente, por el teorema de Savitch conocemos que $PSPACE = NPSPACE$, lo que implica que $EQ_{\mathrm{REX}} \in PSPACE$.
+
+\pagebreak
+
+%%%%%%%%%%%%%%% Ejercicio 8.11%%%%%%%%%%%%%%
+
+\noindent {\bf Ejercicio 8.11:}  Muestre que, si todo lenguaje NP-hard es también PSPACE-hard, entonces \\ PSPACE = NP.
+
+\smallskip
+
+\noindent{\bf Solución:}
+
+\begin{proof}
+
+\smallskip
+
+Partimos de la suposición de que todo lenguaje en NP-hard esta en PSPACE-hard. Sabemos que NP $\subseteq$ PSPACE por la explicación dada en  \cite[p. 308]{sipser06}. También sabemos que NP-completo $\subseteq$ NP-hard, por lo tanto todo lenguaje en NP-completo esta en PSPACE-hard. Además, $SAT$ es NP-completo \cite[Teorema 7.37, p. 276]{sipser06}, en consecuencia $SAT \in$ PSPACE-hard.\\
+
+Por otro lado, como todo lenguaje $A$ en PSPACE es reducible en tiempo polinomial a un lenguaje $B$ que esté en PSPACE-hard \cite[Definicion 8.8, p. 309]{sipser06}, entonces todo lenguaje $A$ en PSPACE es reducible a $SAT$ en tiempo polinomial. Pero $SAT \in$ NP, por lo cual $A \in$ NP y PSPACE $\subseteq$ NP. En conclusión, PSPACE = NP.
+\end{proof}
+
+\bigskip
+
+%%%%%%%%%%%%%%% Ejercicio 8.17%%%%%%%%%%%%%%
+
+\noindent {\bf Ejercicio 8.17:} Sea $A$ el lenguaje de paréntesis anidados correctamente. Por ejemplo, ( () ) y \\ ( () ( () ) ) () están en $A$, pero ) ( no lo esta. Muestre que $A$ esta en $L$.\\
+
+\smallskip
+
+\noindent{\bf Solución:}
+
+\begin{proof}
+
+ Para decidir el lenguaje $A$, es necesario llevar la cuenta de los paréntesis izquierdos sin par encontrados mientras se escanea la cadena de entrada de izquierda a derecha. Si en algún momento hay más paréntesis derechos que izquierdos, la cadena de entrada no puede pertenecer al lenguaje $A$. Como la cuenta de los paréntesis es $O(n)$, donde $n$ es la longitud de la cadena de entrada, entonces sólo es necesario espacio $O(\log n)$ para el contador. La siguiente $\mathsf{MT}$ $M$ decide a $A$ usando espacio $O(\log n)$:\\
+
+\noindent $M = $ ``En entrada $w$ donde $w$ es una cadena de paréntesis:
+\begin{enumerate}
+  \setlength\itemsep{-3pt}
+  \setlength\itemindent{0.8cm}
+
+  \item Hacer $p \gets 0$, donde $p$ es el número de paréntesis izquierdos encontrados en $w$ hasta el momento.
+  \item Para cada símbolo $c$ en $w$ (escaneando $w$ de izquierda a derecha) hacer:
+  \item \quad Si $c =$ '(', entonces $p \gets p + 1$
+  \item \quad Si no, si $c =$ ')', entonces $p \gets p - 1$
+  \item \quad Si $p < 0$, entonces \textbf{\emph{rechazar}} ya que se han encontrado más paréntesis derechos que izquierdos.
+
+  \item Si $p = 0$, \textbf{\emph{aceptar}} ya que los paréntesis están correctamente anidados. Si no, \textbf{\emph{rechazar}}.''
+\end{enumerate}
+
+ Claramente el contador $p$ requiere espacio $O(\log n)$, ya que puede ser incrementada a lo sumo $n$ veces. Por lo tanto, $M$ decide a $A$ en espacio $O(\log n)$, lo que implica que $A \in L$.
+
+\end{proof}
+
+\smallskip
+
+%%%%%%%%%%%%%%% Ejercicio 8.25%%%%%%%%%%%%%%
+
+\noindent {\bf Ejercicio 8.25:} Un grafo no dirigido es \emph{\textbf{bipartito}} si sus nodos pueden ser divididos en dos conjuntos tal que todas las aristas vayan de un nodo de un conjunto a un nodo del otro conjunto. Demuestre que un grafo es bipartito si y sólo si este no contiene un ciclo compuesto por un número impar de nodos.\\
+
+\noindent Sea\\
+
+\begin{equation*}
+BIPARTITE = \{ \braket{G} |  G \text{ es un grafo bipartito} \}\text{.}
+\end{equation*}
+\smallskip
+
+\noindent Demuestre que $BIPARTITE \in$ NL.
+\bigskip
+
+\noindent{\bf Solución:}\\
+
+\noindent a) Demuestre que un grafo es bipartito si y sólo si este no contiene un ciclo compuesto por un número impar de nodos.
+
+\begin{proof}
+Primero se demostrará que si un grafo es bipartito, entonces no debe contener un ciclo compuesto por un número impar de nodos. Suponga que un grafo bipartito contiene un ciclo compuesto por un número impar de nodos y sean $n_{1}, n_{2}, n_{3}, \ldots , n_{2k}, n_{2k+1}$ los nodos del ciclo. Si $n_{1}$ esta en algún conjunto A, entonces $n_{2}$ debe estar en el conjunto B, $n_{3}$ en el conjunto A, etc. Por inducción observamos que todos los nodos con subíndice impar deben estar en el conjunto A, y todos los nodos con subíndice par deben estar en el conjunto B. El primer nodo $n_{1}$ y el último nodo $n_{2k+1}$ del ciclo están en A, lo cual es una contradicción porque están conectados entre si. Otra solución es dar color a cada nodo. Si un grafo es bipartito, es posible pintar los nodos usando dos colores, rojo y azul, tal que no exista una arista conectando dos nodos del mismo color. Esto es claramente imposible de hacer en un ciclo compuesto por un número impar de nodos.\\
+
+Por otro lado, con la intensión de demostrar que si un grafo no contiene ciclos con un número impar de nodos, entonces el grafo es bipartito, suponga que un grafo no contiene ciclos con un número impar de nodos y realice el siguiente procedimiento:
+
+\begin{enumerate}
+  \setlength\itemsep{-3pt}
+  \setlength\itemindent{0.8cm}
+  \item Tomamos un nodo y le ponemos la etiqueta A.
+  \item Repetir hasta que todos los nodos estén etiquetados:
+  \item \quad Etiquetamos a todos sus vecinos (sin etiquetar) como B.
+  \item \quad Etiquetamos todos los vecinos (sin etiquetar) de aquellos nodos etiquetados con B como A.
+\end{enumerate}
+
+Suponga que quedaron dos nodos adyacentes $x$ y $y$ con la misma etiqueta. Esto quiere decir que los dos nodos fueron alcanzados en un número impar de pasos desde el nodo raíz, o que los dos nodos fueron alcanzados en un número par de pasos desde el nodo raíz. En ambos casos, si se excluye el nodo raíz, entonces el número total de nodos visitados para llegar de $x$ al nodo inicial más el número total de nodos visitados para llegar de $y$ al nodo inicial es par. Pero si también se cuenta el nodo inicial, la suma del número total de nodos visitados sera impar, lo que contradice la hipótesis inicial que afirma que el grafo no contiene ciclos con un número impar de nodos. Por lo tanto, el grafo es bipartito.\\
+\end{proof}
+
+\pagebreak
+
+\noindent b) Demuestre que BIPARTITE $\in$ NL.
+
+\begin{proof}
+La siguiente $\mathsf{MT}$ $M$,\\
+
+\noindent $M = $ ``En entrada $\braket{G}$:
+\begin{enumerate}
+  \setlength\itemsep{-3pt}
+  \setlength\itemindent{0.8cm}
+
+  \item Hacer $contador \gets 0$.
+  \item Seleccionar de forma no-determinista un nodo inicial y asignarlo a la variable $inicio$.
+  \item Seleccionar de forma no-determinista un nodo sucesor y asignarlo a la variable $sucesor$.
+  \item Mientras $contador$ sea menor o igual al número de nodos en $G$ hacer:
+  \item \quad Si $sucesor = inicio$ y $contador$ es impar, entonces \textbf{\emph{aceptar}}.
+  \item \quad Seleccionar de forma no-determinista un sucesor de $sucesor$ y asignarlo a $sucesor$
+  \item \quad Mientras $contador$ es mayor que el número de nodos en $G$, entonces \textbf{\emph{rechazar}}.''
+\end{enumerate}
+
+\noindent decide a $\overline{BIPARTITE}$ en espacio $O(\log n)$ ya que sólo se requiere espacio para representar los nodos $inicio$ y $sucesor$; y para la variable $contador$ cuyo máximo valor es el número de nodos en $G$. En consecuencia $\overline{BIPARTITE} \in$ NL y $BIPARTITE \in$ coNL. Pero, es conocido que NL$=$coNL \cite[Teorema 8.27]{sipser06}. Por lo tanto, $BIPARTITE \in$ NL.\\
+\end{proof}
+
+\smallskip
+
+%%%%%%%%%%%%%%% Ejercicio 8.27%%%%%%%%%%%%%%
+
+\noindent {\bf Ejercicio 8.27:} Recordemos que un grafo dirigido es \emph{\textbf{fuertemente conexo}} si cada dos nodos están conectados por un camino dirigido en cada dirección. Sea\\
+
+\begin{equation*}
+\begin{array}{ll}
+\text{$STRONGLY$-$CONNECTED$} = \{ \, \braket{G} \,\, | & \text{$G$ es un grafo fuertemente conexo}\}\text{.}
+\end{array}
+\end{equation*}
+\medskip
+
+\noindent Demuestre que $STRONGLY$-$CONNECTED$ es NL-completo.
+
+\bigskip
+
+\noindent{\bf Solución:}
+
+
+\begin{proof}
+
+\noindent Primero se debe demostrar que $STRONGLY$-$CONNECTED \in$ NL. Para ello, considere la siguiente $\mathsf{MT}$ $M$ que decide a $\overline{STRONGLY-CONNECTED}$:\\
+
+\noindent $M = $ ``En entrada $\braket{G}$, donde $G$ es un grafo dirigido:
+\begin{enumerate}
+  \setlength\itemsep{-3pt}
+  \setlength\itemindent{0.8cm}
+
+  \item Seleccionar no deterministicamente dos nodos $a$ y $b$.
+  \item Correr PATH(a,b).
+  \item Si rechaza, el grafo no es fuertemente conexo, entonces \textbf{\emph{aceptar}}.
+  \item Si no, \textbf{\emph{rechazar}}.''
+\end{enumerate}
+\smallskip
+
+El almacenamiento de los números de nodos $a$ y $b$ sólo requiere espacio $O(\log n)$, y $PATH$ también requiere únicamente espacio $O(\log n)$, por lo tanto $\overline{STRONGLY-CONNECTED} \in$ NL. Finalmente $STRONGLY$-$CONNECTED \in$ coNL, pero como sabemos que NL$=$coNL \cite[Teorema 8.27]{sipser06}, y en consecuencia $STRONGLY$-$CONNECTED \int$ NL.\\
+
+\noindent Por otro lado, para demostrar la completitud de $STRONGLY$-$CONNECTED$, basta con demostrar que PATH $\le_{L}$ $STRONGLY$-$CONNECTED$. Para ello, considere la siguiente reducción de PATH a $STRONGLY$-$CONNECTED$:\\
+
+\noindent ``En entrada $\braket{G, s, t}$:
+\begin{enumerate}
+  \setlength\itemsep{-3pt}
+  \setlength\itemindent{0.8cm}
+
+  \item Copiar $G$ en la cinta de salida.
+  \item Para cada nodo $i$ en $G$ hacer:
+  \item \quad Imprimir una arista de $i$ a $s$.
+  \item \quad Imprimir una arista de $t$ a $i$.
+  \item Si rechaza, el grafo no es fuertemente conexo, entonces \textbf{\emph{aceptar}}.
+  \item Si no, \textbf{\emph{rechazar}}.''
+\end{enumerate}
+
+Si existe un camino de $s$ a $t$, el grafo construido es fuertemente conexo. Si no existe un camino de $s$ a $t$, entonces el grafo construido no es fuertemente conexo ya que las aristas adicionales van a $s$ y salen de $t$, por lo que no habría un camino de $s$ a $t$. La salida es $O(n)$, por lo cual el único espacio requerido es aquel para el contador $i$ en el ciclo de la reducción. En conclusión, $STRONGLY$-$CONNECTED$ es NL-completo.
+\end{proof}
+
+\smallskip
+
+%%%%%%%%%%%%%%% Ejercicio 9.12%%%%%%%%%%%%%%
+
+\noindent {\bf Ejercicio 9.12:} Describa cual es el error en la siguiente ``demostración'' engañosa de $P \ne NP$. Asuma que $P = NP$ y obtenga una contradicción. Si $P = NP$, entonces $SAT \in P$ y para algún $k$, $SAT \in TIME(n^k)$. Debido a que cada lenguaje en $NP$ es polinomialmente reducible a $SAT$, se obtiene que $NP \subseteq TIME(n^k)$. Por lo tanto $P \subseteq TIME(n^k)$. Pero, por el teorema de las jerarquía en tiempo, $TIME(n^{k+1})$ contiene un lenguaje que no esta en $TIME(n^k)$, lo cual contradice $P \subseteq TIME(n^k)$. Por lo tanto $P \ne NP$. \\
+
+\medskip
+
+\noindent{\bf Solución:}\\
+
+El error en la demostración se encuentra en la afirmación $NP \subseteq TIME(n^k)$ si $SAT \in TIME(n^k)$, ya que la reducción polinomial de los problemas en $NP$ a $SAT$ no está acotada en tiempo por $O(n^k)$. Por lo tanto, no es posible asegurar que
+$NP \subseteq TIME(n^k)$ y mucho menos que $P \subseteq TIME(n^k)$. En consecuencia, no es posible demostrar por contradicción que $P \ne NP$ con este argumento.\\
+
+\medskip
+
+%%%%%%%%%%%%%%% Ejercicio 9.19%%%%%%%%%%%%%%
+
+\noindent {\bf Ejercicio 9.19:} Sea el problema \textbf{UNIQUE-SAT}, \\
+
+\begin{equation*}
+\text{\textbf{UNIQUE-SAT}} = \{ \varphi \,|\, \varphi \text{ es una fórmula booleana que tiene una sola asignación que la satisface} \}\text{.}
+\end{equation*}
+\smallskip
+
+\noindent Demuestre que $\text{\textbf{UNIQUE-SAT}} \in \text{P}^{SAT}$.
+
+\medskip
+
+\noindent{\bf Solución:}\\
+
+\begin{proof}
+Para demostrar que $\text{\textbf{UNIQUE-SAT}} \in \text{P}^{SAT}$ es conveniente formular el problema de una forma ligeramente diferente,\\
+
+\begin{equation*}
+\text{\textbf{UNIQUE-SAT}} = \{ \varphi \,|\, \exists x\forall z: \, \left(x \text{ satiface } \varphi \right) \wedge \left(z \ne x \to z \text{ no satisface } \varphi \right) \}\text{.}
+\end{equation*}
+\smallskip
+
+\noindent donde $x = x_1x_2\ldots x_n$ y $z = z_1z_2\ldots z_n$ son asignaciones de $\varphi$ \cite{papadimitriou}. La idea es construir una máquina de Turing con un oráculo de $SAT$ que escoja una asignación $x$ que satisfaga $\varphi$ y verifique universalmente que ninguna otra asignación $z$ es satisfactoria. La $\mathsf{MT}$ $M$,\\
+
+\noindent $M$ = ``En la entrada $\varphi$ donde $\varphi$ es una formula booleana:
+\begin{enumerate}
+  \setlength\itemsep{-3pt}
+  \setlength\itemindent{0.8cm}
+
+  \item Consultar al oráculo de $SAT$ con $\varphi$ como entrada.
+  \item Si el oráculo rechaza, \textbf{\emph{rechazar}}.
+  \item Construir $\rho \leftarrow \text{TRUE}$ 
+  \item Para $i \leftarrow 1$ hasta $n$ realizar: (donde $n$ es el número de variables en $\varphi$)
+  \item \quad Consultar el oráculo $SAT$ con $\varphi \wedge \rho \wedge x_i$ como entrada.
+  \item \quad Si el oráculo acepta, simbólicamente $\rho \leftarrow \rho \wedge x_i$. Si no, $\rho \leftarrow \rho \wedge \neg x_i$.
+  \item Consulta al oráculo de $SAT$ con $\varphi \wedge \neg \rho$ como entrada.
+  \item Si el oráculo rechaza, \textbf{\emph{aceptar}}. Si no, \textbf{\emph{rechazar}}.''
+\end{enumerate}
+\smallskip
+
+\noindent reconoce $\text{\textbf{UNIQUE-SAT}}$ en tiempo polinomial siguiendo la idea antes expuesta. Los pasos del $4$ al $6$, construyen una asignación que satisface tanto a $\varphi$ como a $\rho$. Por lo tanto la única manera que $\varphi \wedge \neg \rho$ sea satifasible es debido a la existencia de otra asignación que también satisface $\varphi$ pero no a $\rho$. Finalmente, de esto se concluye que $\text{\textbf{UNIQUE-SAT}} \in \text{P}^{SAT}$.\\
+\end{proof}
+\medskip
+
+%%%%%%%%%%%%%%% Ejercicio 9.21%%%%%%%%%%%%%%
+
+\noindent {\bf Ejercicio 9.21:} Una máquina de Turing con oráculo de $k$-consultas es una $\mathsf{TM}$ con oráculo que permite realizar a lo sumo $k$ consultas en cada entrada. Una máquina de Turing $M$ con un oráculo de $k$-consultas para $A$ es representado por $M^{A,k}$ y $P^{A,k}$ es la colección de lenguajes que son decidibles en tiempo polinomial por esta clase de máquinas.
+
+\begin{enumerate}
+  \item[a] Demuestre que $\text{NP} \cup \text{coNP} \subseteq \text{P}^{SAT,1}$.
+  \item[b] Asuma que $\text{NP} \ne \text{coNP}$. Demuestre que $\text{P} \cup \text{coNP} \subsetneq \text{P}^{SAT,1}$.
+\end{enumerate}
+
+\medskip
+
+\noindent{\bf Solución:}\\
+
+\noindent a) Demuestre que $\text{NP} \cup \text{coNP} \subseteq \text{P}^{SAT,1}$.\\
+
+\begin{proof}
+Primero se mostrara que $NP \subseteq \text{P}^{SAT,1}$. Para esto basta con demostrar que,
+
+\begin{equation*}
+    \forall A \in \text{NP} \to A \in \text{P}^{SAT,1}\text{.}
+\end{equation*}
+
+Sabemos que $SAT$ es NP-completo, y por lo tanto es posible reducir $A$ a $SAT$ ($A <_{p} SAT$) por cierta función $f(w)$ computable en tiempo polinomial. Conocida la función $f(w)$ es entonces posible construir una máquina de Turing con oráculo de $1$-consulta $M^{SAT,1}$,\\
+
+\noindent $M^{SAT,1}$ = ``En la entrada $w$:
+\begin{enumerate}
+  \setlength\itemsep{-3pt}
+  \setlength\itemindent{0.8cm}
+
+  \item Computar la reducción $f(w)$.
+  \item Consulta al oráculo de $SAT$ con $f(w)$ como entrada.
+  \item Si el oráculo rechaza, \textbf{\emph{rechazar}}. Si no, \textbf{\emph{aceptar}}.''
+\end{enumerate}
+\smallskip
+
+\noindent que decide el lenguaje $A \in \text{NP}$. Claramente los pasos $1$ y $2$ son computables en tiempo polinomial, y en consecuencia queda demostrado que $NP \subseteq \text{P}^{SAT,1}$. \\
+
+\noindent Lo segundo que se debe demostrar es que $coNP \subseteq \text{P}^{SAT,1}$. Para esto basta con demostrar que,
+
+\begin{equation*}
+    \forall \overline{A} \in \text{NP} \to A \in \text{P}^{SAT,1}\text{.}
+\end{equation*}
+
+\noindent Esta última afirmación es sencilla de demostrar con una pequeña alteración a la máquina $M^{SAT,1}$ mostrada anteriormente,\\
+
+\noindent $Q^{SAT,1}$ = ``En la entrada $w$:
+\begin{enumerate}
+  \setlength\itemsep{-3pt}
+  \setlength\itemindent{0.8cm}
+
+  \item Construir la reducción $f(w)$.
+  \item Consulta al oráculo de $SAT$ con $f(w)$ como entrada.
+  \item Si el oráculo rechaza, \textbf{\emph{aceptar}}. Si no, \textbf{\emph{rechazar}}.''
+\end{enumerate}
+\smallskip
+
+\noindent Este cambio en el funcionamiento implica que $Q^{SAT,1}$ decide a los lenguajes que no se encuentran en NP en tiempo polinomial con una sola consulta al oráculo de $SAT$. En consecuencia $coNP \subseteq \text{P}^{SAT,1}$.\\
+
+\noindent Finalmente como tanto NP como coNP están contenidos en $\text{P}^{SAT,1}$, entonces su unión claramente también lo está.\\
+\end{proof}
+
+\noindent b) Asuma que $\text{NP} \ne \text{coNP}$. Demuestre que $\text{P} \cup \text{coNP} \subsetneq \text{P}^{SAT,1}$.\\
+
+\begin{proof}
+La suposición $\text{NP} \ne \text{coNP}$ implica que $\text{P} \ne \text{NP}$ ya que es conocido que $P$ es cerrado bajo complementación. En consecuencia, $P \subsetneq NP$ y por lo tanto $P \subsetneq \text{P}^{SAT,1}$.\\
+
+\noindent Por otro lado, como quedo demostrado en el apartado anterior, $coNP \subseteq \text{P}^{SAT,1}$ y $\text{NP} \cup \text{coNP} \subseteq \text{P}^{SAT,1}$. Esto implica que si $P \subsetneq NP$, entonces $\text{P} \cup \text{coNP} \subsetneq \text{NP} \cup \text{coNP}$ y por lo tanto $\text{P} \cup \text{coNP} \subsetneq \text{P}^{SAT,1}$.\\
+\end{proof}
+
+%%%%%%%%%%%%%% Bibliografia %%%%%%%%%%%%%%%%
+
+\begin{thebibliography}{99}
+
+\bibitem{sipser06}
+  Sipser, Michael.
+  \emph{Introduction to the Theory of Computation}.
+  International Thomson Publishing,
+  2nd Edition,
+  2006.
+
+\bibitem{papadimitriou}
+  Papadimitriou, Christos.
+  \emph{On the complexity of unique solutions}.
+  J. ACM,
+  p.{392-400},
+  1984.
+
+\end{thebibliography}
+
+\end{document} 

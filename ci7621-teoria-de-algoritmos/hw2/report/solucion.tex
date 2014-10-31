@@ -1,0 +1,641 @@
+% ********************************************** %
+% *                                            * %
+% * Autor : Claro Mosqueda Alejandro           * %
+% *                                            * %
+% * e-mail: alejandro.claro@gmail.com          * %
+% *                                            * %
+% * Teoria de algoritmos, USB                  * %
+% *                                            * %
+% * Tarea No  2                                * %
+% *                                            * %
+% ********************************************** %
+
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage[spanish]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{mathrsfs}
+\usepackage{clrscode}
+\usepackage{slashbox}
+\usepackage{multirow} 
+\usepackage{longtable} 
+\usepackage{array} 
+
+\headheight 0.2truecm \headsep 0.5truecm \topmargin -0.54truecm
+\topskip 0pt \textheight 22.49truecm \footskip 0.75truecm
+\oddsidemargin 0.46truecm \evensidemargin 0.46truecm
+\marginparwidth 0pt \marginparsep 0pt \textwidth 16.59truecm
+\parindent 2em
+\fboxsep 1ex \fboxrule 0.15ex \setlength{\jot}{0.2truecm}
+\flushbottom
+
+% Use $$\Braket{\phi | {\partial^2}\over {\partial t^2} | \psi}$$
+
+\def\bra#1{\mathinner{\langle{#1}|}}
+\def\ket#1{\mathinner{|{#1}\rangle}}
+\def\braket#1{\mathinner{\langle{#1}\rangle}}
+\def\Bra#1{\left<#1\right|}
+\def\Ket#1{\left|#1\right>}
+{\catcode`\|=\active 
+  \gdef\Braket#1{\left<\mathcode`\|"8000\let|\bravert {#1}\right>}}
+\def\bravert{\egroup\,\vrule\,\bgroup}
+
+\newcommand{\pderiv}[2]{\frac{\partial #1}{\partial #2}}      % derivada parcial
+\newcommand{\deriv}[2]{\frac{\mathrm{d} #1}{\mathrm{d} #2}}      % derivada parcial
+\newcommand{\comm}[2]{\left[\,#1\;,\;#2\,\right]}                 % [ , ]
+\newcommand{\qed}{\hfill \ensuremath{\Box}}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\newenvironment{proof}[1][Proof]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{definition}[1][Definition]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{example}[1][Example]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{remark}[1][Remark]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+
+%%%%%%%%%%%%%%% Comienzo del documento %%%%%%%%%%%%%%
+
+\begin{document}
+
+  \setlength{\unitlength}{1truecm}\thicklines%
+
+  \begin{flushleft}
+    \bf {\small UNIVERSIDAD SIMÓN BOLIVAR\hfill \today} \\
+    \bf {\small CI-7621 - Teoría de Algoritmos\hfill Lic. Alejandro Claro Mosqueda}    \\
+  \end{flushleft}
+  
+  \bigskip
+ 
+	\begin{center}
+	\noindent \Large \bf Tarea \#2
+	\end{center}
+
+  \bigskip
+  
+\noindent {\bf Problema \#1a:} Sean $u$ y $v$ dos cadenas de caracteres. Deseamos transformar $u$ en $v$ con el menor número posible de operaciones de los tres tipos siguientes, borrar un carácter, añadir un carácter o modificar un carácter. Por ejemplo, podemos transformar $abbac$ en $abcbc$ en tres etapas:\\
+
+\begin{table}[h]
+	\centering
+		\begin{tabular}{ l l l }
+		$abbac$ & $\rightarrow abac$  & (borrar b) \\
+		        & $\rightarrow ababc$ & (anadir b) \\
+		        & $\rightarrow aabcbc$ & (transformar $a$ en $c$)
+		\end{tabular}
+\end{table}
+
+\noindent Demostrar que esta transformación no es óptima. Escribir un algoritmo de programación dinámica que busque el número mínimo de operaciones necesarias para transformar $u$ en $v$ y que nos diga cuáles son esas operaciones. En función de las longitudes de $u$ y $v$, ¿cuánto tiempo requiere este algoritmo?\\
+
+\noindent {\bf Solución:}\\
+
+En general, supónganse las dos cadenas de caracteres $u = x_1 x_2 \ldots x_n$ y $v = y_1 y_2 \ldots y_m$. La idea principal del enfoque de programación dinámica consiste en preparar una tabla $T$, de dimensión $(n+1) \times (m+1)$, que contenga resultados intermedios útiles, que al ser combinados resulten en la solución del problema completo. Los elementos $T_{i,j}$ de la tabla representan el número mínimo de transformaciones entre las sub-cadenas de caracteres $x_1 x_2 \ldots x_{i}$ y $y_1 y_2 \ldots y_{j}$ y son calculadas de la siguiente manera:
+
+\begin{equation}
+T_{i,j} = \begin{cases}
+						i & \text{si}\; j = 0 \\
+						j & \text{si}\; i = 0 \\
+						\text{min}\left( T_{i-1,j} + 1,\; T_{i,j-1} + 1,\; T_{i-1,j-1} + \delta_{x_i y_j}\right) & \text{si}\; i,j \geq 1
+					\end{cases}	
+\end{equation}
+\smallskip
+
+\noindent donde $\delta_{x_i y_j}$ es la función delta de Kronecker:
+
+\begin{equation}
+\delta_{x_i y_j} = \begin{cases}
+						1 & \text{si}\; x_i = y_j    \\
+						0 & \text{si}\; x_i \neq y_j \\
+					\end{cases}	
+\end{equation}
+\smallskip
+
+Observe que $T_{i,0} = i$ para todo $i$ puesto que cualquier cadena de caracteres de longitud $i$ se convierte en una cadena de longitud $0$ al eliminar $i$ caracteres. De forma similar, $T_{0,j} = j$ puesto que cualquier cadena de longitud $0$ se convierte en una cadena de longitud $j$ luego de insertar $j$ caracteres. En el resto de los casos consisten en la operación de ``costo'' mínimo entre:
+
+\pagebreak
+
+\begin{itemize}
+	\item transformar $x_1 x_2 \ldots x_{i-1}$ en $y_1 y_2 \ldots y_j$  y eliminar $x_i$
+	\item transformar $x_1 x_2 \ldots x_{i}$   en $y_1 y_2 \ldots y_{j-1}$ e insertar $y_j$
+	\item transformar $x_1 x_2 \ldots x_{i-1}$ en $y_1 y_2 \ldots y_{j-1}$ y remplazar $x_i$ por $y_j$ si $x_i \neq y_j$
+\end{itemize}
+
+El cálculo de los elementos de la tabla sólo depende de elementos previamente calculados. Entonces, el algoritmo debe calcular los elementos de la tabla $T$ fila por fila, o columna por columna,  partiendo en $T_{0,0}$ hasta llegar a $T_{n,m}$. 
+
+Además, es posible determinar cual secuencia de transformaciones llevan a la solución si se almacena la transformación al tomar la decisión en el cálculo de $T_{i,j}$, y luego se sigue el rastro de abajo hacia arriba en la tabla. Esto es, partiendo en $T_{n,m}$ se observa cual transformación dió lugar al cálculo de dicho elemento de los elementos, si fue eliminar $x_n$ entonces se salta al elemento $T_{n-1,m}$ ($\uparrow$); si en cambio fue insertar $y_m$, entonces se salta a $T_{n,m-1}$ ($\leftarrow$); en caso contrario se salta a $T_{n-1,m-1}$ ($\nwarrow$). Este proceso se repite sucesivamente hasta llegar a algún elemento con valor 0.\\
+
+Por ejemplo, considere que se desea transformar $u = abbac$ en $v = abcbc$.
+
+\begin{table*}[h]
+\centering
+\begin{tabular}{ | c | c | c | c | c | c | c |}
+	\hline
+		&                & a                  & b                  & c                & b                & c \\
+	\hline
+		& 0 ($\bullet$)  & 1 ($\leftarrow$)   & 2 ($\leftarrow$)   & 3 ($\leftarrow$) & 4 ($\leftarrow$) & 5 ($\leftarrow$)\\
+	\hline
+	a & 1 ($\uparrow$) & 0 ($\nwarrow$)     & 1 ($\leftarrow$)   & 2 ($\leftarrow$) & 3 ($\leftarrow$) & 4 ($\leftarrow$)\\
+	\hline
+	b & 2 ($\uparrow$) & 1 ($\;\uparrow\;$) & 0 ($\nwarrow$)     & 1 ($\leftarrow$) & 2 ($\leftarrow$) & 3 ($\leftarrow$)\\
+	\hline
+	b & 3 ($\uparrow$) & 2 ($\;\uparrow\;$) & 1 ($\;\uparrow\;$) & 1 ($\nwarrow$)   & 1 ($\nwarrow$)   & 2 ($\leftarrow$)\\			
+	\hline
+	a & 4 ($\uparrow$) & 3 ($\;\uparrow\;$) & 2 ($\;\uparrow\;$) & 2 ($\nwarrow$)   & 2 ($\nwarrow$)   & 2 ($\nwarrow$)\\			
+	\hline
+	c & 5 ($\uparrow$) & 4 ($\;\uparrow\;$) & 3 ($\;\uparrow\;$) & 2 ($\nwarrow$)   & 3 ($\nwarrow$)   & 2 ($\nwarrow$)\\			
+	\hline
+\end{tabular}
+\end{table*}
+
+\noindent Una solución óptima consiste en sólo 2 operaciones de remplazo (menos de las propuestas en el enunciado).\\
+
+\medskip
+\noindent {\bf Problema \#1b:} Se dispone de $n$ objetos que es necesario ordenar empleando las relaciones ``$<$'' y ``=''. Por ejemplo, con tres objetos se tienen 13 ordenaciones posibles.\\
+
+\begin{table}[h]
+	\centering
+		\begin{tabular}{ c c c c c }
+		$a=b=c$ & $a=b<c$ & $a<b=c$ & $a<b<c$ & $a<c<b$ \\
+		$a=c<b$ & $b<a=c$ & $b<a<c$ & $b<c<a$ & $b=c<a$ \\
+		$c<a=b$ & $c<a<b$ & $c<b<a$ &         &         
+		\end{tabular}
+\end{table}
+
+Dar un algoritmo de programación dinámica que pueda calcular, como función de $n$, el número de ordenaciones posibles. El algoritmo debe necesitar un tiempo que esté en $O(n^2)$, y un espacio que esté en $O(n)$.\\
+
+\noindent {\bf Solución:}\\
+
+El problema de calcular la combinaciones en este problema radica en el hecho de que las expresiones unicamente relacionados por ``$=$'' son equivalentes. Esto es, expresiones de la forma ``$a = b$'' son equivalentes a ``$b = a$''. En cambio las que incluyen relaciones ``$<$'' no lo son. Esto es, expresiones de la forma ``$a < b$'' no son equivalentes a ``$b < a$''. Entonces, la mejor forma de expresar como contar el número de formas de ordenar $n$ objetos empleando las relaciones ``$<$'' y ``='' es:\\
+
+\begin{equation}
+	X_n = \sum_{i = 0}^{n - 1}C_{i}^{(n)}
+\end{equation}
+
+\smallskip
+\noindent donde $C_{i}^{(n)}$ es el número de formas de ordenar $n$ objetos donde hay $i$ relaciones ``$=$''. Como fue comentando previamente, ``$a = b$'' es equivalente a ``$b = a$'' pero ``$a < b$'' y ``$b < a$'' no lo son. Por lo tanto,
+
+\begin{align*}
+	C_{0}^{(2)} = 2 \\ 
+	C_{1}^{(2)} = 1 
+\end{align*}
+
+\smallskip
+Por otro lado, es posible expresar $C_{i}^{(n)}$ en términos de una simplificación del  problema original. Precisamente, en términos del número de ordenaciones posibles de $n-1$ objetos. 
+
+\begin{align*}
+	C_{0}^{(n)} &= n     \, C_{0}^{(n-1)}\\ 
+	C_{1}^{(n)} &= (n-1) \, \left( C_{1}^{(n-1)} + C_{0}^{(n-1)} \right)\\ 
+	\vdots &\\
+	C_{j}^{(n)} &= (n-j) \, \left( C_{j}^{(n-1)} + C_{j-1}^{(n-1)} \right)\\ 
+\end{align*}
+
+\smallskip
+\noindent Al combinar con los resultados anteriores, se obtiene que
+
+\begin{equation}
+	C_{j}^{(n)} = \begin{cases}
+									2 & \text{si} \; j = 0 \,\wedge\, n = 2,    \\
+									1 & \text{si} \; j = 1 \,\wedge\, n = 2,    \\
+									0 & \text{si} \; j < 0 \,\vee\,   j \geq n, \\
+									(n-j) \, \left( C_{j}^{(n-1)} + C_{j-1}^{(n-1)} \right) & \text{en caso contrario.}
+								\end{cases}
+\end{equation}
+
+\smallskip
+El algoritmo consiste en un arreglo $C$ de tamaño $n$ donde se calculan los términos $C_{j}^{(k)}$ partiendo de $k = 1$ hasta $k = n$. De esta manera se va actualizando el arreglo mientras se va aumentando el tamaño del problema aprovechando los cálculo del problema de tamaño $n-1$. Esto implica que calcular los $n$ términos $C_{j}^{(n)}$ requiere un tiempo $O(n^2)$. Finalmente, para obtener el número de ordenaciones posibles simplemente se deben sumar todos los términos $C_{j}^{(n)}$. A continuación se muestra el pseudo-código de este algoritmo. \\
+
+\begin{codebox}
+	\Procname{$\proc{ORDENACIONES}(n)$}
+	
+	\zi \Comment{\bf Inicia el arreglo}
+	\li $C_0 \gets 2$
+	\li $C_1 \gets 1$
+	\li \For $i \gets 2$ \To $n-1$ \Do
+	\li		$C_i \gets 0$
+			\End
+	\zi
+	\zi \Comment{\bf Calcula los términos $C_{j}^{(n)}$}
+	\li \For $k \gets 3$ \To $n$ \Do
+	\li 	$x \gets 0$
+	\li		\For $j \gets 0$ \To $k-1$ \Do
+	\li			$y \gets C_j$
+	\li			$C_j \gets (k-j)\left( C_j + x \right)$
+	\li			$x \gets y$
+				\End
+			\End
+	\zi
+	\zi \Comment{\bf Suma los términos $C_{j}^{(n)}$}
+	\li $S \gets 0$
+	\li \For $i \gets 0$ \To $n-1$ \Do
+	\li		$S \gets S + C_i$
+			\End
+	\zi	
+	\li \Return $S$
+	\End
+\end{codebox}
+
+\medskip
+\noindent {\bf Problema \#2:} Se quiere que resuelva con backtracking el siguiente problema: Dado un conjunto $\bf A$ de $n$ elementos, y un conjunto $\bf F$ con $m$ subconjuntos de $\bf A$, determinar, si existe, un subconjunto de $\bf F$ que sea una partición de $\bf A$.\\
+
+\noindent a) Describir claramente el grafo implícito (vértices y sucesores) sobre el cual realizará el DFS. Defina criterios razonables de poda.\\
+
+\noindent {\bf Solución:}\\
+
+Es posible representar la instancia del problema como una matriz de dimensión $m \times n$ de ceros y unos, donde cada fila representa un elemento del conjunto $\bf F$, cada columna un elemento del conjunto $\bf A$ y cada elemento de la matriz es asignado con uno ($1$) si el subconjunto de $\bf A$ en $\bf F$ contiene al elemento correspondiente a la columna (de lo contrario es asignado con cero). En esta representación, la solución del problema consiste en encontrar los conjuntos de filas que al sumar columna a columna resulte en un vector cuyas componentes son todas iguales a $1$ (un recubrimiento exacto del conjunto $\bf A$). \\
+
+La construcción del grafo implícito, considerando la representación matricial del problema, consiste en recorrer cada elemento de la primera columna con valor igual a $1$, e incluir la fila correspondiente en un vértice. Luego, bajo este vértice, se determinan los sucesores buscando cada elemento igual a $1$ restante en la fila y descartando todas las filas que contengan el valor $1$ en la correspondiente columna. Esto significa, descartar todos los subconjuntos $\bf A$ en $\bf F$  restantes que contengan algún elemento repetido. La búsqueda de los sucesores se repite en cada vértice considerando sólo las columnas que no hayan sido consideradas previamente en la construcción de la rama, hasta no encontrar mas sucesores posibles. Se puede observar que en cada vértice se va a obteniendo una representación matricial del sub-problema cada vez de menor dimensión. \\ 
+
+Un criterio razonable de poda, para el primer nivel del grafo, es comenzar la construcción del grafo implícito por la columna con menor número de ``unos'' en lugar de la primera ya que la solución debe tener alguna de las filas con un ``uno'' en dicha columna. Ademas, es conveniente aprovechar el orden de las filas para podar las ramificaciones redundantes del grafo, buscando sucesores únicamente en filas mayores a la última insertada en el vértice.\\
+
+\noindent b) Corra paso a paso su algoritmo con el siguiente ejemplo: \\
+
+${\bf A} = \left\{ a,b,c,d,e,f,g \right\}$, ${\bf F} = \left\{ \{c,e,f\}, \{a,d,g\}, \{b,c,f\}, \{a,d\}, \{b,a,g\}, \{b,g\} \right\}$\\
+
+\noindent {\bf Solución:}\\
+
+A continuación se muestra una tabla con el estado de la ejecución paso a paso del algoritmo. Al finalizar se concluye que una recubrimiento exacto esta dado por:
+
+\begin{equation*}
+	{\bf X} = \{ \{c,e,f\}, \{a,d\}, \{b,g\}\}
+\end{equation*}
+
+\smallskip
+\begin{longtable}{ | c | p{3.3cm} | c | m{6cm} | }
+\hline
+Paso & Vértice & Representación de sucesores & Comentario \\
+\hline
+1 & $\{ \}$ & $\begin{array}{lccccccc} & a & b & c & d & e & f & g  \\ \{c,e,f\} & 0 & 0 & 1 & 0 & 1 & 1 & 0 \\ \{a,d,g\} & 1 & 0 & 0 & 1 & 0 & 0 & 1 \\ \{b,c,f\} & 0 & 1 & 1 & 0 & 0 & 1 & 0 \\ \{a,d\} & 1 & 0 & 0 & 1 & 0 & 0 & 0 \\ \{b,a,g\} & 1 & 1 & 0 & 0 & 0 & 0 & 1 \\ \{b,g\} & 0 & 1 & 0 & 0 & 0 & 0 & 1 \end{array}$ & La solución obligatoriamente debe contener la primera fila. \\
+\hline
+2 & $\{ \{c,e,f\} \}$ & $\begin{array}{lcccc} & a & b & d & g  \\ \{a,d,g\} & 1 & 0 & 1 & 1 \\ \{a,d\} & 1 & 0 & 1 & 0 \\ \{b,a,g\} & 1 & 1 & 0 & 1 \\ \{b,g\} & 0 & 1 & 0 & 1 \end{array}$ & La fila 3 queda descartada debido a que la intercepción con la fila 1 no es vacío. \\
+\hline
+3 & $\{ \{c,e,f\}, \{a,d,g\} \}$ & & No existen mas sucesores. No es solución porque no representa un recubrimiento (falta el elemento $b$). \\
+\hline
+4 & $\{ \{c,e,f\}, \{a,d\} \}$ & $\begin{array}{lcc} & b & g  \\ \{b,g\} & 1 & 1 \end{array}$ & \\
+\hline
+5 & $\left\{ \begin{array}{l} \{c,e,f\}, \{a,d\}, \\ \{b,g\} \end{array} \right\}$ & & Este vértice es una solución del problema. \\
+\hline
+6 & $\{ \{c,e,f\}, \{b,a,g\} \}$ & & No existen mas sucesores. No es solución porque no representa un recubrimiento (falta el elemento $d$). \\
+\hline
+7 & $\{ \{c,e,f\}, \{b,g\} \}$ & & $\{a,d\}$ es sucesor pero es descartado porque ya fue considerado previamente (pasos 4 y 5). \\
+\hline
+\end{longtable}
+
+\medskip
+\noindent {\bf Problema \#3:} Aplicar Branch and Bound, paso a paso, para determinar un conjunto independiente de vértices de cardinalidad máxima en el grafo siguiente:\\
+
+\noindent {\bf Grafo implícito}: un vértice será un conjunto $\bf X$ independiente de vértices. Los sucesores de $\bf X$ son todos los conjuntos ${\bf X}\cup\{x\}$ que son independientes. Emplee un algoritmo greedy para hallar una solución inicial que permita junto a la función de cota (bound), podar el árbol.
+
+\noindent Para la cota (bound) que permitirá podar el árbol, use la siguiente: estando en un vértice $\bf X$, una cota superior del máximo independiente que contiene a $\bf X$ es $\left| {\bf X} \right|+\left|\{{\bf Y}: {\bf Y} \;\text{es sucesor de}\; {\bf X}\}\right|$ ¿por qué?.\\
+
+\noindent {\bf Solución:}\\
+
+Para el recorrido del grafo implícito es conveniente especificar un orden sobre los vértices, de manera que es posible podar las ramificaciones redundantes del grafo. Esto es, al considerar los posibles sucesores, primero se descartan aquellos menores al último insertado en el conjunto de independientes. Una cota superior del máximo independiente que contiene a $\bf X$ es $\left| {\bf X} \right|+\left|\{{\bf Y}: {\bf Y} \;\text{es sucesor de}\; {\bf X}\}\right|$, porque el caso mas optimista es considerar que la unión de $\bf X$ con el conjunto de posibles sucesores es un conjunto de independientes. Si la cardinalidad de dicha unión es menor o igual que la cardinalidad de la mejor solución conocida, entonces no tiene sentido seguir buscando por esa ramificación. \\
+
+Por otro lado, para hallar la solución inicial es posible, dado un orden sobre los vértices y una lista inicialmente vacía de vértices seleccionados como independientes, recorrer todos los vértices uno por uno e ir verificando que el grafo no contenga una arista que conecte dicho vértice con algún vértice ya seleccionado. Si efectivamente no existe dicha arista, entonces este vértice es agregado a la lista de vértices seleccionados. Al ejecutar este algoritmos sobre el grafo indicado en el enunciado, ordenando los vértices por su índice, se obtiene la siguiente solución:
+
+\begin{equation}
+	{\bf X} = \{ v_1, v_3, v_5, v_7 \}
+\end{equation}
+
+\smallskip
+\noindent cuya cardinalidad es $|{\bf X}| = 4$. A continuación se muestra la tabla con el estado de cada paso de la ejecución de Branch and Bound con esta solución inicial. Al finalizar la ejecución se concluye que efectivamente la solución inicial es una solución óptima.
+
+\begin{longtable}{ | c | l | c | p{3.3cm} | c | p{6.8cm} | }
+\hline
+Paso & Vértice (v) & $|\text{v}|$ & Sucesores & Cota & Comentario \\
+\hline
+1 & $\{ \}$ & 0 & $\left\{ \begin{array}{c} v_{1}, v_{2}, v_{3}, v_{4}, \\ v_{5}, v_{6}, v_{7}, v_{8}, \\ v_{9}, v_{10}, v_{11}, v_{12} \end{array} \right\}$ & 12 & \\ 
+\hline
+2 & $\{ v_{1} \}$ & 1 & $\left\{ \begin{array}{c} v_{3}, v_{4}, v_{5}, v_{6}, \\ v_{7}, v_{10}, v_{11}, v_{12} \end{array} \right\}$ & 9 & \\ 
+\hline
+3 & $\{ v_{1} ,v_{3} \}$ & 2 & $\{ v_{5} ,v_{6} ,v_{7} ,v_{11} ,v_{12} \}$ & 7 & \\ 
+\hline
+4 & $\{ v_{1} ,v_{3} ,v_{5} \}$ & 3 & $\{ v_{7} ,v_{12} \}$ & 5 & \\ 
+\hline
+5 & $\{ v_{1} ,v_{3} ,v_{5} ,v_{7} \}$ & 4 & $\{ \}$ & 4 & No es mejor solución.\\ 
+\hline
+6 & $\{ v_{1} ,v_{3} ,v_{5} ,v_{12} \}$ & 4 & $\{ \}$ & 4 & No es mejor solución.\\ 
+\hline
+7 & $\{ v_{1} ,v_{3} ,v_{6} \}$ & 3 & $\{ \}$ & 3 & No es mejor solución.\\ 
+\hline
+8 & $\{ v_{1} ,v_{3} ,v_{7} \}$ & 3 & $\{ v_{11} \}$ & 4 & Por esta ramificación no se encontrará una mejor solución.\\ 
+\hline
+9 & $\{ v_{1} ,v_{3} ,v_{11} \}$ & 3 & $\{ \}$ & 3 & No es mejor solución.\\ 
+\hline
+10 & $\{ v_{1} ,v_{3} ,v_{12} \}$ & 3 & $\{ \}$ & 3 & No es mejor solución.\\ 
+\hline
+11 & $\{ v_{1} ,v_{4} \}$ & 2 & $\{ v_{6} ,v_{7} ,v_{12} \}$ & 5 & \\ 
+\hline
+12 & $\{ v_{1} ,v_{4} ,v_{6} \}$ & 3 & $\{ \}$ & 3 & No es mejor solución.\\ 
+\hline
+13 & $\{ v_{1} ,v_{4} ,v_{7} \}$ & 3 & $\{ \}$ & 3 & No es mejor solución.\\ 
+\hline
+14 & $\{ v_{1} ,v_{4} ,v_{12} \}$ & 3 & $\{ \}$ & 3 & No es mejor solución.\\ 
+\hline
+15 & $\{ v_{1} ,v_{5} \}$ & 2 & $\{ v_{7} ,v_{10} ,v_{12} \}$ & 5 & \\ 
+\hline
+16 & $\{ v_{1} ,v_{5} ,v_{7} \}$ & 3 & $\{ v_{10} \}$ & 4 & Por esta ramificación no se encontrará una mejor solución.\\ 
+\hline
+17 & $\{ v_{1} ,v_{5} ,v_{10} \}$ & 3 & $\{ v_{12} \}$ & 4 & Por esta ramificación no se encontrará una mejor solución.\\ 
+\hline
+18 & $\{ v_{1} ,v_{5} ,v_{12} \}$ & 3 & $\{ \}$ & 3 & No es mejor solución.\\ 
+\hline
+19 & $\{ v_{1} ,v_{6} \}$ & 2 & $\{ v_{10} \}$ & 3 & Por esta ramificación no se encontrará una mejor solución.\\ 
+\hline
+20 & $\{ v_{1} ,v_{7} \}$ & 2 & $\{ v_{10} ,v_{11} \}$ & 4 & Por esta ramificación no se encontrará una mejor solución.\\ 
+\hline
+21 & $\{ v_{1} ,v_{10} \}$ & 2 & $\{ v_{12} \}$ & 3 & Por esta ramificación no se encontrará una mejor solución.\\ 
+\hline
+22 & $\{ v_{1} ,v_{11} \}$ & 2 & $\{ \}$ & 2 & No es mejor solución.\\ 
+\hline
+23 & $\{ v_{1} ,v_{12} \}$ & 2 & $\{ \}$ & 2 & No es mejor solución.\\ 
+\hline
+24 & $\{ v_{2} \}$ & 1 & $\left\{ \begin{array}{c} v_{4} ,v_{5} ,v_{6} ,v_{7}, \\ v_{8} ,v_{11} ,v_{12} \end{array} \right\}$ & 8 & \\ 
+\hline
+25 & $\{ v_{2} ,v_{4} \}$ & 2 & $\{ v_{6} ,v_{7} ,v_{8} ,v_{12} \}$ & 6 & \\ 
+\hline
+26 & $\{ v_{2} ,v_{4} ,v_{6} \}$ & 3 & $\{ v_{8} \}$ & 4 & Por esta ramificación no se encontrará una mejor solución.\\ 
+\hline
+27 & $\{ v_{2} ,v_{4} ,v_{7} \}$ & 3 & $\{ \}$ & 3 & No es mejor solución.\\ 
+\hline
+28 & $\{ v_{2} ,v_{4} ,v_{8} \}$ & 3 & $\{ \}$ & 3 & No es mejor solución.\\ 
+\hline
+29 & $\{ v_{2} ,v_{4} ,v_{12} \}$ & 3 & $\{ \}$ & 3 & No es mejor solución.\\ 
+\hline
+30 & $\{ v_{2} ,v_{5} \}$ & 2 & $\{ v_{7} ,v_{8} ,v_{12} \}$ & 5 & \\ 
+\hline
+31 & $\{ v_{2} ,v_{5} ,v_{7} \}$ & 3 & $\{ \}$ & 3 & No es mejor solución.\\ 
+\hline
+32 & $\{ v_{2} ,v_{5} ,v_{8} \}$ & 3 & $\{ \}$ & 3 & No es mejor solución.\\ 
+\hline
+33 & $\{ v_{2} ,v_{5} ,v_{12} \}$ & 3 & $\{ \}$ & 3 & No es mejor solución.\\ 
+\hline
+34 & $\{ v_{2} ,v_{6} \}$ & 2 & $\{ v_{8} \}$ & 3 & Por esta ramificación no se encontrará una mejor solución.\\ 
+\hline
+35 & $\{ v_{2} ,v_{7} \}$ & 2 & $\{ v_{11} \}$ & 3 & Por esta ramificación no se encontrará una mejor solución.\\ 
+\hline
+36 & $\{ v_{2} ,v_{8} \}$ & 2 & $\{ v_{11} \}$ & 3 & Por esta ramificación no se encontrará una mejor solución.\\ 
+\hline
+37 & $\{ v_{2} ,v_{11} \}$ & 2 & $\{ \}$ & 2 & No es mejor solución.\\ 
+\hline
+38 & $\{ v_{2} ,v_{12} \}$ & 2 & $\{ \}$ & 2 & No es mejor solución.\\ 
+\hline
+39 & $\{ v_{3} \}$ & 1 & $\left\{ \begin{array}{c} v_{5} ,v_{6} ,v_{7} ,v_{8}, \\ v_{9} ,v_{11} ,v_{12} \end{array} \right\}$ & 8 & \\ 
+\hline
+40 & $\{ v_{3} ,v_{5} \}$ & 2 & $\{ v_{7} ,v_{8} ,v_{9} ,v_{12} \}$ & 6 & \\ 
+\hline
+41 & $\{ v_{3} ,v_{5} ,v_{7} \}$ & 3 & $\{ v_{9} \}$ & 4 & Por esta ramificación no se encontrará una mejor solución.\\ 
+\hline
+42 & $\{ v_{3} ,v_{5} ,v_{8} \}$ & 3 & $\{ \}$ & 3 & No es mejor solución.\\ 
+\hline
+43 & $\{ v_{3} ,v_{5} ,v_{9} \}$ & 3 & $\{ \}$ & 3 & No es mejor solución.\\ 
+\hline
+44 & $\{ v_{3} ,v_{5} ,v_{12} \}$ & 3 & $\{ \}$ & 3 & No es mejor solución.\\ 
+\hline
+45 & $\{ v_{3} ,v_{6} \}$ & 2 & $\{ v_{8} ,v_{9} \}$ & 4 & Por esta ramificación no se encontrará una mejor solución.\\ 
+\hline
+46 & $\{ v_{3} ,v_{7} \}$ & 2 & $\{ v_{9} ,v_{11} \}$ & 4 & Por esta ramificación no se encontrará una mejor solución.\\ 
+\hline
+47 & $\{ v_{3} ,v_{8} \}$ & 2 & $\{ v_{11} \}$ & 3 & Por esta ramificación no se encontrará una mejor solución.\\ 
+\hline
+48 & $\{ v_{3} ,v_{9} \}$ & 2 & $\{ v_{11} \}$ & 3 & Por esta ramificación no se encontrará una mejor solución.\\ 
+\hline
+49 & $\{ v_{3} ,v_{11} \}$ & 2 & $\{ \}$ & 2 & No es mejor solución.\\ 
+\hline
+50 & $\{ v_{3} ,v_{12} \}$ & 2 & $\{ \}$ & 2 & No es mejor solución.\\ 
+\hline
+51 & $\{ v_{4} \}$ & 1 & $\{ v_{6} ,v_{7} ,v_{8} ,v_{9} ,v_{12} \}$ & 6 & \\ 
+\hline
+52 & $\{ v_{4} ,v_{6} \}$ & 2 & $\{ v_{8} ,v_{9} \}$ & 4 & Por esta ramificación no se encontrará una mejor solución.\\ 
+\hline
+53 & $\{ v_{4} ,v_{7} \}$ & 2 & $\{ v_{9} \}$ & 3 & Por esta ramificación no se encontrará una mejor solución.\\ 
+\hline
+54 & $\{ v_{4} ,v_{8} \}$ & 2 & $\{ \}$ & 2 & No es mejor solución.\\ 
+\hline
+55 & $\{ v_{4} ,v_{9} \}$ & 2 & $\{ \}$ & 2 & No es mejor solución.\\ 
+\hline
+56 & $\{ v_{4} ,v_{12} \}$ & 2 & $\{ \}$ & 2 & No es mejor solución.\\ 
+\hline
+57 & $\{ v_{5} \}$ & 1 & $\{ v_{7} ,v_{8} ,v_{9} ,v_{10} ,v_{12} \}$ & 6 & \\ 
+\hline
+58 & $\{ v_{5} ,v_{7} \}$ & 2 & $\{ v_{9} ,v_{10} \}$ & 4 & Por esta ramificación no se encontrará una mejor solución.\\ 
+\hline
+59 & $\{ v_{5} ,v_{8} \}$ & 2 & $\{ v_{10} \}$ & 3 & Por esta ramificación no se encontrará una mejor solución.\\ 
+\hline
+60 & $\{ v_{5} ,v_{9} \}$ & 2 & $\{ \}$ & 2 & No es mejor solución.\\ 
+\hline
+61 & $\{ v_{5} ,v_{10} \}$ & 2 & $\{ v_{12} \}$ & 3 & Por esta ramificación no se encontrará una mejor solución.\\ 
+\hline
+62 & $\{ v_{5} ,v_{12} \}$ & 2 & $\{ \}$ & 2 & No es mejor solución.\\ 
+\hline
+63 & $\{ v_{6} \}$ & 1 & $\{ v_{8} ,v_{9} ,v_{10} \}$ & 4 & Por esta ramificación no se encontrará una mejor solución.\\ 
+\hline
+64 & $\{ v_{7} \}$ & 1 & $\{ v_{9} ,v_{10} ,v_{11} \}$ & 4 & Por esta ramificación no se encontrará una mejor solución.\\ 
+\hline
+65 & $\{ v_{8} \}$ & 1 & $\{ v_{10} ,v_{11} \}$ & 3 & Por esta ramificación no se encontrará una mejor solución.\\ 
+\hline
+66 & $\{ v_{9} \}$ & 1 & $\{ v_{11} \}$ & 2 & Por esta ramificación no se encontrará una mejor solución.\\ 
+\hline
+67 & $\{ v_{10} \}$ & 1 & $\{ v_{12} \}$ & 2 & Por esta ramificación no se encontrará una mejor solución.\\ 
+\hline
+68 & $\{ v_{11} \}$ & 1 & $\{ \}$ & 1 & No es mejor solución.\\ 
+\hline
+69 & $\{ v_{12} \}$ & 1 & $\{ \}$ & 1 & No es mejor solución.\\ 
+\hline
+\end{longtable}
+
+\pagebreak
+
+\noindent {\bf Problema \#4:} Se quiere que resuelva con ramificación y acotamiento el siguiente problema. Dado un multiconjunto con $n$ enteros no negativos ${\bf A} = \{x_1, x_2,x_3,\ldots,x_n\}$, hallar una partición de $\bf A$ en dos multiconjuntos ${\bf A}_1$ y ${\bf A}_2$, tal que la diferencia, en valor absoluto, de la suma de los elementos en cada multiconjunto sea la mínima posible. Es decir,
+
+\begin{equation*}
+	\left| \sum_{e \in {\bf A}_1}e - \sum_{e \in {\bf A}_2}e\right| = \text{min}_{\{{\bf A}, {\bf B}\} \;\text{partición de}\; {\bf A}}\left| \sum_{e \in {\bf A}}e - \sum_{e \in {\bf B}}e\right|
+\end{equation*}
+
+\smallskip
+
+\noindent a) Describir claramente el grafo implícito (vértices y sucesores) sobre el cual realizará la ramificación. Indique el criterio que utilizará para decidir cuál es el siguiente nodo a expandir.\\
+
+\noindent {\bf Solución:}\\
+
+Un posible grafo implícito para este problema consiste en considerar cada vértice como una tupla $({\bf A^{*}},{\bf A}_1,{\bf A}_2)$. La raíz de dicho grafo debe ser $({\bf A}, \emptyset, \emptyset)$. La idea para generar los sucesores es retirar en cada vértice un elemento $x$ del conjunto ${\bf A^{*}}$ e insertarlo en el conjunto ${\bf A}_1$ (que junto con ${\bf A}_2$  y ${\bf A^{*}}\backslash\{x\}$ forman un sucesor) o en el conjunto ${\bf A}_2$ (que junto con ${\bf A}_1$  y ${\bf A^{*}}\backslash\{x\}$ forman el otro sucesor). En las hojas de este árbol se tiene que ${\bf A^{*}} = \emptyset$ y $\{ {\bf A}_1, {\bf A}_2 \}$ es una partición de ${\bf A}$, lo cual es una solución factible del problema. En la siguiente figura se ilustra un ejemplo de este grafo para el conjunto $A = \{ 2, 6, 9 \}$.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=15cm]{grafo4.pdf}
+\end{figure}
+
+\noindent b) Describir claramente la función de acotamiento (bounding). Note que puede hacer un pre-procesamiento, por ejemplo, ordenar los elementos de ${\bf A}$ antes de ir colocándolos en ${\bf A}_1$ y ${\bf A}_2$.\\
+
+\noindent {\bf Solución:}\\
+
+Para definir una función de acotamiento sobre el grafo implícito descrito anteriormente, resulta conveniente primero resaltar que la mejor solución posible es
+
+\begin{equation*}
+	\sum_{e \in {\bf A}_1}e = \sum_{e \in {\bf A}_2}e = \frac{1}{2}\sum_{e \in {\bf A}}e
+\end{equation*}
+
+\noindent Esto significa,
+
+\begin{equation*}
+	\Delta = \left| \sum_{e \in {\bf A}_1}e - \sum_{e \in {\bf A}_2}e\right| = 0
+\end{equation*}
+
+ \noindent Sin embargo, en general la solución óptima no es necesariamente $\Delta = 0$. Por otro lado, suponiendo que se conoce una solución factible $\{ {\bf A}_1^{(i)}, {\bf A}_2^{(i)}\}$ donde $\Delta^{(i)} > 0$ es bastante claro que otra solución factible $\{ {\bf A}_1^{(k)}, {\bf A}_2^{(k)}\}$ es mejor solución si y solo si, 
+
+\begin{align*}
+		\Delta^{(k)} & < \Delta^{(i)} \\
+		\left| \sum_{e \in {\bf A}_1^{(k)}}e - \sum_{e \in {\bf A}_2^{(k)}}e\right| & < \Delta^{(i)} \\
+		\left| 2\sum_{e \in {\bf A}_1^{(k)}}e - \sum_{e \in {\bf A}}e \right| = \left| \sum_{e \in {\bf A}}e - 2\sum_{e \in {\bf A}_2^{(k)}}e \right| & < \Delta^{(i)} \\
+		\left| \sum_{e \in {\bf A}_1^{(k)}}e - \frac{1}{2}\sum_{e \in {\bf A}}e \right| = \left| \frac{1}{2}\sum_{e \in {\bf A}}e - \sum_{e \in {\bf A}_2^{(k)}}e \right| & < \frac{1}{2}\Delta^{(i)} \\
+\end{align*}
+
+\noindent De esto se puede concluir que la siguiente cota,
+
+\begin{equation*}
+	\text{max}\left( \sum_{e \in {\bf A}_1^{(k)}}e, \sum_{e \in {\bf A}_2^{(k)}}e\right) < \frac{1}{2}\sum_{e \in {\bf A}}e + \frac{\Delta^{(i)}}{2}
+\end{equation*}
+ 
+\noindent se puede utilizar adecuadamente, verificando en cada vértice del grafo si se cumple la relación. Descartando así a todos los sucesores del vértice en caso de no cumplirse. \\
+ 
+\noindent c) Corra paso a paso su algoritmo con el siguiente ejemplo: ${\bf A} = \{ 10, 2, 15, 9, 6, 11\}$\\
+
+\noindent {\bf Solución:}\\
+
+Una posible solución inicial del problema es dividir el conjunto, ordenado de forma creciente, en los primero $\left\lfloor \frac{n}{2} \right\rfloor$ elementos de $\bf A$ y los elementos $n  - \left\lfloor \frac{n}{2} \right\rfloor$ restantes. Con esto se obtiene la partición,
+
+\begin{equation*}
+	X = \{ \{2 ,6 , 9\}, \{10, 11, 15\} \}
+\end{equation*}
+
+\noindent cuya diferencia es $\Delta = 19$, y la cota correspondiente es $\frac{\sum_{e \in {\bf A}}e}{2} + \frac{\Delta}{2} = 36$. Al finalizar la ejecución del algoritmo Branch and Bound se concluye que una solución óptima del problema es,
+
+\begin{equation*}
+	X_{opt} = \{ \{11,15\},\{2,6,9,10\} \}
+\end{equation*}
+
+\noindent cuya diferencia es $\Delta = 1$. En la siguiente tabla se muestra el estado de la ejecución del algoritmo DFS paso a paso. \\
+
+\pagebreak
+
+\begin{longtable}{ | c | l | c | c | c | c | p{5.5cm} | }
+\hline
+Paso & Vértice (v) & $\displaystyle\sum_{e \in {\bf A}_1}e$ & $\displaystyle\sum_{e \in {\bf A}_2}e$ & Cota & $\Delta$ & Comentario \\
+\hline
+1 & ($\{15,11,10,9,6,2\},\{\},\{\}$) & 0 & 0 & 36 &  & \\ 
+\hline
+2 & ($\{11,10,9,6,2\},\{15\},\{\}$) & 15 & 0 & 36 &  & \\ 
+\hline
+3 & ($\{10,9,6,2\},\{11,15\},\{\}$) & 26 & 0 & 36 &  & \\ 
+\hline
+4 & ($\{9,6,2\},\{10,11,15\},\{\}$) & 36 & 0 & 36 &  & Por esta ramificación no se encontrará una mejor solución. \\ 
+\hline
+5 & ($\{9,6,2\},\{11,15\},\{10\}$) & 26 & 10 & 36 &  & \\ 
+\hline
+6 & ($\{6,2\},\{9,11,15\},\{10\}$) & 35 & 10 & 36 &  & \\ 
+\hline
+7 & ($\{2\},\{6,9,11,15\},\{10\}$) & 41 & 10 & 36 &  & Por esta ramificación no se encontrará una mejor solución. \\ 
+\hline
+8 & ($\{2\},\{9,11,15\},\{6,10\}$) & 35 & 16 & 36 &  & \\ 
+\hline
+9 & ($\{\},\{2,9,11,15\},\{6,10\}$) & 37 & 16 & 36 & 21 & No es una mejor solución.\\ 
+\hline
+10 & ($\{\},\{9,11,15\},\{2,6,10\}$) & 35 & 18 & 36 & 17 & Mejor solución hasta el momento. \\ 
+\hline
+11 & ($\{6,2\},\{11,15\},\{9,10\}$) & 26 & 19 & 35 &  & \\ 
+\hline
+12 & ($\{2\},\{6,11,15\},\{9,10\}$) & 32 & 19 & 35 &  & \\ 
+\hline
+13 & ($\{\},\{2,6,11,15\},\{9,10\}$) & 34 & 19 & 35 & 15 & Mejor solución hasta el momento. \\ 
+\hline
+14 & ($\{\},\{6,11,15\},\{2,9,10\}$) & 32 & 21 & 34 & 11 & Mejor solución hasta el momento. \\ 
+\hline
+15 & ($\{2\},\{11,15\},\{6,9,10\}$) & 26 & 25 & 32 &  & \\ 
+\hline
+16 & ($\{\},\{2,11,15\},\{6,9,10\}$) & 28 & 25 & 32 & 3 & Mejor solución hasta el momento. \\ 
+\hline
+17 & ($\{\},\{11,15\},\{2,6,9,10\}$) & 26 & 27 & 28 & 1 & Mejor solución hasta el momento. \\ 
+\hline
+18 & ($\{10,9,6,2\},\{15\},\{11\}$) & 15 & 11 & 27 &  & \\ 
+\hline
+19 & ($\{9,6,2\},\{10,15\},\{11\}$) & 25 & 11 & 27 &  & \\ 
+\hline
+20 & ($\{6,2\},\{9,10,15\},\{11\}$) & 34 & 11 & 27 &  & Por esta ramificación no se encontrará una mejor solución. \\ 
+\hline
+21 & ($\{6,2\},\{10,15\},\{9,11\}$) & 25 & 20 & 27 &  & \\ 
+\hline
+22 & ($\{2\},\{6,10,15\},\{9,11\}$) & 31 & 20 & 27 &  & Por esta ramificación no se encontrará una mejor solución. \\ 
+\hline
+23 & ($\{2\},\{10,15\},\{6,9,11\}$) & 25 & 26 & 27 &  & \\ 
+\hline
+24 & ($\{\},\{2,10,15\},\{6,9,11\}$) & 27 & 26 & 27 & 1 & No es una mejor solución.\\ 
+\hline
+25 & ($\{\},\{10,15\},\{2,6,9,11\}$) & 25 & 28 & 27 & 3 & No es una mejor solución.\\ 
+\hline
+26 & ($\{9,6,2\},\{15\},\{10,11\}$) & 15 & 21 & 27 &  & \\ 
+\hline
+27 & ($\{6,2\},\{9,15\},\{10,11\}$) & 24 & 21 & 27 &  & \\ 
+\hline
+28 & ($\{2\},\{6,9,15\},\{10,11\}$) & 30 & 21 & 27 &  & Por esta ramificación no se encontrará una mejor solución. \\ 
+\hline
+29 & ($\{2\},\{9,15\},\{6,10,11\}$) & 24 & 27 & 27 &  & Por esta ramificación no se encontrará una mejor solución. \\ 
+\hline
+30 & ($\{6,2\},\{15\},\{9,10,11\}$) & 15 & 30 & 27 &  & Por esta ramificación no se encontrará una mejor solución. \\ 
+\hline
+31 & ($\{11,10,9,6,2\},\{\},\{15\}$) & 0 & 15 & 27 &  & \\ 
+\hline
+32 & ($\{10,9,6,2\},\{11\},\{15\}$) & 11 & 15 & 27 &  & \\ 
+\hline
+33 & ($\{9,6,2\},\{10,11\},\{15\}$) & 21 & 15 & 27 &  & \\ 
+\hline
+34 & ($\{6,2\},\{9,10,11\},\{15\}$) & 30 & 15 & 27 &  & Por esta ramificación no se encontrará una mejor solución. \\ 
+\hline
+35 & ($\{6,2\},\{10,11\},\{9,15\}$) & 21 & 24 & 27 &  & \\ 
+\hline
+36 & ($\{2\},\{6,10,11\},\{9,15\}$) & 27 & 24 & 27 &  & Por esta ramificación no se encontrará una mejor solución. \\ 
+\hline
+37 & ($\{2\},\{10,11\},\{6,9,15\}$) & 21 & 30 & 27 &  & Por esta ramificación no se encontrará una mejor solución. \\ 
+\hline
+38 & ($\{9,6,2\},\{11\},\{10,15\}$) & 11 & 25 & 27 &  & \\ 
+\hline
+39 & ($\{6,2\},\{9,11\},\{10,15\}$) & 20 & 25 & 27 &  & \\ 
+\hline
+40 & ($\{2\},\{6,9,11\},\{10,15\}$) & 26 & 25 & 27 &  & \\ 
+\hline
+41 & ($\{\},\{2,6,9,11\},\{10,15\}$) & 28 & 25 & 27 & 3 & No es una mejor solución.\\ 
+\hline
+42 & ($\{\},\{6,9,11\},\{2,10,15\}$) & 26 & 27 & 27 & 1 & No es una mejor solución.\\ 
+\hline
+43 & ($\{2\},\{9,11\},\{6,10,15\}$) & 20 & 31 & 27 &  & Por esta ramificación no se encontrará una mejor solución. \\ 
+\hline
+44 & ($\{6,2\},\{11\},\{9,10,15\}$) & 11 & 34 & 27 &  & Por esta ramificación no se encontrará una mejor solución. \\ 
+\hline
+45 & ($\{10,9,6,2\},\{\},\{11,15\}$) & 0 & 26 & 27 &  & \\ 
+\hline
+46 & ($\{9,6,2\},\{10\},\{11,15\}$) & 10 & 26 & 27 &  & \\ 
+\hline
+47 & ($\{6,2\},\{9,10\},\{11,15\}$) & 19 & 26 & 27 &  & \\ 
+\hline
+48 & ($\{2\},\{6,9,10\},\{11,15\}$) & 25 & 26 & 27 &  & \\ 
+\hline
+49 & ($\{\},\{2,6,9,10\},\{11,15\}$) & 27 & 26 & 27 & 1 & No es una mejor solución.\\ 
+\hline
+50 & ($\{\},\{6,9,10\},\{2,11,15\}$) & 25 & 28 & 27 & 3 & No es una mejor solución.\\ 
+\hline
+51 & ($\{2\},\{9,10\},\{6,11,15\}$) & 19 & 32 & 27 &  & Por esta ramificación no se encontrará una mejor solución. \\ 
+\hline
+52 & ($\{6,2\},\{10\},\{9,11,15\}$) & 10 & 35 & 27 &  & Por esta ramificación no se encontrará una mejor solución. \\ 
+\hline
+53 & ($\{9,6,2\},\{\},\{10,11,15\}$) & 0 & 36 & 27 &  & Por esta ramificación no se encontrará una mejor solución. \\ 
+\hline
+\end{longtable}
+
+\end{document}

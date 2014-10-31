@@ -1,0 +1,421 @@
+% ******************************************************** %
+% *                                                      * %
+% * Autores : Angarita Rafael & Claro Mosqueda Alejandro * %
+% *                                                      * %
+% * Tarea #2                                             * %
+% *                                                      * %
+% ******************************************************** %
+
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage[spanish]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{mathrsfs}
+\usepackage{amsthm}
+
+\headheight 0.2truecm \headsep 0.5truecm \topmargin -0.54truecm
+\topskip 0pt \textheight 22.49truecm \footskip 0.75truecm
+\oddsidemargin 0.46truecm \evensidemargin 0.46truecm
+\marginparwidth 0pt \marginparsep 0pt \textwidth 16.59truecm
+\parindent 2em
+\fboxsep 1ex \fboxrule 0.15ex \setlength{\jot}{0.2truecm}
+\flushbottom
+
+\def\braket#1{\mathinner{\langle{#1}\rangle}}
+
+%%%%%%%%%%%%%%% Comienzo del documento %%%%%%%%%%%%%%
+
+\begin{document}
+
+\setlength{\unitlength}{1truecm}\thicklines%
+
+\begin{flushleft}
+\bf {\scriptsize UNIVERSIDAD SIMON BOLIVAR \hfill \today} \\
+\bf {\scriptsize DEPARTAMENTO DE COMPUTACION }    \\
+\bf {\scriptsize MAESTRIA EN CIENCIAS DE LA COMPUTACION \hfill Ing. Angarita Rafael}    \\
+\bf {\scriptsize ASIGNATURA: CI-7541 - Teoria de la computación. \hfill Lic. Claro Mosqueda Alejandro} \\
+\end{flushleft}
+
+\bigskip
+
+\begin{center}
+\large \bf TAREA N${}^{o}\; 2$
+\end{center}
+
+\bigskip
+
+%%%%%%%%%%%%%%% Ejercicio 5.1%%%%%%%%%%%%%%
+
+\noindent {\bf Ejercicio 5.1:} Muestre que $EQ_{\mathrm{CFG}}$ no es decidible.\\
+
+\medskip
+
+\noindent{\bf Solución:}
+
+\begin{proof}
+Si se parte de la suposición de que existe una $\mathsf{TM}$ $R$ que decide $EQ_{\mathrm{CFG}}$, entonces es posible construir una $\mathsf{TM}$ $S$,\\
+
+\smallskip
+
+\noindent $S = $ ``En entrada $\braket{G_{1}}$:
+\begin{enumerate}
+  \setlength\itemsep{-3pt}
+  \setlength\itemindent{0.8cm}
+
+  \item Construir un CFG $G_{\mathrm{ALL}}$, donde $L(G_{\mathrm{ALL}}) = \Sigma^*$.
+  \item Correr $R$ en $\braket{G_{1}, G_{\mathrm{ALL}}}$.
+  \item Si $R$ acepta,  \textbf{\emph{aceptar}}.
+  \item De lo contrario, \textbf{\emph{rechazar}}.'',
+\end{enumerate}
+\smallskip
+
+\noindent que decide $ALL_{\mathrm{CFG}} = \{ \braket{G} | G \text{ es un $CFG$ y $L(G) = \Sigma^{*}$} \}$. Evidentemente, si $R$ decide  a $EQ_{\mathrm{CFG}}$, entonces $S$ decide a $ALL_{\mathrm{CFG}}$. Sin embargo, es conocido que $ALL_{\mathrm{CFG}}$ no es decidible \cite[Teorema 5.13]{sipser06} y por lo tanto la suposición de que existe $R$ es falsa. Con lo cual queda demostrado que $EQ_{\mathrm{CFG}}$ no es decidible.\\
+\end{proof}
+
+\smallskip
+
+%%%%%%%%%%%%%%% Ejercicio 5.3%%%%%%%%%%%%%%
+
+\noindent {\bf Ejercicio 5.3:} Encuentre una correspondencia en la siguiente instancia del problema de correspondencia de Post (\emph{PCP}):
+
+\begin{equation*}
+ \left\{  \left[   \frac{\text{ab}}{\text{abab}} \right]  , \left[   \frac{\text{b}}{\text{a}} \right] , \left[   \frac{\text{aba}}{\text{b}} \right] , \left[   \frac{\text{aa}\vphantom{\text{b}}}{\text{a}} \right]  \right\}
+\end{equation*}
+
+\smallskip
+
+\noindent{\bf Solución:} \\
+
+La siguiente secuencia es una correspondencia para esta instancia de \emph{PCP}:
+
+\begin{equation*}
+ \left[   \frac{\text{aa}\vphantom{\text{b}}}{\text{a}} \right] \left[   \frac{\text{aa}\vphantom{\text{b}}}{\text{a}} \right] \left[   \frac{\text{b}}{\text{a}} \right] \left[   \frac{\text{ab}}{\text{abab}} \right]
+\end{equation*}
+\smallskip
+
+\noindent Tanto en la parte superior como inferior se observa la cadena \textbf{aaaabab}.\\
+
+\bigskip
+
+%%%%%%%%%%%%%%% Ejercicio 5.13%%%%%%%%%%%%%%
+
+\noindent {\bf Ejercicio 5.13:} Un \textbf{\emph{estado inútil}} en una maquina de Turing es aquel que nunca es alcanzado sin importar la entrada proporcionada. Considere el problema de determinar cuando una maquina de Turing tiene algún estado inútil. Formule este problema como un lenguaje y muestre que no es decidible.\\
+
+\pagebreak
+
+\noindent{\bf Solución:}
+
+\begin{proof}
+Sea $USELESS_{\mathrm{TM}} = \{\braket{M,q} \,|\, M \text{ es una $\mathsf{TM}$ con el estado inútil $q$}\}$. Si existe una $\mathsf{TM}$ $R$ que decide $USELESS_{\mathrm{TM}}$, entonces es posible construir una $\mathsf{TM}$ $S$, \\
+
+\smallskip
+
+\noindent $S = $ ``En entrada $\braket{M}$:
+\begin{enumerate}
+  \setlength\itemsep{-3pt}
+  \setlength\itemindent{0.8cm}
+
+  \item Simular $R$ en $\braket{M,q_a}$. Donde $q_a$ es el estado de aceptación de $M$.
+  \item Si $R$ acepta,  \textbf{\emph{aceptar}}.
+  \item Si $R$ rechaza, \textbf{\emph{rechazar}}.''
+\end{enumerate}
+
+\noindent que decide $E_{\mathrm{TM}} = \{ \braket{M} \,|\, M \text{ es una $\mathsf{TM}$ y $L(M) = \emptyset$} \}$ ya que $R$ decide si el estado de aceptación de $M$ es inútil y en consecuencia $L(M) = \emptyset$. Sin embargo, es conocido que $E_{\mathrm{TM}}$ no es decidible \cite[Teorema 5.12]{sipser06} y en consecuencia la suposición de que existe $R$ es falsa. Con lo cual queda demostrado por contradicción que $USELESS_{\mathrm{TM}}$ no es decidible.\\
+\end{proof}
+
+\smallskip
+
+%%%%%%%%%%%%%%% Ejercicio 5.20%%%%%%%%%%%%%%
+
+\noindent {\bf Ejercicio 5.20:} Pruebe que existe un subconjunto no decidible de $\left\{1\right\}^*$.\\
+
+\medskip
+
+\noindent{\bf Solución:} 
+
+\begin{proof}
+Considere el lenguaje
+
+\smallskip
+\begin{equation*}
+U_{A_{TM}} = \{ 1^k \,|\, \text{$1^k$ es la representación unitaria de $\braket{G,w} \in A_{TM}$} \}\text{.}
+\end{equation*}
+\smallskip
+ 
+\noindent Claramente toda cadena unitaria $1^k \in U_{A_{TM}}$ pertenece también a $\left\{1\right\}^*$ (i.e., $U_{A_{TM}} \subseteq \left\{1\right\}^*$). Además, por construcción de $U_{A_{TM}}$ existe la reducción $f: \Sigma^* \longrightarrow \Sigma^*$, donde para cada $\braket{G,w}$,
+
+\smallskip
+\begin{equation*}
+    \braket{G,w} \in A_{TM} \Longleftrightarrow f(\braket{G,w}) \in U_{A_{TM}}\text{,}
+\end{equation*}
+ \smallskip
+ 
+ \noindent y por lo tanto $A_{TM} \leq_{m} U_{A_{TM}}$ \cite[Definición 5.20]{sipser06}. Dado esto se concluye que $U_{A_{TM}}$ es un subconjunto  no decidible de $\left\{1\right\}^*$ \cite[Corolario 5.23]{sipser06}. \\
+ 
+\end{proof}
+
+\smallskip
+
+%%%%%%%%%%%%%%% Ejercicio 7.11%%%%%%%%%%%%%%
+
+\noindent {\bf Ejercicio 7.11:} Dos grafos $G$ y $H$ son \textbf{\emph{isomorfos}} si los nodos de $G$ pueden ser reordenados de tal manera que esté sea idéntico a $H$. Sea $ISO = \left\{\braket{G, H} |  \text{ $G$ y $H$ son grafos isomorfos}\right\}$. Muestre que $ISO \in \text{\textbf{NP}}$.\\
+
+\medskip
+
+\noindent{\bf Solución:}
+
+\begin{proof}
+Sean $G = (V_{G}, E_{G})$ y $H = (V_{H}, E_{H})$ dos grafos no dirigidos. Si un mapa $f: V_{G} \to V_{H}$ es un mapa biyectivo tal que dos vertices $u$ y $v$, pertenecientes a $V_{G}$, son adyacentes sii $f(u)$ y $f(v)$ son vertices adyacentes pertenecientes a $V_{H}$, entonces se dice que $G$ y $H$ son grafos isomorfos ($G \simeq H$). Es posible construir una maquina de Turing no-determinista $N$,\\
+
+\pagebreak
+
+\noindent $N = $ ``En entrada $\braket{G,H}$, donde $G$ y $H$ son grafos no dirigidos:
+\begin{enumerate}
+  \setlength\itemsep{-3pt}
+  \setlength\itemindent{0.8cm}
+
+  \item Si $G$ y $H$ no tienen la misma cardinalidad, \textbf{\emph{rechazar}}.
+  \item De manera no-determinista construir una permutación $f$ de todos vertices de $G$.
+  \item Verificar que para cada arista $(u,v) \in E_{G}$ existe la arista $(f(u), f(v))$ en $E_{H}$.
+  \item Si la verificación es negativa, \textbf{\emph{rechazar}}.
+  \item De lo contrario, \textbf{\emph{aceptar}}.''
+\end{enumerate}
+\medskip
+
+\noindent que decide $ISO$. El paso $1$ es claramente computable en tiempo polinomial; una permutación de $n$ valores es posible construirla en tiempo polinomial, por lo tanto el paso $2$ también es computable en tiempo polinomial si se construyen todas las permutaciones de forma no-determinista; y finalmente el paso $3$ son $n$ búsquedas que son claramente posibles de computar en tiempo polinomial. De este razonamiento queda evidenciado que $N$ decide $ISO$ en tiempo polinomial y por lo tanto $ISO \in \text{\textbf{NP}}$. \\
+\end{proof}
+
+\smallskip
+
+%%%%%%%%%%%%%%% Ejercicio 7.13%%%%%%%%%%%%%%
+
+\noindent {\bf Ejercicio 7.13:} Una \textbf{\emph{permutación}} en el conjunto $S = \{1,\cdots,k\}$ es una función biyectiva de esté conjunto en si mismo. Si $p$ es una permutación, $p^t$ es la composición de $p$ consigo mismo $t$ veces. Sea \\
+
+\begin{equation*}
+\begin{array}{ll}
+\text{$PERM$-$POWER$} = \{ \, \braket{p,q,t} \,\, | & \text{$p = q^{t}$ donde $p$ y $q$ son permutaciones}  \\
+                                &  \text{en $S = \{1,\cdots,k\}$ y $t$ es un entero binario} \,\}
+\end{array}
+\end{equation*}
+\medskip
+
+\noindent Muestre que $\text{$PERM$-$POWER$} \in \text{\textbf{P}}$. (Observe que el tiempo de ejecución del algoritmo mas obvio no es polinomial. Pista: Intente primero con $t$ igual a potencias de 2).\\
+
+\medskip
+
+\noindent{\bf Solución:}\\
+
+Como lo indica el enunciado, una \textbf{\emph{permutación}} en el conjunto $S = \{1,\cdots,k\}$ es una función biyectiva de esté conjunto en si mismo. Por ejemplo considérese el conjunto $S = \{1,2,3\}$, una posible permutación $p$ de la secuencia $(1,2,3)$ es la secuencia $(2,3,1)$. Es posible computar tanto la permutación como la composición de 2 permutaciones en tiempo polinomial en la cardinalidad del conjunto $S$. Pero, por otro lado, si se desean componer $p$ consigo mismo $t$ veces (un ejemplo se muestra en el cuadro \ref{tab:permutations}), a primera vista, parece necesario realizar sucesivamente la permutación justamente $t$ veces. Si $t$ esta representado en base 2, el tamaño de la representación de $t$ es $n = O(\log_2t)$ y por lo tanto el tiempo de ejecución de dicha composición de permutaciones es exponencial $O(2^n)$.\\
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{|c|ccc|}
+  \hline
+  $s_i$ & $p(s_i)$ & $p^2(s_i)$ & $p^3(s_i)$\\
+  \hline
+  1 & 2 & 3 & 1 \\
+  2 & 3 & 1 & 2 \\
+  3 & 1 & 2 & 3 \\
+  \hline
+  \end{tabular}
+  \caption{Ejemplo de tres permutaciones sobre el conjunto $S = \{1,2,3\}$. La permutación $p^3$ no altera el orden de la secuencia de entrada (Esta permutación es llamada \textbf{\emph{permutación identidad}}).}
+  \label{tab:permutations}
+\end{table}
+\medskip
+
+La demostración que sigue a continuación se basa en otro algoritmo para computar la composición de $p$ consigo mismo $t$ veces en tiempo polinomial, aprovechando el hecho de que la representación de un numero en base 2 se puede construir a partir de la combinación lineal de las potencias de 2.
+
+\begin{proof}
+Para demostrar que $\text{$PERM$-$POWER$} \in \text{\textbf{P}}$ basta con mostrar que existe un algoritmo que compute $q^t$ y verifique que $p = q^t$ de forma determinista en tiempo polinomial. A continuación se muestra dicho algoritmo $E$:\\
+
+\noindent $E = $ ``En entrada $\braket{p,q,t}$, donde $p$ y $q$ son permutaciones y $t$ un numero binario:
+\begin{enumerate}
+  \setlength\itemsep{-3pt}
+  \setlength\itemindent{0.8cm}
+
+  \item $g \leftarrow$ permutación identidad.
+  \item Para cada bit en $t$ desde el menos significativo hasta el mas significativo, realizar:
+  \item \quad Si el bit es igual a $1$, entonces computar la composición $g \leftarrow q \cdot g$.
+  \item \quad Computar la composición $q \leftarrow q^2$.
+  \item Si $g$ y $p$ son iguales, \textbf{\emph{aceptar}}.
+  \item De lo contrario, \textbf{\emph{rechazar}}.''
+\end{enumerate}
+\medskip
+
+\noindent No se dan detalles de la verificación $g = p$ debido a que es claramente computable en tiempo polinomial en la cardinalidad del conjunto $S$. Los pasos del 2 al 4 se lleva a cabo $n = O(\log_2t)$ veces, por lo tanto es computable en tiempo polinomial en el tamaño de la entrada. De esta manera queda demostrado que $\text{$PERM$-$POWER$} \in \text{\textbf{P}}$.\\
+\end{proof}
+
+\bigskip
+
+%%%%%%%%%%%%%%% Ejercicio 7.20%%%%%%%%%%%%%%
+
+\noindent {\bf Ejercicio 7.20:} Sea $G$ un grafo no dirigido. Sean también \\
+
+\smallskip
+
+\begin{equation*}
+\begin{array}{ll}
+SPATH = \{ \, \braket{G,a,b,k} \,\, | & \text{$G$ contiene un camino simple de}  \\
+                                      & \text{longitud a lo sumo $k$ desde $a$ hasta $b$} \,\}
+\end{array}
+\end{equation*}
+
+\medskip
+
+\noindent y \\
+
+\smallskip
+
+\begin{equation*}
+\begin{array}{ll}
+LPATH = \{ \, \braket{G,a,b,k} \,\, | & \text{$G$ contiene un camino simple de}  \\
+                                      & \text{longitud al menos $k$ desde $a$ hasta $b$} \,\}
+\end{array}
+\end{equation*}
+
+\medskip
+
+\begin{enumerate}
+  \item[a)] Muestre que $SPATH \in \text{\textbf{P}}$.\\
+  \item[b)] Muestre que $LPATH$ es \textbf{NP}-completo. Se puede asumir la \textbf{NP}-completitud de $UHAMPATH$, el problema del camino Hamilotoniano para grafos no dirigidos.
+\end{enumerate}
+
+\medskip
+
+\noindent{\bf Solución:}
+
+\begin{proof}[a) Demostración]
+La siguiente modificación del algoritmo $M$ para $PATH$ \cite[Teorema 7.14]{sipser06}: \\
+
+\pagebreak
+
+\noindent $M = $ ``En entrada $\braket{G,a,b,k}$, donde $G$ es un grafo no dirigido con vertices $a$ y $b$:
+\begin{enumerate}
+  \setlength\itemsep{-2pt}
+  \setlength\itemindent{0.8cm}
+
+  \item Marcar en el vértice $a$ con el numero $0$.
+  \item Repetir lo que sigue hasta que no sean marcados mas vertices:
+  \item   \quad Recorrer todas las aristas de $G$. Si es encontrada una arista $(u,v)$ donde $u$ es un vértice
+  \item[] \quad marcado con el numero $i$ y $v$ es un vértice no marcado, entonces:
+  \item   \quad \quad Marcar el vértice $v$ con el numero $i+1$.
+  \item   \quad \quad Si el numero con el cual se marco $v$ es mayor que $k$, \textbf{\emph{rechazar}}.
+  \item Si $b$ esta marcado, \textbf{\emph{aceptar}}. De lo contrario, \textbf{\emph{rechazar}}.''
+\end{enumerate}
+\medskip
+
+\noindent decide $SPATH$ claramente en tiempo polinomial.
+\end{proof}
+\medskip
+
+\begin{proof}[b) Demostración]
+ Partiendo de la definición de \textbf{NP}-completo \cite[Definicion 7.34]{sipser06}, el lenguaje $LPATH$ es \textbf{NP}-completo si:\\
+
+\noindent 1.- $LPATH \in \text{\textbf{NP}}$. Para demostrar esto, basta con observar que es posible construir un verificador $V$ en tiempo polinomial para $LPATH$.\\
+
+\noindent $V = $ ``En entrada $\braket{\braket{G,a,b,k},C}$, donde $C$ es un camino simple:
+\begin{enumerate}
+  \setlength\itemsep{-2pt}
+  \setlength\itemindent{0.8cm}
+
+  \item   Si la longitud de $C$ es menor que $k$, \textbf{\emph{rechazar}}.
+  \item   Si los extremos de $C$ son distintos de $a$ y $b$, \textbf{\emph{rechazar}}.
+  \item   Recorre todas las aristas $(u,v) \in C$, si alguna de estas arista no pertenece al conjunto de
+  \item[] aristas de $G$, \textbf{\emph{rechazar}}.
+  \item   De lo contrario, \textbf{\emph{aceptar}}.''
+\end{enumerate}
+\medskip
+
+\noindent 2.- Todo $A$ en \textbf{NP} es reducible en tiempo polinomial a $LPATH$. Para demostrar esto, es suficiente con mostrar que existe una función computable en tiempo polinomial $f(\braket{G,a,b}) \equiv \braket{G,a,b,k}$ tal que $UHAMPATH \leq_{P} LPATH$. La siguiente $\mathsf{TM}$ $M$ calcula la reducción en tiempo polinomial,\\
+
+\noindent $M = $ ``En entrada $\braket{G,a,b}$, donde $G$ es un grafo no dirigido con vertices $a$ y $b$:
+\begin{enumerate}
+  \setlength\itemsep{-2pt}
+  \setlength\itemindent{0.8cm}
+
+  \item Recorre la cinta contando los vertices de $G$.
+  \item Imprime al final de la cinta el numero total de vertices $k$.
+  \item \textbf{\emph{Aceptar}}.''
+\end{enumerate}
+\medskip
+
+\noindent El contenido de la cinta al finalizar $M$ es una posible codificación de $\braket{G,a,b,k}$. Si $\braket{G,a,b} \in UHAMPATH$, entonces $G$ tiene un camino Hamiltoniano de longitud $k$ que contiene a los vertices $a$ y $b$, por lo tanto $\braket{G,a,b,k} \in LPATH$. Ahora en sentido contrario, si $\braket{G,a,b,k} \in LPATH$, entonces $G$ contiene un camino simple de longitud $k$ desde $a$ hasta $b$. Pero $G$ tiene cardinalidad $k$, así que en este camino es hamiltoniano, $\braket{G,a,b} \in UHAMPATH$.
+
+\end{proof}
+\bigskip
+
+%%%%%%%%%%%%%%% Ejercicio 7.36%%%%%%%%%%%%%%
+
+\noindent {\bf Ejercicio 7.36:} Muestre que si \textbf{P} =\textbf{ NP}, existe un algoritmo en tiempo polinomial que produce una asignación satisfactoria cuando se da una formula booleana satisfacible. (Nota: El algoritmo que se pide calcula una función, pero \textbf{NP} contiene lenguajes, no funciones. La suposición \textbf{P} = \textbf{NP} implica que $SAT$ esta en \textbf{P}, por lo tanto probar la satisfactibilidad es computable en tiempo polinomial. Pero la suposición no dice como se realiza la prueba, y la prueba puede que no revele asignaciones satisfactorias. Se debe mostrar que es posible encontrarlas de cualquier manera. Pista: Use la prueba de satisfactibilidad repetidamente para encontrar la asignación bit-por-bit.)\\
+
+\smallskip
+
+\noindent{\bf Solución:} \\
+
+Considérese la función Booleana $f: B^k \rightarrow B$ que es satisfacible por cierta cadena binaria $x^{(s)} = x_1x_2\ldots x_k$ (i.e., $k$ variables). El siguiente algoritmo $S$, \\
+
+\noindent $S = $ ``En entrada $\braket{f}$, donde $f$ es una función Booleana $f: B^k \rightarrow B$ satisfacible:
+\begin{enumerate}
+  \setlength\itemsep{-2pt}
+  \setlength\itemindent{0.8cm}
+
+  \item   Construir una cadena binaria $x$ de longitud $k$.
+  \item   $\braket{g} \leftarrow \braket{f}$
+  \item   Para cada bit $x_i$ en $x$, realizar:
+  \item   \quad $\braket{g_0} \leftarrow$ Sustituir la $i$-ésima variable por $0$ en $\braket{g}$.
+  \item   \quad $\braket{g_1} \leftarrow$ Sustituir la $i$-ésima variable por $1$ en $\braket{g}$.
+  \item   \quad Si $g_0$ es satisfacible: (Observe que el numero de variables en $g_0$ es uno menos que en $g$)
+  \item   \quad \quad  $x_i \leftarrow 0$.
+  \item   \quad \quad  $\braket{g} \leftarrow \braket{g_0}$.
+  \item   \quad Si no, como $g_1$ debe ser satisfacible:
+  \item   \quad \quad  $x_i \leftarrow 1$.
+  \item   \quad \quad  $\braket{g} \leftarrow \braket{g_1}$.
+  \item   Imprimir en la cinta $x$.
+  \item   \textbf{\emph{aceptar}}.''
+\end{enumerate}
+\medskip
+
+\noindent claramente computa en tiempo polinomial una asignación $x^{(s)}$ que satisface $f$ si la satisfactibilidad de $f$, paso 6, es computable en tiempo polinomial como supone el enunciado.\\
+
+\smallskip
+
+%%%%%%%%%%%%%%% Ejercicio 7.44%%%%%%%%%%%%%%
+
+\noindent {\bf Ejercicio 7.44:} Dos formulas booleanas son \textbf{\emph{equivalentes}} si tienen el mismo conjunto de variables y son verdad para el mismo conjunto de asignaciones para esas variables (i.e., describen la misma función booleana). Una formula  booleana es \textbf{\emph{minimal}} si no tiene una formula booleana mas peque\~{n}a equivalente. Sea $MIN$-$FORMULA$ la colección de formulas booleanas minimales. Muestre que, si \textbf{P} = \textbf{NP}, entonces $\text{$MIN$-$FORMULA$} \in \text{\textbf{P}}$.
+
+\smallskip
+
+\noindent{\bf Solución:}
+
+\begin{proof}
+
+Si \textbf{P} = \textbf{NP}, entonces $SAT \in$  \textbf{P} \cite[Teorema 7.27]{sipser06}, por lo que debe existir un algoritmo que corre en tiempo polinomial para $SAT$. \\
+
+Sea $MIN$-$FORMULA = \{\braket{\phi}| \phi \text{ es una funcion booleana \textbf{\emph{minimal}}} \}$,\\
+
+Una maquina de Turing no-determinista puede  hallar una formula $\phi'$ tal que $|\phi'| < |\phi|$ y decidir en tiempo polinomial si $\phi'  \equiv \phi$, es decir si ($\phi'  \Leftrightarrow \phi$) $\in SAT$.\\
+
+Entonces $\overline{\text{$MIN$-$FORMULA$}} \in \text{\textbf{NP = P}}$\\
+
+
+\noindent Por lo tanto, queda demostrado que $\text{$MIN$-$FORMULA$} \in \text{\textbf{P}}$.
+\end{proof}
+
+%%%%%%%%%%%%%% Bibliografia %%%%%%%%%%%%%%%%
+
+\begin{thebibliography}{99}
+
+\bibitem{sipser06}
+  Sipser, Michael.
+  \emph{Introduction to the theory of computation}.
+  International Thomson Publishing,
+  2nd Edition,
+  2006.
+
+\end{thebibliography}
+
+\end{document} 

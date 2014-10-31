@@ -1,0 +1,454 @@
+% ********************************************** %
+% *                                            * %
+% * Autor : Claro Mosqueda Alejandro           * %
+% *                                            * %
+% * e-mail: alejandro.claro@gmail.com          * %
+% *                                            * %
+% * Teoria de algoritmos, USB                  * %
+% *                                            * %
+% * Tarea No  1                                * %
+% *                                            * %
+% ********************************************** %
+
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage[spanish]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+
+\headheight 0.2truecm \headsep 0.5truecm \topmargin -0.54truecm
+\topskip 0pt \textheight 22.49truecm \footskip 0.75truecm
+\oddsidemargin 0.46truecm \evensidemargin 0.46truecm
+\marginparwidth 0pt \marginparsep 0pt \textwidth 16.59truecm
+\parindent 2em
+\fboxsep 1ex \fboxrule 0.15ex \setlength{\jot}{0.2truecm}
+\flushbottom
+
+% Use $$\Braket{\phi | {\partial^2}\over {\partial t^2} | \psi}$$
+
+\def\bra#1{\mathinner{\langle{#1}|}}
+\def\ket#1{\mathinner{|{#1}\rangle}}
+\def\braket#1{\mathinner{\langle{#1}\rangle}}
+\def\Bra#1{\left<#1\right|}
+\def\Ket#1{\left|#1\right>}
+{\catcode`\|=\active 
+  \gdef\Braket#1{\left<\mathcode`\|"8000\let|\bravert {#1}\right>}}
+\def\bravert{\egroup\,\vrule\,\bgroup}
+
+\newcommand{\pderiv}[2]{\frac{\partial #1}{\partial #2}}      % derivada parcial
+\newcommand{\deriv}[2]{\frac{\mathrm{d} #1}{\mathrm{d} #2}}      % derivada parcial
+\newcommand{\comm}[2]{\left[\,#1\;,\;#2\,\right]}                 % [ , ]
+%\newcommand{\qed}{\hfill \ensuremath{\Box}}
+
+%\newtheorem{theorem}{Theorem}[section]
+%\newtheorem{lemma}[theorem]{Lemma}
+%\newtheorem{proposition}[theorem]{Proposition}
+%\newtheorem{corollary}[theorem]{Corollary}
+
+%\newenvironment{proof}[1][Proof]{\begin{trivlist}
+%\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+%\newenvironment{definition}[1][Definition]{\begin{trivlist}
+%\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+%\newenvironment{example}[1][Example]{\begin{trivlist}
+%\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+%\newenvironment{remark}[1][Remark]{\begin{trivlist}
+%\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+
+%%%%%%%%%%%%%%% Comienzo del documento %%%%%%%%%%%%%%
+
+\begin{document}
+
+  \setlength{\unitlength}{1truecm}\thicklines%
+
+  \begin{flushleft}
+    \bf {\small UNIVERSIDAD SIMÓN BOLIVAR\hfill \today} \\
+    \bf {\small CI-7521 - Matemáticas para la computación\hfill Lic. Alejandro Claro Mosqueda} \\
+  \end{flushleft}
+
+  \bigskip
+
+	\begin{center}
+	\noindent \Large \bf Tarea \#1
+	\end{center}
+
+  \bigskip
+
+\noindent {\bf Problema \#1:} Sea $\mathcal{V}$ un alfabeto finito con al menos dos letras. Muestre que $(\mathcal{V}^{*}, \leq)$ donde $\leq$ es el orden lexicográfico, no es Noetheriano. \\
+
+\noindent {\bf Solución}
+
+\begin{proof}
+Sea $\mathcal{V}$ un alfabeto finito con un orden total ($\preceq$) y $\mathcal{V}^{*}$ el conjunto de todas las cadenas de caracteres de longitud finita sobre $\mathcal{V}$. Se define como orden lexicográfico ($\leq$) en el conjunto $\mathcal{V}^{*}$ de cadenas de caracteres sobre $\mathcal{V}$ como sigue,\\
+
+\noindent Sean $s,t \in \mathcal{V}^{*}$. Entonces $s < t$ sii
+
+\begin{enumerate}
+	\item $s$ es un prefijo de $j$ o
+	\item $s_i \prec t_i$ para algún $i$ tal que $1 \leq i \leq \textrm{\textbf{MIN}}(\textrm{ \textbf{LEN}}(s), \textrm{ \textbf{LEN}}(t))$ y $s_j = t_j$ para todo $j$, $1 \leq j < i$, donde $\prec$ es la relación de orden en $\mathcal{V}$. 
+\end{enumerate}
+\smallskip
+
+\noindent Por simple inspección de la definición de orden lexicográfico en el conjunto $\mathcal{V}^{*}$, se observa que entre las dos primeras letras del alfabeto $\mathcal{V}$ (llámense, sin pérdida de generalidad, ``$\mathbf a$'' y ``$\mathbf b$'') se forma una cadena descendiente infinita:
+
+\begin{equation*}
+	\mathbf{b} > \mathbf{ab} > \mathbf{aab} > \mathbf{aaab} > \mathbf{aaaab} > \ldots
+\end{equation*}
+ \smallskip
+ 
+ \noindent y en consecuencia, por definición de orden Noetheriano, $(\mathcal{V}^{*}, \leq)$ no es Noetheriano. (En \cite{andreas01} se encuentra una demostración de la equivalencia entre la definición clásica de orden Noetheriano y la no existencia de una cadena descendiente infinita).
+ 
+\end{proof}
+
+\noindent {\bf Problema \#2:} Muestre que el conjunto de las secuencias finitas de ceros y unos $\mathcal S$ es contable.\\
+
+\noindent {\bf Solución}
+
+\begin{proof}
+Un conjunto $\mathcal{A}$ es \textbf{contable} sii es finito o tiene el mismo tamaño que $\mathbb{N}$. Sea $\mathcal{S}_k$ el conjunto de todas las secuencias de ceros y unos de longitud $k$. Este conjunto es finito, puesto que tiene exactamente $2^{k}$ elementos, y por lo tanto es contable. Además, vale la pena resaltar que los conjuntos $\mathcal{S}_k$ y $\mathcal{S}_l$ son disjuntos ($\mathcal{S}_k \cap \mathcal{S}_l = \emptyset$) si $k \neq l$ (ya que longitud de las secuencias en cada conjunto difieren en su longitud). \\
+
+\noindent Por otro lado, es posible representar el conjunto de las secuencias finitas de ceros y unos $\mathcal{S}$ como la unión de todos los conjuntos $S_n$ de distintas longitudes:
+
+\begin{equation*}
+	\mathcal{S} = \bigcup_{n = 0}^{\infty}\mathcal{S}_n 
+\end{equation*}
+ 
+\noindent Ahora, la unión de dos conjunto $\mathcal{S}_k$ y $\mathcal{S}_l$ también es finito, con exactamente $2^{k}+2^{l}$ elementos, y por lo tanto $\mathcal{S}_k \cup S_l$ también es contable. Por inducción, 
+
+\begin{eqnarray*}
+	C_{m+1} &=& C_m \cup \mathcal{S}_{m+1} \\
+	&\vdots& \\
+	C_2 &=& C_1 \cup \mathcal{S}_{2} = \left(\mathcal{S}_0 \cup \mathcal{S}_1 \right) \cup \mathcal{S}_2 \\
+	C_1 &=& \mathcal{S}_0 \cup \mathcal{S}_1
+\end{eqnarray*}
+\smallskip
+
+\noindent se obtiene que la unión de múltiples conjuntos disjuntos contables también es contable. En consecuencia, $\mathcal{S} \equiv C_\infty$ es un conjunto \textbf{infinito contable}. \\
+\end{proof}
+\smallskip
+
+\noindent {\bf Problema \#3:} Definamos inductivamente el siguiente conjunto de árboles $A$ sobre un conjunto de objetos $E$:
+
+\begin{enumerate}
+  \item $\braket{e,\emptyset}$ está en $A$, para todo $e$ en $E$. Decimos que $e$ es la raíz¸ de $\braket{e,\emptyset}$, el número de elementos de $\braket{e,\emptyset}$ es 1, la altura es 0.
+  \item Si $a_1=\braket{e_1,A_1}$ y $a_2=\braket{e_2,A_2}$ son árboles en $A$ y la altura de $a_1$ es menor o igual a la altura de $a_2$ entonces $\braket{e_2,A_2\cup \{a_1\}}$ es un árbol de $A$. Decimos que $e_2$ es la raíz¸ de este último árbol, su número de elementos es el número de elementos de $a_1$ mas el número de elementos de $a_2$, y la altura es igual a 1 mas el máximo de las alturas de los árboles en $A_2\cup \{a_1\}$.
+  \item Todo árbol en $A$ se obtiene de la aplicación de las reglas (1) y (2) un número finito de veces.
+\end{enumerate}
+
+\begin{enumerate}
+  \item[a)] Investigue si es verdad que la altura de un árbol con $n$ elementos en $A$ tiene altura a lo sumo $\lfloor\log_2n\rfloor$.
+  \item[b)] ¿Si en la regla (2) cambiamos ``la altura de $a_1$ es menor o igual a la altura de $a_2$'' por ``el número de elementos de $a_1$ es menor o igual al número de elementos de $a_2$'', entonces se puede deducir un resultado parecido a (a)?.
+\end{enumerate}
+\smallskip
+
+\noindent {\bf Solución}\\
+
+\noindent a) \textbf{DEPTH}($A$) $\leq \lfloor\log_2n\rfloor$.
+
+\begin{proof} Sea $A$ un árbol con $n$ elementos definido inductivamente por la reglas dadas en el enunciado. Observese que el \textbf{caso base} $\braket{e,\emptyset}$ tiene un solo elemento (\textbf{SIZE}($\braket{e,\emptyset}$) = 1) y cumple la proposición inicial.
+
+\begin{equation*}
+		\textrm{\textbf{DEPTH}}(\braket{e,\emptyset}) = 0 \leq \lfloor\log_2(1)\rfloor = 0
+\end{equation*}
+\smallskip
+
+\noindent Además, supongase que
+
+\begin{eqnarray}
+		\textrm{\textbf{DEPTH}}(a_1) \leq \lfloor\log_2\,n_1\rfloor \label{p3-induc1} \\
+		\textrm{\textbf{DEPTH}}(a_2) \leq \lfloor\log_2\,n_2\rfloor \label{p3-induc2}
+\end{eqnarray}
+\smallskip
+
+\noindent es verdad. Donde $a_1=\braket{e_1,A_1}$, $a_2=\braket{e_2,A_2}$, $n_1 =$ \textbf{SIZE}($a_1$) y $n_2 =$ \textbf{SIZE}($a_2$). \\
+
+\noindent Partiendo de la segundo regla en la definición del conjunto de árboles, que proporciona una regla de construcción de elementos en $A$,
+
+\begin{equation}
+		a_k = \braket{e_2,A_2\cup \{a_1\}}
+\end{equation}
+\smallskip
+
+\noindent se obtiene la siguiente expresión
+
+\begin{equation}
+		\textrm{\textbf{DEPTH}}(a_k) \leq \lfloor\log_2(n_1 + n_2)\rfloor
+		\label{p3-prop}
+\end{equation}
+\smallskip
+
+\noindent que se debe demostrar. Para ello, se debe utilizar la información, proporcionada en la segunda regla, sobre la relación entre la profundidad del árbol $a_k$ y las profundidades de los árboles $a_1$ y $a_2$. 
+
+\begin{equation}
+		\textrm{\textbf{DEPTH}}(a_k) = 1 + \textrm{\textbf{MAXDEPTH}}(A_2\cup\{a_1\})
+\end{equation}
+\smallskip
+
+\noindent De esta información, se obtiene la siguente forma de la expresión (\ref{p3-prop})
+
+\begin{equation}
+		 1 + \textrm{\textbf{MAXDEPTH}}(A_2\cup\{a_1\}) \leq \lfloor\log_2(n_1 + n_2)\rfloor
+		 \label{p3-prop2}
+\end{equation}
+\smallskip
+
+\noindent Por otro lado, de la segunda regla en el enunciado se puede deducir que
+
+\begin{equation}
+		 \textrm{\textbf{MAXDEPTH}}(A_2\cup\{a_1\}) =
+		 \begin{cases}
+		 \textrm{\textbf{DEPTH}}(a_1)     & \textrm{\textbf{DEPTH}}(a_1) = \textrm{\textbf{DEPTH}}(a_2) \\
+		 \textrm{\textbf{DEPTH}}(a_2) - 1 & \textrm{\textbf{DEPTH}}(a_1) < \textrm{\textbf{DEPTH}}(a_2) \\
+		 \end{cases}
+		 \label{p3-maxdepth}
+\end{equation}
+\smallskip
+
+\noindent puesto que $\textrm{\textbf{DEPTH}}(A_2) = \textrm{\textbf{DEPTH}}(a_2) - 1$. Al remplazar (\ref{p3-maxdepth}) en (\ref{p3-prop2})
+
+\begin{equation}
+		 \lfloor\log_2(n_1 + n_2)\rfloor \geq 1 +
+		 \begin{cases}
+		 \textrm{\textbf{DEPTH}}(a_1)     & \textrm{\textbf{DEPTH}}(a_1) = \textrm{\textbf{DEPTH}}(a_2) \\
+		 \textrm{\textbf{DEPTH}}(a_2) - 1 & \textrm{\textbf{DEPTH}}(a_1) < \textrm{\textbf{DEPTH}}(a_2) \\
+		 \end{cases}
+\end{equation}
+\smallskip
+
+\noindent y hacer uso de la hipótesis inductiva (\ref{p3-induc1}-\ref{p3-induc2}) se obtiene
+
+\begin{eqnarray}
+		 \lfloor\log_2(n_1 + n_2)\rfloor \geq
+		 \begin{cases}
+		 \lfloor\log_2\,n_1\rfloor + 1 & \textrm{\textbf{DEPTH}}(a_1) = \textrm{\textbf{DEPTH}}(a_2) \\
+		 \lfloor\log_2\,n_2\rfloor     & \textrm{\textbf{DEPTH}}(a_1) < \textrm{\textbf{DEPTH}}(a_2) \\
+		 \end{cases} \\
+		 \\
+		 \lfloor\log_2(n_1 + n_2)\rfloor \geq
+		 \begin{cases}
+		 \lfloor\log_2\,2\,n_1\rfloor & \textrm{\textbf{DEPTH}}(a_1) = \textrm{\textbf{DEPTH}}(a_2) \\
+		 \lfloor\log_2\,n_2\rfloor  & \textrm{\textbf{DEPTH}}(a_1) < \textrm{\textbf{DEPTH}}(a_2) \\
+		 \end{cases} \label{p3-lasta}
+\end{eqnarray}
+\smallskip
+
+\noindent que para el caso $\textrm{\textbf{DEPTH}}(a_1) < \textrm{\textbf{DEPTH}}(a_2)$ es obviamente cierto puesto que la función $\log_2(x)$ es monótono creciente. Sin embargo para el caso $\textrm{\textbf{DEPTH}}(a_1) = \textrm{\textbf{DEPTH}}(a_2)$ sólo es cierto si $n_1 \leq n_2$.\\
+\end{proof}
+\smallskip
+
+\noindent b) ¿Si en la regla (2) cambiamos ``la altura de $a_1$ es menor o igual a la altura de $a_2$'' por ``el número de elementos de $a_1$ es menor o igual al número de elementos de $a_2$'', entonces se puede deducir un resultado parecido a (a)?.\\
+
+La demostración proporcionada en la parte (a) del problema sigue siendo válida para los casos $\textrm{\textbf{DEPTH}}(a_1) < \textrm{\textbf{DEPTH}}(a_2)$ y $\textrm{\textbf{DEPTH}}(a_1) = \textrm{\textbf{DEPTH}}(a_2)$. Con la ventaja que ahora, el caso $\textrm{\textbf{DEPTH}}(a_1) = \textrm{\textbf{DEPTH}}(a_2)$ cumple la desigualdad (\ref{p3-lasta}) por definición. \\
+
+Al retirar la suposición ``la altura de $a_1$ es menor o igual a la altura de $a_2$'', se requiere demostrar que la expresión (\ref{p3-prop}) se cumple en un caso adicional, $\textrm{\textbf{DEPTH}}(a_1) > \textrm{\textbf{DEPTH}}(a_2)$, a los vistos en la sección anterior.
+
+\begin{proof} Para el caso $\textrm{\textbf{DEPTH}}(a_1) > \textrm{\textbf{DEPTH}}(a_2)$, se observa que
+
+\begin{equation}
+		 \textrm{\textbf{MAXDEPTH}}(A_2\cup\{a_1\}) = \textrm{\textbf{DEPTH}}(a_1)
+\end{equation}
+\smallskip
+
+\noindent al igual que el caso $\textrm{\textbf{DEPTH}}(a_1) = \textrm{\textbf{DEPTH}}(a_2)$. Luego, al remplazar $\textrm{\textbf{MAXDEPTH}}(A_2\cup\{a_1\})$ en (\ref{p3-prop2}) se obtiene,
+
+\begin{equation}
+		 \lfloor\log_2(n_1 + n_2)\rfloor \geq \lfloor\log_2\,2\,n_1\rfloor \qquad \textrm{si \, \textbf{DEPTH}}(a_1) > \textrm{\textbf{DEPTH}}(a_2) 
+\end{equation}
+\smallskip
+
+\noindent lo cual es obviamente cierto puesto que la función $\log_2(x)$ es monótono creciente y por hipótesis ``el número de elementos de $a_1$ es menor o igual al número de elementos de $a_2$'' ($n_1+n_2 \geq n_1+n_1$).\\
+\end{proof}
+\smallskip
+
+\noindent {\bf Problema \#4:} Sea $A$ un conjunto de $n \geq 1$ elementos y $(\mathcal{P}(A), \subseteq)$ el c.p.o. de sobre el conjunto $\mathcal{P}(A)$ de todos los subconjuntos de $A$ respecto a la inclusión. Muestre utilizando inducción noetheriana que para todo elemento $B$ en $\mathcal{P}(A)$, en el diagrama de Hasse, toda cadena (o camino) que va de $\emptyset$ (el menor elemento del c.p.o.) a $B$ tiene largo $|B|$ y que el número de esas cadenas es $|B|!$.\\
+
+\noindent {\bf Solución}\\
+
+\begin{proof}
+Sea $\mathcal{L}(B)$ el largo de toda cadena que va de $\emptyset$ a $B$ en el diagrama de Hasse de $\mathcal{P}(A)$ y $\mathcal{C}(B)$ el número de esas cadenas. El enunciado hace las siguientes proposiciones:
+
+\begin{eqnarray}
+		 \mathcal{L}(B) &=& |B| \\
+		 \mathcal{C}(B) &=& |B|! 
+\end{eqnarray}
+\smallskip
+
+\begin{figure}[htp]
+\begin{center} 
+\includegraphics[scale=0.66]{HasseDiagram.eps}
+\end{center} 
+\caption{Diagrama de Hasse para $A = \{x,y,z\}$}
+\end{figure}
+
+\noindent Para demostrar estas proposiciones, observese primero que se cumplen para el \textbf{caso base}
+
+\begin{eqnarray}
+		 \mathcal{L}(\{x\}) &=& 1 \qquad \forall x \in A \\
+		 \mathcal{C}(\{x\}) &=& 1 \qquad \forall x \in A 
+\end{eqnarray}
+\smallskip
+
+\noindent ya que por la regla de inclusión, solo hay un camino de longitud $1$ entre el conjunto $\emptyset$ y el conjunto con un solo elemento $\{x\}$. Para el \textbf{paso inductivo} es necesario definir $B_k \in \mathcal{P}(A)$ como un subconjunto de $A$ con $k \leq n$ elementos. Es claro que no existe un conjunto $B_l$ tal que $B_k \subset B_l \subset B_{k+1}$ y en consecuencia,
+
+\begin{eqnarray}
+		 \mathcal{L}(B_{k+1}) &=& \mathcal{L}(B_{k}) + 1 \label{p4-eq1}
+\end{eqnarray}
+\smallskip
+
+\noindent Además, es sencillo observar que al remover un elemento cualquiera de un subconjunto $B_{k+1} \in \mathcal{P}(A)$ se obtiene un subconjunto $B_{k} \subset B_{k+1}$ con $k$ elementos. Como $B_{k+1}$ tiene $k+1$ elementos, entonces esté tiene $k+1$ subconjuntos con $k$ elementos y por ende hay $k+1$ caminos en el diagrama de Hasse que van desde estos $k+1$ subconjuntos $B_{k}$ hasta $B_{k+1}$:
+
+\begin{eqnarray}
+		 \mathcal{C}(B_{k+1}) &=& (k+1)\,\mathcal{C}(B_{k}) \label{p4-eq2}
+\end{eqnarray}
+\smallskip
+
+\noindent Ahora, por hipótesis inductiva, si $\mathcal{L}(B_{k}) = |B_{k}| = k$ entonces de (\ref{p4-eq1}) se obtiene que
+
+\[
+\mathcal{L}(B_{k+1}) = k+1 = |B_{k+1}|
+\]
+\smallskip
+
+\noindent lo cual esta de acuerdo con la proposición inicial. De igual manera, si $\mathcal{C}(B_{k}) = |B|! = k!$ entonces de la expresión (\ref{p4-eq2}) se obtiene que
+
+\[
+\mathcal{C}(B_{k+1}) = (k+1)k! = (k+1)! = |B_{k+1}|!
+\]
+\smallskip
+
+\noindent Concluyendo así que ambas proposiciones son ciertas.\\
+\end{proof}
+
+\noindent {\bf Problema \#5:} Mostrar por inducción constructiva que para todo $k$ entero positivo, existen $n_0$ y $d$ tales que para $n \geq n_0$, $t(n) \leq d.n!$, donde:\\
+
+\begin{equation*}
+    t(n) =
+    \begin{cases}
+        a & \mbox{si }n = 1 \\
+        b.n^{k} + n.t(n-1) & \mbox{si }n \geq 2
+    \end{cases}
+    \qquad \text{con $a,b > 0$}.
+\end{equation*}
+\smallskip
+
+\noindent {\bf Solución}\\
+
+\begin{proof}
+Considérese una conjetura mas fuerte que la exigida en el enunciado,
+
+\begin{equation*}
+    \left(\exists d,e > 0 \right)(\forall n \in \mathbb{N}) \left[ t(n) \leq d\,n! - e\,n^k \right]
+\end{equation*}
+
+\noindent con $n$ ``suficientemente grande''. El enfoque de inducción constructiva consiste en preguntar para que valores de $d$ y $e$ se sigue que $P_{d,e}(n)\equiv \left[ t(n) \leq d\,n! - e\,n^k \right]$ tomando como base la hipótesis de inducción especificada parcialmente y consistente en que $P_{d,e}(m)$ es cierto para todo entero $m$ que sea menor que $n$ pero que tenga un valor suficientemente grande. Empleando la definición de $t(n)$ y esta hipótesis, y siempre y cuando $n-1$ sea también ``suficientemente grande'':
+
+\begin{eqnarray}
+		t(n) &=&    b\,n^{k} + n\,t(n-1) \\
+		t(n) &\leq& b\,n^{k} + n\left[d\,(n-1)! - e\,(n-1)^k \right] \\
+		t(n) &\leq& b\,n^{k} + d\,n! - e\,n\,(n-1)^k \\
+		t(n) &\leq& b\,n^{k} + d\,n! - e\,n\,(n-1)^k - e\,n^k + e\,n^k \\
+		t(n) &\leq& d\,n! - e\,n^k + \left[ b\,n^{k} - e\,n\,(n-1)^k + e\,n^k \right]
+\end{eqnarray}
+\smallskip
+
+\noindent Para concluir que $t(n) \leq d\,n! - e\,n^k$, es necesario que $d\,n! - e\,n^k + \left[ b\,n^{k} - e\,n\,(n-1)^k + e\,n^k \right]\leq d\,n! - e\,n^k$. Por algebra elemental,
+
+\begin{eqnarray}
+		d\,n! - e\,n^k + \left[ b\,n^{k} - e\,n\,(n-1)^k + e\,n^k \right] &\leq& d\,n! - e\,n^k \\
+	  b\,n^{k} - e\,n\,(n-1)^k + e\,n^k &\leq& 0 \\
+  	\left(1 + \frac{b}{e}\right)n^k - n\,(n-1)^k &\leq& 0 \\
+  	\frac{b}{e} &\leq& \frac{(n-1)^k}{n^{k-1}} - 1 \label{p5-cond}
+\end{eqnarray}
+\smallskip
+
+\noindent se observa que si $b > 0$ y finito, entonces es posible definir un valor para $e > 0$ tal que para cierto valor $n = n_0$ ``suficientemente grande'' se cumpla la condición (\ref{p5-cond}). Finalmente, la constante $d$ debe cumplir 
+
+\begin{eqnarray}
+		t(n_0) \leq d\,n_0! - e\,n_0^k \\
+		d \geq \frac{t(n_0) + e\,n_0^k}{n_0!}
+\end{eqnarray}
+\smallskip
+
+\noindent De esta manera queda entonces demostrado que $t(n) \leq d.n!$.\\
+\smallskip
+\end{proof}
+\noindent {\bf Problema \#6:} Pruebe que\\
+
+\begin{equation*}
+    \left\lceil \frac{n}{m} \right\rceil = \left\lfloor \frac{n+m-1}{m} \right\rfloor
+\end{equation*}
+\smallskip
+
+\noindent para todo entero $n$ y todo entero positivo $m$. [Esta identidad nos da otra forma de convertir la función techo en la función piso y viceversa, en lugar de usar la propiedad de reflexividad.]\\
+
+\noindent {\bf Solución}\\
+
+\begin{proof}
+Considere un número entero $q$. Existen al menos un número entero $k$ y un número entero positivo $s$ tales que:
+
+\begin{equation}
+    q = \left\lfloor\frac{k}{s}\right\rfloor
+\end{equation}
+\smallskip
+
+\noindent y por lo tanto,
+
+\begin{eqnarray}
+    \frac{k}{s} - 1 < \;\;\, q &\leq& \frac{k}{s}\quad < q + 1 \\
+                k - s \le s\,q &\leq& \,k\quad < s\,(q + 1) \\
+                          s\,q &\leq& \,k\quad \leq s\,(q + 1) - 1 \label{p6-eq4}
+\end{eqnarray}
+\smallskip
+
+Por otro lado, también existen al menos un número entero $n$ y un número entero positivo $m$ tales que:
+
+\begin{equation}
+    q = \left\lceil\frac{n}{m}\right\rceil
+\end{equation}
+\smallskip
+
+\noindent y en consecuencia,
+
+\begin{eqnarray}
+          q - 1 < \quad\frac{n}{m} &\leq& q\quad < \frac{n}{m} + 1 \\
+            m\,(q - 1) < \quad n\, &\leq& m\,q < n + m \\
+     m\,(q - 1) + 1 \leq \quad n\, &\leq& m\,q \label{p6-eq8}
+\end{eqnarray}
+\smallskip
+
+\noindent Al reacomodar los términos en la ecuación (\ref{p6-eq8}), se obtiene:
+
+\begin{eqnarray}
+    m\,(q - 1) \leq \qquad\, n - 1 &\leq& m\,q - 1  \\
+      m\,q \leq n - 1 + m &\leq& m\,q - 1 + m \\
+      m\,q \leq n + m - 1 &\leq& m\,(q+1) - 1
+\end{eqnarray}
+\smallskip
+
+\noindent lo cual es equivalente a la expresión (\ref{p6-eq4}) con:
+
+\begin{eqnarray}
+    k &=& n + m - 1 \\
+    s &=& m
+\end{eqnarray}
+\smallskip
+
+\noindent y de donde finalmente se concluye que
+
+\begin{equation*}
+    \left\lceil \frac{n}{m} \right\rceil = \left\lfloor \frac{n+m-1}{m} \right\rfloor
+\end{equation*}
+
+\end{proof}
+\smallskip
+
+\begin{thebibliography}{99}
+
+\bibitem{andreas01}
+  Klappenecker, Andreas.
+  \emph{Noetherian Induction}.
+  http:// faculty.cs.tamu.edu / klappi / csce222-s10 / noetherian induction.pdf
+\end{thebibliography}
+
+\end{document} 

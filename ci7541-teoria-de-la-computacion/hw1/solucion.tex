@@ -1,0 +1,321 @@
+% ******************************************************** %
+% *                                                      * %
+% * Autores : Angarita Rafael & Claro Mosqueda Alejandro * %
+% *                                                      * %
+% * Tarea #1                                             * %
+% *                                                      * %
+% ******************************************************** %
+
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage[spanish]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{mathrsfs}
+\usepackage{amsthm}
+\usepackage{subfig}
+
+\headheight 0.2truecm \headsep 0.5truecm \topmargin -0.54truecm
+\topskip 0pt \textheight 22.49truecm \footskip 0.75truecm
+\oddsidemargin 0.46truecm \evensidemargin 0.46truecm
+\marginparwidth 0pt \marginparsep 0pt \textwidth 16.59truecm
+\parindent 2em
+\fboxsep 1ex \fboxrule 0.15ex \setlength{\jot}{0.2truecm}
+\flushbottom
+
+\def\braket#1{\mathinner{\langle{#1}\rangle}}
+
+%%%%%%%%%%%%%%% Comienzo del documento %%%%%%%%%%%%%%
+
+\begin{document}
+
+\setlength{\unitlength}{1truecm}\thicklines%
+
+\begin{flushleft}
+\bf {\scriptsize UNIVERSIDAD SIMON BOLIVAR \hfill \today} \\
+\bf {\scriptsize DEPARTAMENTO DE COMPUTACION }    \\
+\bf {\scriptsize MAESTRIA EN CIENCIAS DE LA COMPUTACION \hfill Ing. Angarita Arocha Rafael}    \\
+\bf {\scriptsize ASIGNATURA: CI-7541 - Teoria de la computación. \hfill Lic. Claro Mosqueda Alejandro} \\
+\end{flushleft}
+
+\bigskip
+
+\begin{center}
+\large \bf TAREA N${}^{o}\; 1$
+\end{center}
+
+\bigskip
+
+\noindent {\bf Ejercicio 3.6:} En el teorema 3.21 \cite[p. 153]{sipser06} se mostró que un lenguaje es Turing-reconocible sii algún enumerador lo enumera. Por qué no se utilizó el siguiente algoritmo para la demostración directa? Como antes, $s_1, s_2, s_3, \dots$ es una lista de todas las posibles palabras en $\Sigma^{*}$.\\
+
+\smallskip
+
+\noindent $E = $ ``Ignora la entrada.
+\begin{enumerate}
+  \setlength\itemsep{-3pt}
+  \setlength\itemindent{0.8cm}
+
+  \item Repite lo siguiente para $i = 1,2,3,\dots$
+  \item \quad Ejecuta $M$ con $s_i$ como entrada.
+  \item \quad Si $M$ acepta, imprime como salida $s_i$.''
+\end{enumerate}
+\medskip
+
+\noindent {\bf Solución:} \\
+
+Con este algoritmo es posible que $E$ no enumere el lenguaje $L(M)$.  Esto se debe a que $M$ no es un ``decider'', y puede que no acepte ni rechace alguna palabra $s_i$ en el paso 2. Si esto sucede, $E$ no imprimirá mas palabras pertenecientes a $L(M)$ despues de $s_i$.
+
+\bigskip
+
+\noindent {\bf Problema 3.12:} Una {\bfseries {\em máquina de Turing con reinicio a la izquierda}} ($\mathsf{LRTM}$) es similar a una máquina de Turing ordinaria ($\mathsf{TM}$), pero la función de transición tiene la forma:
+
+\begin{equation}
+    \delta : \, Q \times \Gamma \, \longrightarrow \, Q \times \Gamma \times \{ R, RESET \}
+\end{equation}
+
+\noindent Si $\delta(q,a)= (r,b,RESET)$, cuando la máquina esta en el estado $q$ leyendo el símbolo $a$, la cabeza de la máquina salta al extremo izquierdo de la cinta después de escribir el símbolo $b$ sobre la cinta y entrar en el estado $r$. Observe que esta máquina no tiene la habilidad usual de mover la cabeza un símbolo a la izquierda. Muestre que la máquina de Turing con reinicio a la izquierda reconoce la clase de lenguajes Turing-reconocibles.\\
+
+\noindent {\bf Solución:}\\
+
+Para demostrar que $\mathsf{LRTM}$ reconoce la clase de lenguajes Turing-reconocibles es suficiente demostrar que ésta es capaz de simular una máquina de Turing ordinaria. El funcionamiento de estas dos máquinas se diferencia únicamente en la movilidad de la cabeza de la cinta. Debido a esto, el único punto que vale la pena tratar en la demostración es como $\mathsf{LRTM}$ es capaz de alcanzar configuraciones equivalentes a las que producen las funciones de transición de $\mathsf{TM}$ durante cada  paso de la simulación.
+
+\bigskip
+\bigskip
+
+\begin{proof}
+Considérese alguna función de transición de $\mathsf{TM}$ de la forma $\delta(q_l, \, x)=(q_m, \, y,\, R)$. La simulación de esta transición en $\mathsf{LRTM}$ es trivial,
+
+\begin{equation}
+    \delta_{_{LRTM}} (q_l, \, x) = (q_m, \, y,\, R).
+\end{equation}
+\smallskip
+
+\noindent Esto es, cuando $TM$ mueve el cabezal a la derecha entonces $\mathsf{LRTM}$ hace lo mismo. \\
+
+La otra posibilidad, $\delta(q_i, \, a)=(q_j, \, b,\, L)$, no es tan sencilla. La idea para simular esta transición consiste en reemplazar el símbolo $a$ por $b$ con una marca sobre este símbolo (llamemos este símbolo, sin pérdida de generalidad, ${}^{\ast}$). Luego, se reinicia ($RESET$) y se procede a buscar de izquierda a derecha el símbolo inmediatamente antes del marcado con ${}^{\ast}$. Esto se puede lograr, marcando (con otro símbolo, digamos ${}^{\#}$) y reiniciado ($RESET$) de forma sucesiva hasta llegar de nuevo al símbolo marcado con ${}^{\ast}$. A continuación se describe con mas detalle, paso a paso, el procedimiento que simula el movimiento del cabezal una celda a la izquierda:
+
+\bigskip
+\begin{enumerate}
+  \setlength\itemsep{-3pt}
+  \setlength\itemindent{0.0cm}
+
+    \item Marcar con ${}^{\ast}$ la celda actual y reinicia a la izquierda el cabezal ($RESET$).
+    \item Marcar con ${}^{\#}$ la primera celda de la cinta y mover una celda a la derecha ($R$).
+    \item Si la celda actual esta marcada con ${}^{\ast}$ salta al paso 9.
+    \item Marcar con ${}^{\#}$ la celda actual y reinicia a la izquierda el cabezal ($RESET$).
+    \item Recorrer la cinta con pasos a la derecha hasta encontrar la primera celda marcada con ${}^{\#}$.
+    \item Remover la marca ${}^{\#}$ de la celda actual y mover una celda a la derecha el cabezal ($R$).
+    \item Mover una celda a la derecha el cabezal ($R$).
+    \item Saltar al paso 3.
+    \item Remover la marca ${}^{\ast}$ de la celda actual y reinicia a la izquierda el cabezal ($RESET$).
+    \item Recorre la cinta con pasos a la derecha hasta encontrar la celda marcada con ${}^{\#}$. Esta celda es la celda junto a la izquierda de la celda inicial.
+
+\end{enumerate}
+\bigskip
+
+\noindent Observe que la marca ${}^{\#}$ desaparece en la proxima  transición, sea por qué se sustituye por un símbolo sin marca en el movimiento a la derecha o por un símbolo marcado con ${}^{\ast}$ al comienzo del movimiento a la izquierda. Con esto se concluye que es posible simular todas las transiciones de cualquier $\mathsf{TM}$ en $\mathsf{LRTM}$ y por lo tanto $\mathsf{LRTM}$ también reconoce la clase de lenguajes Turing-reconocibles.\\
+\end{proof}
+
+\bigskip
+\bigskip
+
+\noindent {\bf Problema 3.18:} Muestre que un lenguaje es decidible sii algún enumerador enumera el lenguaje en orden lexicográfico.\\
+
+\noindent {\bf Solución:}
+
+\bigskip
+
+\begin{proof}
+A continuación se describe una máquina de Turing que decide un lenguaje $A$ si un enumerador $E$ enumera $A$ en orden lexicográfico. Por conveniencia y sin pérdida de generalidad, en caso de ser $A$ finito, el enumerador $E$, al terminar de imprimir todas las palabras en $A$ repite desde el comienzo. \footnote{ La idea detrás de esta demostración esta basada en la demostración del Teorema 3.21 \cite[p. 153]{sipser06}.}\\
+
+\pagebreak
+
+\noindent $M = $ ``En la entrada $w$:
+\begin{enumerate}
+  \setlength\itemsep{-3pt}
+  \setlength\itemindent{0.8cm}
+
+  \item Ejecuta $E$.
+  \item Cada vez que $E$ imprime una palabra $x_i$, se realizan las siguientes acciones,
+  \item \quad Si $x_i$ es lexicográficamente menor que $x_{i-1}$, para y \textbf{\emph{rechaza}}.
+  \item \quad Se compara $x_i$ con $w$.
+  \item \quad Si $x_i$ es lexicográficamente mayor que $w$, para y \textbf{\emph{rechaza}}.
+  \item \quad Si $x_i$ es igual a $w$, para y \textbf{\emph{acepta}}.
+\end{enumerate}
+\medskip
+
+\noindent Claramente $M$ acepta aquellas cadenas que aparecen impresas por $E$. Además, el hecho de que las palabras aparezcan en orden lexicográfico permite que se garantice que la máquina $M$ termina, sea porque se imprimen todas las palabras en $A$, porque se alcanza una palabra lexicográficamente mayor que la entrada o porque se acepta una palabra impresa.\\
+
+Ahora, en la otra dirección. Si $M$ decide $A$, se puede construir el siguiente enumerador $E$ para $A$. Sea $s_1,s_2,s_3,\dots$ una lista de todas las posibles palabras en $\Sigma^{*}$ en orden lexicográfico, entonces,\\
+
+\noindent $E = $ ``Ignora la entrada.
+\begin{enumerate}
+  \setlength\itemsep{-3pt}
+  \setlength\itemindent{0.8cm}
+
+  \item Repite lo siguiente para $i = 1,2,3,\dots$
+  \item \quad Ejecuta $M$ con $s_i$ como entrada.
+  \item \quad Si $M$ acepta, imprime como salida $s_i$.''
+\end{enumerate}
+\medskip
+
+\noindent como $M$ es un ``decider'', eventualmente $E$ imprimirá todas las palabras en $A$.
+\end{proof}
+
+\bigskip
+
+\noindent {\bf Ejercicio 4.6:} Sea $\mathcal{B}$ el conjunto de todas las secuencias infinitas sobre $\{ 0 ,1 \}$. Muestre que $\mathcal{B}$ es incontable, utilizando una demostración por diagonalización.\\
+
+\noindent {\bf Solución:}
+
+\begin{proof}
+Suponga que $\mathcal{B}$ es contable. Esto es, existe una correspondencia entre $\mathbb{N}$ y $\mathcal{B}$ dada por cierto mapa $f: \, \mathbb{N} \, \longrightarrow \, \mathcal{B}$.
+
+\begin{table}[h]
+\centering
+
+\begin{tabular}{c|c}
+  $n$    & $f(n)$      \\
+  \hline
+  0      & 000000\dots \\
+  1      & 100000\dots \\
+  2      & 010000\dots \\
+  \vdots & \vdots      \\
+  $i$    & $f(i)$      \\
+  \vdots & \vdots
+\end{tabular}
+\caption {Correspondencia entre $\mathbb{N}$ y $\mathcal{B}$.}
+\end{table}
+
+\noindent Si se considera una palabra, $z = z_1z_2z_3\dots$, perteneciente a $\mathcal{B}$ que cumple la siguiente condición,
+
+\pagebreak
+
+\begin{equation}
+    z_i = \begin{cases}
+            0 & \text{si } \left[f(i)\right]_i = 1 \\
+            1 & \text{si } \left[f(i)\right]_i = 0
+          \end{cases}
+\end{equation}
+
+\noindent donde $z_i$ es el $i$-esimo símbolo en la palabra $z$ y $\left[f(i)\right]_i$ es el $i$-esimo símbolo en la palabra $f(i)$. \\
+
+La palabra $z$ es la palabra que difiere de cada $f(i)$ en su $i$-esimo símbolo. Esto indica que $z$ no puede ser igual a ningún $f(i)$, y por lo tanto $z$ esta fuera de la imagen de $f$, lo cual contradice la suposición inicial. En conclusión, queda demostrado por contradicción que $\mathcal{B}$ es incontable.\\
+\end{proof}
+
+\bigskip
+
+\noindent {\bf Problema 4.12:} Sea $A = \left\{ \braket{R,S} \mid \text{$R$ y $S$ son expresiones regulares y $L(R) \subseteq L(S)$} \right\}$. Muestre que $A$ es decidible.\\
+
+\noindent {\bf Solución:}
+
+\begin{proof}
+A continuación se describe una máquina de Turing $M$ que decide el lenguaje $A$:\\
+
+\noindent $M = $ ``En la entrada $\braket{R,S}$ donde $R$ y $S$ son expresiones regulares:
+\begin{enumerate}
+  \setlength\itemsep{-3pt}
+  \setlength\itemindent{0.0cm}
+
+  \item Convertir $R$ y $S$ a su forma equivalente $\mathsf{NFA}$ $R_{{}_{NFA}}$ y $S_{{}_{NFA}}$. \cite[Teorema 1.54 p. 66]{sipser06}
+  \item Convertir $R_{{}_{NFA}}$ y $S_{{}_{NFA}}$ a su forma equivalente $\mathsf{DFA}$ $R_{{}_{DFA}}$ y $S_{{}_{DFA}}$. \cite[Teorema 1.39 p. 55]{sipser06}
+  \item Construir un $\mathsf{DFA}$ $E$ tal que $L(E) = L(S_{{}_{DFA}}) \cap L(R_{{}_{DFA}})$.
+  \item Ejecutar la $\mathsf{TM}$ $F$ con $\braket{E,R_{{}_{DFA}}}$ como entrada. Donde, $F$ decide $EQ_{DFA}$. \cite[p. 169]{sipser06}
+  \item Si $F$ acepta, para y \textbf{\emph{acepta}}.
+  \item Si $F$ rechaza, para y \textbf{\emph{rechaza}}.''
+\end{enumerate}
+
+\end{proof}
+
+\noindent {\bf Problema 4.18:} Sean $A$ y $B$ dos lenguajes disjuntos. Se dice que un lenguaje $C$ {\bfseries {\em separa}} a $A$ de $B$ si $A \subseteq C$ y $B \subseteq \overline{C}$. Muestre que cualquier par de lenguajes co-Turing-reconocibles son separables por algún lenguaje decidible.\\
+
+\noindent {\bf Solución:}
+
+\begin{proof}
+Considérese la siguiente descripción de una máquina de Turing $M$:\\
+
+\noindent $M = $ ``En la entrada $w$:
+\begin{enumerate}
+  \setlength\itemsep{-3pt}
+  \setlength\itemindent{0.6cm}
+
+  \item Ejecutar, en paralelo, $M_{\overline{A}}$ y $M_{\overline{B}}$ \, con $w$ como entrada en cada máquina.
+  \item Si $M_{\overline{B}}$ acepta primero, para y \textbf{\emph{acepta}}. Si $M_{\overline{B}}$ rechaza, continúa con la ejecución de $M_{\overline{A}}$.
+  \item Si $M_{\overline{A}}$ acepta primero, para y \textbf{\emph{rechaza}}. Si $M_{\overline{A}}$ rechaza, continúa con la ejecución de $M_{\overline{B}}$.''
+\end{enumerate}
+\medskip
+
+\noindent donde $M_{\overline{A}}$ y $M_{\overline{B}}$ son máquinas de Turing que reconocen $\overline{A}$ y $\overline{B}$ respectivamente. Ejecutar las dos máquinas en paralelo significa que $M$ tiene dos cintas, una para simular $M_{\overline{A}}$ y la otra para simular $M_{\overline{B}}$. En este caso $M$ toma turnos simulando un paso de cada máquina, lo cual continúa hasta que una de ellas acepta. \footnote{ Idea tomada de la demostración del teorema 4.22 \cite[p. 181]{sipser06}.}\\
+
+\begin{figure}[h]
+  \centering
+  \subfloat[ $\Sigma^{*}$, $A$ y $B$]{\label{fig:418a}\includegraphics[width=0.29\textwidth]{418a}} \quad
+  \subfloat[$\overline{B}$]{\label{fig:418b}\includegraphics[width=0.29\textwidth]{418b}} \quad
+  \subfloat[$\overline{A}$]{\label{fig:418c}\includegraphics[width=0.29\textwidth]{418c}}
+  \caption{Imagenes ilustrativas del los conjutos $\Sigma^{*}$, $A$, $B$, $\overline{A}$ y $\overline{B}$}
+  \label{fig:418}
+\end{figure}
+
+ Claramente el conjunto de palabras que $M_{\overline{A}}$ no acepta ($A$) es aceptado por $M_{\overline{B}}$ y viceversa, el conjunto de palabras que $M_{\overline{B}}$ no acepta ($B$) es aceptado por $M_{\overline{A}}$, ya que los conjuntos $A$ y $B$ son disjuntos ($A \cap B = \emptyset$) [Figura \ref{fig:418}]. Esto implica que $M$ decide $C \equiv L(M)$ puesto que cualquier palabra $w \in \Sigma^{*}$ es aceptado por $M_{\overline{A}}$ o por $M_{\overline{B}}$. Por otro lado, el hecho de que $M$ acepta cuando $M_{\overline{B}}$ acepta primero (rechaza de lo contrario) implica que $C \subseteq \overline{B}$. Además, si $w \in A$ la máquina $M_{\overline{A}}$ no acepta pero $M_{\overline{B}}$ si lo hace. Esto significa que $A \subseteq C$. En conclusión, el lenguaje $C$ decidido por $M$ separa a $A$ de $B$. \cite{blai10}
+
+\end{proof}
+
+\noindent {\bf Problema 4.28:} Sea $A$ un lenguaje Turing-reconocible que consiste en la descripción de máquinas de Turing, $\left\{ \braket{M_1}, \braket{M_2}, \dots \right\}$, donde cada $M_i$ es un ``decider''. Demuestre que algún lenguaje decidible $D$ no es decidido por algún ``decider'' $M_i$ cuya descripción aparece en $A$. (Ayuda: quizás encuentre útil considerar un enumerador para $A$.)\\
+
+\noindent {\bf Solución:}
+
+\begin{proof}
+Considere el siguiente mapa $f$ entre $\mathbb{N}^{+}$ y $A$:
+
+\begin{table}[h]
+\centering
+
+\begin{tabular}{c|c}
+  $n$    & $f(n)$           \\
+  \hline
+  1      & $\braket{M_1}$   \\
+  2      & $\braket{M_2}$   \\
+  3      & $\braket{M_3}$   \\
+  \vdots & \vdots           \\
+  $i$    & $\braket{M_{i}}$ \\
+  \vdots & \vdots
+\end{tabular}
+\caption {Mapa $f$ entre $\mathbb{N}^{+}$ y $A$.}
+\end{table}
+
+\noindent Sea $E$ un enumerador que enumera A en orden según $f$ y sea $w_i$ la $i$-esima palabra de $\Sigma^{*} \equiv \{w_1, w_2, w_3, \dots \}$ ordenado de alguna manera arbitraria, entonces $\mathsf{TM}$ $M_{D}$,\\
+
+\noindent $M_{D} = $ ``En la entrada $w_i$:
+\begin{enumerate}
+  \setlength\itemsep{-3pt}
+  \setlength\itemindent{0.6cm}
+
+  \item Ejecutar $E$.
+  \item Esperar hasta que $E$ imprima la $i$-esima palabra $\braket{M_{i}}$.
+  \item Simular $\mathsf{TM}$ $M_{i}$ con $w_i$ como entrada.
+  \item Si $M_{i}$ acepta, para y \textbf{\emph{rechaza}}.
+  \item Sino, para y \textbf{\emph{acepta}}.'',
+\end{enumerate}
+\medskip
+
+\noindent decide cierto lenguaje $D \equiv L(M_{D})$ ya que $M_{i}$ es un ``decider''. Si $D$ fuese decidido por alguna máquina $M_{k}$ cuya descripción pertenece a $A$, esto es $D = L(M_{k})$, entonces tanto $M_{D}$ como $M_{k}$ deberían aceptar (o rechazar) ante la entrada $w_{k}$. Sin embargo, por construcción de $M_{D}$, se obtiene una contradicción, cuando $M_{k}$ acepta $w_{k}$ entonces $M_{D}$ rechaza y viceversa. De este argumento se concluye que $D$ es un lenguaje decidible que no puede ser decidido por alguna máquina cuya descripción aparece en A.\\
+\end{proof}
+
+\begin{thebibliography}{99}
+
+\bibitem{sipser06}
+  Sipser, Michael.
+  \emph{Introduction to the theory of computation}.
+  International Thomson Publishing,
+  2nd Edition,
+  2006.
+
+\bibitem{blai10}
+    Conversación con el Profesor Blai Bonet.
+
+\end{thebibliography}
+
+\end{document} 

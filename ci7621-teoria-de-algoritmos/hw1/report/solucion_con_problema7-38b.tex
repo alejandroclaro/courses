@@ -1,0 +1,558 @@
+% ********************************************** %
+% *                                            * %
+% * Autor : Claro Mosqueda Alejandro           * %
+% *                                            * %
+% * e-mail: alejandro.claro@gmail.com          * %
+% *                                            * %
+% * Teoria de algoritmos, USB                  * %
+% *                                            * %
+% * Tarea No  1                                * %
+% *                                            * %
+% ********************************************** %
+
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage[spanish]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{mathrsfs}
+\usepackage{clrscode}
+\usepackage{slashbox}
+\usepackage{multirow} 
+
+\headheight 0.2truecm \headsep 0.5truecm \topmargin -0.54truecm
+\topskip 0pt \textheight 22.49truecm \footskip 0.75truecm
+\oddsidemargin 0.46truecm \evensidemargin 0.46truecm
+\marginparwidth 0pt \marginparsep 0pt \textwidth 16.59truecm
+\parindent 2em
+\fboxsep 1ex \fboxrule 0.15ex \setlength{\jot}{0.2truecm}
+\flushbottom
+
+% Use $$\Braket{\phi | {\partial^2}\over {\partial t^2} | \psi}$$
+
+\def\bra#1{\mathinner{\langle{#1}|}}
+\def\ket#1{\mathinner{|{#1}\rangle}}
+\def\braket#1{\mathinner{\langle{#1}\rangle}}
+\def\Bra#1{\left<#1\right|}
+\def\Ket#1{\left|#1\right>}
+{\catcode`\|=\active 
+  \gdef\Braket#1{\left<\mathcode`\|"8000\let|\bravert {#1}\right>}}
+\def\bravert{\egroup\,\vrule\,\bgroup}
+
+\newcommand{\pderiv}[2]{\frac{\partial #1}{\partial #2}}      % derivada parcial
+\newcommand{\deriv}[2]{\frac{\mathrm{d} #1}{\mathrm{d} #2}}      % derivada parcial
+\newcommand{\comm}[2]{\left[\,#1\;,\;#2\,\right]}                 % [ , ]
+\newcommand{\qed}{\hfill \ensuremath{\Box}}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\newenvironment{proof}[1][Proof]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{definition}[1][Definition]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{example}[1][Example]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{remark}[1][Remark]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+
+%%%%%%%%%%%%%%% Comienzo del documento %%%%%%%%%%%%%%
+
+\begin{document}
+
+  \setlength{\unitlength}{1truecm}\thicklines%
+
+  \begin{flushleft}
+    \bf {\small UNIVERSIDAD SIMÓN BOLIVAR\hfill \today} \\
+    \bf {\small CI-7621 - Teoría de Algoritmos\hfill Lic. Alejandro Claro Mosqueda}    \\
+  \end{flushleft}
+  
+  \bigskip
+ 
+	\begin{center}
+	\noindent \Large \bf Tarea \#1
+	\end{center}
+
+  \bigskip
+  
+\noindent {\bf Problema \#1:} Muestre como implementar una cola (queue) con dos pilas (stack) ordinarias de tal manera que el costo amortizado de cada operación $\proc{ENCOLAR}$ (ENQUEUE) y cada operación $\proc{DESENCOLAR}$ (DEQUEUE) es O(1). (Ejercicio 17.3-6 del Cormen)\\
+
+\noindent {\bf Solución:}\\
+
+Denotemos las dos pilas como $S_1$ y $S_2$. La operación $\proc{ENCOLAR}$ es simplemente insertar el objeto en la pila $S_1$.
+
+\begin{codebox}
+	\Procname{$\proc{ENCOLAR}(Q, x)$}
+	\li $\proc{PUSH}(Q.S_1, x)$
+	\End
+\end{codebox}
+
+La operación $\proc{DESENCOLAR}$ consiste simplemente en retirar el objeto superior de la pila $S_2$ si dicha pila no esta vacía. Si la pila $S_2$ esta vacía, primero se retira de forma sucesiva el objeto superior de $S_1$ y se inserta en $S_2$ hasta que $S_1$ este vacía. Esto invierte el orden de los objetos de $S_1$ dentro de $S_2$.
+
+\begin{codebox}
+	\Procname{$\proc{DESENCOLAR}(Q)$}
+	
+	\li \If $Q.S_2$ está vacía \Then
+	\li 	\While $Q.S_1$ no esté vacía \Do
+	\li 		$x \gets \proc{POP}(Q.S_1)$
+	\li 		$\proc{PUSH}(Q.S_2, x)$
+				\End
+			\End
+	
+	\li \Return $\proc{POP}(Q.S_2)$
+	\End
+\end{codebox}
+
+Es bastante claro que el costo amortizado de una operación $\proc{ENCOLAR}$ es $O(1)$ debido a que la operación es simplemente insertar el objeto en la pila $S_1$. \\
+
+En cambio, el costo amortizado de la operación $\proc{DESENCOLAR}$, no es tan evidente. Asignemos un costo de 4 créditos a cada operacion $\proc{ENCOLAR}$ y 0 créditos a cada operación $\proc{DESENCOLAR}$. Cuando se encola un objeto se cancela 1 crédito al insertar el objeto en $S_1$ y se guardan los otros 3 junto al objeto en la pila. Ahora, al desencolar un objeto se debe cancelar 1 crédito por la operación $\proc{POP}$ en $S_1$ y 1 crédito por la operación $\proc{PUSH}$ en $S_2$ por cada objeto durante el proceso que invierte el orden de los objetos; y finalmente 1 crédito por la operación $\proc{POP}$ en $S_2$ del objeto a desencolar. Con este razonamiento se observa que la cantidad de créditos nunca se hace negativo y que efectivamente el costo amortizado de la operación $\proc{DESENCOLAR}$ es $O(1)$. \\
+
+\pagebreak 
+
+\noindent {\bf Problema \#2:} Mostrar que la altura de un árbol AVL con $n$ nodos es $O(\log n)$. (ayuda: use inducción sobre $n$, ó establezca una recurrencia para $T_n =$ número mínimo de nodos de un árbol AVL de altura h, resuélvala y utilícela). Un árbol AVL es un árbol binario de búsqueda donde para cada nodo la diferencia de las alturas de sus dos sub-árboles es a lo sumo 1. Considere que el árbol vacío posee altura -1.\\
+
+\noindent {\bf Solución:}\\
+
+\noindent {\bf Proposición.} Sea $A_h$ un árbol AVL de altura $h$ que tiene el número mínimo de nodos, y $A_I$ y $A_D$ los sub-árboles de $A_h$. (Figura \ref{fig:avl})
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=4cm]{AVL.jpg}
+	\caption{Árbol AVL}
+	\label{fig:avl}
+\end{figure}
+
+Entonces, el sub-árbol $A_I$ o el sub-árbol $A_D$ debe tener altura $h-2$, puesto que por definición se debe cumplir que las alturas del sub-árbol izquierdo y el sub-árbol derecho no deben diferir en más de $1$ en todo árbol AVL. De esta manera es bastante claro que la fórmula de recurrencia para el número de nodos en función de la altura es,
+
+\begin{equation}
+\label{eq:avl}
+n_h =  \begin{cases}
+				1                      & \text{si $h = 0$,} \\
+				2                      & \text{si $h = 1$,} \\
+				n_{h-1} + n_{h-2} + 1  & \text{si $h > 1$}
+				\end{cases}
+\end{equation}
+
+\smallskip
+\noindent donde $n_h$ denota el número de nodos en el árbol de altura $h$. Obsérvese que al sumar $1$ en ambos lados a la ecuación (\ref{eq:avl}), se obtiene la fórmula de recurrencia de los números de Fibonacci con el índice desplazado 3 posiciones.
+
+\begin{equation}
+\label{eq:fibonacci}
+n_h + 1 = \begin{cases}
+				  2                             & \text{si $h = 0$,} \\
+				  3                             & \text{si $h = 1$,} \\
+				  (n_{h-1} + 1) + (n_{h-2} + 1) & \text{si $h > 1$}
+				  \end{cases}
+\end{equation}
+
+\smallskip
+\noindent Utilizando la fórmula de De Moivre (Brassard pp. 32) se obtiene que,
+
+\begin{align}
+n_h + 1 & \approx \frac{\left( \frac{1 + \sqrt{5}}{2}\right)^{h+3}}{\sqrt{5}} \,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\, h \gg 1\\
+h	      & \approx 1.4\log n_h
+\end{align}
+
+\smallskip
+\noindent Con lo que queda demostrado que la altura de un árbol AVL con $n_h$ nodos es $O(\log n_h)$. \qed\\
+
+\pagebreak
+
+\noindent {\bf Problema \#3a:} Dar una instancia sencilla (4 objetos y números enteros) del problema de la mochila 0-1 donde al aplicar el algoritmo Greedy considerando los elementos por orden no creciente, o no decreciente, de peso; por orden no creciente, o no decreciente, de beneficio; ó por orden no creciente, o no decreciente, de beneficio por peso unitario ($v_i/w_i$), ninguno produce la solución óptima.\\
+
+\noindent {\bf Solución:}\\
+
+%Una estrategia Greedy evidente es insertar los objetos con mayor beneficio primero. Pero esta estrategia no funciona bien cuando los objetos mas ``atractivos'' tienen un peso mucho mayor en comparación con su beneficio. Otra posible estrategia Greedy sería insertar los objetos mas livianos primero. Esta estrategia falla de forma similar a la anterior cuando los objetos livianos tienen un beneficio muy bajo comparados con el beneficio de objetos de mayor peso. Una estrategia Greddy mas sofisticada, que busca evitar los problemas de las dos ya mencionadas, sería insertar los objetos con mayor beneficio por unidad de peso primero. Sin embargo, esta estrategia tampoco resulta siempre en la solución óptima. Por lo tanto, no se puede garantizar que alguna de las estrategias genere la solución óptima. De hecho, es incluso posible que ninguna de dichas estrategias produzca la solución óptima en algunos ejemplares de este problema. La siguiente tabla muestra un ejemplo de este caso con una mochila de capacidad 100.\\
+
+ En el siguiente cuadro se muestra una instancia de 4 objetos donde ninguna de las estrategias mencionadas produce la solución óptima si la mochila tiene capacidad $100$.
+ 
+\begin{table}[h]
+\centering
+\begin{tabular}{ | c | c | c || c | c | c | c | c | c | c | }
+	\hline
+	$w_i$ & $v_i$ & $v_i/w_i$ & Max $v_i$ & Min $v_i$ & Max $w_i$ & Min $w_i$ & Max $v_i/w_i$ & Min $v_i/w_i$ & óptimo \\
+	\hline
+  100   & 400   & 4         & 1         & 0         & 1         & 0         & 0             & 1 (0)         & 0      \\
+  50    & 350   & 7         & 0         & 0         & 0         & 0         & 1             & 0 (0)         & 1      \\
+  45    & 180   & 4         & 0         & 1         & 0         & 1         & 0             & 0 (1)         & 1      \\
+  20    & 100   & 5         & 0         & 1         & 0         & 1         & 1             & 0 (1)         & 0      \\
+  \hline
+  \multicolumn{3}{|l||}{Peso total}       & 100 & 65  & 65  & 100 & 70  & 100 (65)  & 95  \\
+  \multicolumn{3}{|l||}{Beneficio total}  & 400 & 280 & 280 & 400 & 450 & 400 (280) & 530 \\
+  \hline
+\end{tabular}
+\caption{Ejemplo del problema de la mochila 0-1 ($C=100$)}
+\end{table}
+
+\bigskip
+
+\noindent {\bf Problema \#3b:} En la sección 6.5 del Bassard se suponía que estaban disponibles $n$ objetos, numerados de $1$ a $n$. Supongamos en cambio que tenemos $n$ tipos de objetos disponibles, con un suministro adecuado de objetos de cada tipo. Formalmente, esto sólo cambia la restricción anterior $0 \leq x_i \leq 1$ por la restricción más permisiva $x_i \geq 0$. ¿Sigue funcionando el algoritmo voraz de la sección 6.5? ¿sigue siendo necesario? (Ejercicio 6.18 del Brassard)\\
+
+\noindent {\bf Solución:}\\
+
+En esta situación el algoritmo de la sección 6.5 no funciona sin modificaciones, o sin insertar todo el suministro ``adecuado'' de cada tipo de objeto a la lista de objetos, puesto que el bucle voraz impone la restricción $0 \leq x_i \leq 1$ entre las líneas $6$ y $11$ (ver algoritmo $\proc{MOCHILA}$ al final de problema). Modificar el algoritmo carece de sentido debido a que ya no es necesario. Es posible llenar la mochila únicamente con el tipo de objeto ($k$) con mayor beneficio por unidad de peso,
+
+\begin{equation}
+v_{\text{MOCHILA}} = W\frac{v_k}{w_k}
+\end{equation}
+
+\noindent lo cual es la solución óptima del problema. \\
+
+\noindent {\bf Demostración.} Supongamos, sin pérdida de generalidad, que los objetos disponibles están ordenados por valor decreciente de beneficio por unidad de peso, esto es, que
+
+\begin{equation}
+\frac{v_1}{w_1} \geq \frac{v_2}{w_2} \geq \cdots \geq \frac{v_n}{w_n}
+\end{equation}
+
+\noindent Sabemos que el beneficio total en la mochila es,
+
+\begin{equation}
+\label{eq:bmochila}
+v_{\text{MOCHILA}} = \sum_{i = 1}^{n} x_i v_i
+\end{equation}
+
+\noindent donde $v_i > 0$, $w_i > 0$, $x_i \geq 0$. Además, se debe cumplir que
+
+\begin{equation}
+\label{eq:pesomochila}
+\sum_{i = 1}^n x_i w_i \leq W
+\end{equation}
+
+\noindent donde $W > 0$ es la capacidad de la mochila. Reacomodando la ecuación (\ref{eq:bmochila}) se obtiene que
+ 
+\begin{equation}
+v_{\text{MOCHILA}} = \sum_{i = 1}^{n}\left(x_i w_i\right) \frac{v_i}{w_i}
+\end{equation}
+
+\noindent Como es cierto que, $\frac{v_j}{w_j} \leq \frac{v_1}{w_1} \,\,\, \forall\, j > 1$, entonces
+
+\begin{equation}
+\sum_{i = 1}^{n}\left(x_i w_i \right) \frac{v_i}{w_i} \leq \frac{v_1}{w_1}\sum_{i = 1}^{n}\left(x_i w_i \right)
+\end{equation}
+
+\noindent Finalmente, haciendo uso de la restricción (\ref{eq:pesomochila}), se concluye que
+
+\begin{align}
+\sum_{i = 1}^{n}\left(x_i w_i \right) \frac{v_i}{w_i} & \leq W\frac{v_1}{w_1} 
+\\
+v_{\text{MOCHILA}} & \leq \frac{W}{w_1}v_1 
+\end{align}
+
+\noindent Como la única restricción sobre $x_i$ es $x_i \geq 0$, queda demostrado que la solución óptima es
+
+\begin{align}
+x_i & = \begin{cases}
+				W/w_i & \text{si $i = 1$,} \\
+				0     & \text{si $i > 1$}
+			\end{cases}
+\\
+v_{\text{MOCHILA}} & = W\frac{v_1}{w_1}
+\end{align}
+
+\qed\\
+
+\begin{codebox}
+	\Procname{$\proc{MOCHILA}(w[1\ldots n], v[1\ldots n], W)$}
+	
+	\zi \Comment{\bf inicialización}
+	
+	\li \For $i \gets 1$ \To $n$ \Do 
+	\li		$x_i \gets 0$
+			\End
+
+	\li	$peso \gets 0$	
+	\zi
+	\zi \Comment{\bf bucle voraz}		
+	\li 	\While $peso < W$ \Do
+	\li 		$i \gets \text{mejor objeto restante}$
+	\li     \If $peso + w[i] \leq W$ \Then
+	\li     	$x[i] \gets 1$
+	\li     	$peso \gets peso + w[i]$
+	\li     \Else
+	\li     	$x[i] \gets \frac{\left( W - peso \right)}{w[i]}$
+	\li     	$peso \gets W$
+					\End
+				\End
+			\End
+	
+	\li \Return $x$
+	\End
+\end{codebox}
+
+\smallskip
+
+\noindent {\bf Problema \#4:} Dado un grafo no dirigido simple (sin aristas múltiples) $\mathbf{G}=(\mathbb{V},\mathbb{E})$, con $\mathbb{E}$ no vacío, la matroide de cociclos $\mathbf{M}=(\mathbb{E},\mathbb{F})$ de $\mathbf{G}$ tiene como conjunto base a $\mathbb{E}$ y un independiente es un conjunto de aristas que al eliminarlas simultáneamente de $\mathbf{G}$ no aumenta el número de componentes conexas.\\
+
+\noindent {\bf a)} Muestre que $\mathbf{M}=(\mathbb{E},\mathbb{F})$ es una matroide.\\
+
+\noindent {\bf Solución:}\\
+
+Para demostrar que $M=(\mathbb{E},\mathbb{F})$ es una matroide basta con demostrar que el conjunto $\mathbb{E}$ es no vacío (suposición hecha en el enunciado del problema) y que el conjunto $\mathbb{F}$ cumple las siguiente propiedades:
+
+\begin{enumerate}
+	\item $\emptyset \in \mathbb{F}$
+	\item Si $F \in \mathbb{F} \,\wedge\, F' \subseteq F$ entonces $F' \in \mathbb{F}$
+	\item Si $F,F' \in \mathbb{F} \,\wedge\, \left| F' \right| < \left| F \right|$ entonces $\left| F' \right| \cup \{x\} \in \mathbb{F}$ para algún $x \in F \backslash F'$
+\end{enumerate}
+
+Es bastante claro que la primera propiedad se cumple. No eliminar aristas de $\mathbf{G}$ no aumenta el número de componentes conexas del grafo. \\
+
+Por otro lado, el conjunto $\mathbb{F}$ es la colección de todos los sub-conjuntos $E$ de $\mathbb{E}$ tal que el grafo $(\mathbb{V},\mathbb{E} \backslash E)$ tiene el mismo número de componentes conexas que $\mathbf{G}$. Ahora, como $F' \subseteq F$, se observa que el grafo $(\mathbb{V},\mathbb{E} \backslash F)$ tiene igual numero de componente conexas que el grafo $(\mathbb{V},\mathbb{E} \backslash F')$. Entonces, por definición, $F' \in \mathbb{F}$. Quedando demostrada así la segunda propiedad. \\
+
+Para demostrar la tercera propiedad, digamos, sin perdida de generalidad, que el grafo $\mathbf{G}$ tiene $n$ componentes conexas y sean $F$ y $F'$ dos sub-conjuntos de $\mathbb{E}$ tales que los grafos $(\mathbb{V},\mathbb{E} \backslash F)$ y $(\mathbb{V},\mathbb{E} \backslash F')$ tienen $n$ componentes; y ademas $\left| F' \right| < \left| F \right|$. Se quiere mostrar que el grafo $\left(\mathbb{V},\mathbb{E} \backslash \left(F' \cup \{x\} \right)\right)$ tiene $n$ componentes conexas para algun $x \in F \backslash F'$.\\
+
+Supongase por un momento lo contrario, esto es, $\left(\mathbb{V},\mathbb{E} \backslash \left(F' \cup \{x\} \right)\right)$ tiene mas de $n$ componentes conexas para todo $x \in F \backslash F'$. Entonces, $\left(\mathbb{V},\mathbb{E} \backslash \left(F' \cup F \right)\right)$ tiene $n + \left| F \backslash F' \right|$ componentes. Ademas, como $\mathbb{E} \backslash F = \left(\mathbb{V},\mathbb{E} \backslash \left(F' \cup F \right)\right) \cup \left( F' \backslash F\right)$, se obtiene que $(\mathbb{V},\mathbb{E} \backslash F')$ tiene al menos $n + \left| F \backslash F' \right| - \left| F' \backslash F \right| = n + \left| F \right| - \left| F' \right|  > n$ componentes. Pero esto contradice el hecho de que $F \in \mathbb{F}$. Por lo tanto debe ser cierto lo contrario, que era lo que se deseaba demostrar. \qed \\
+
+\noindent {\bf b)} Un subconjunto de $\mathbb{E}$ que no esté en $\mathbb{F}$ se dice que es dependiente. Un conjunto dependiente minimal es uno donde todo subconjunto propio es independiente. Caracterice en términos de grafos un dependiente minimal. Cómo serían los dependientes minimales de un ciclo elemental con $n$-vértices.\\
+
+\noindent {\bf Solución:}\\
+
+Tomemos por ejemplo, un grafo formado por 3 vértices y 3 aristas que conectan a los vértices entre si (Figura \ref{fig:grafo}a). Un dependiente minimal es el subconjunto $F=\{ (a, b), (a, c) \}$. Si se eliminan simultáneamente las dos aristas (Figura \ref{fig:grafo}b), el número de componentes conexas aumenta en 1. Pero los sub-conjuntos , $\{ (a, b) \}$ y $\{ (a, c) \}$, son independientes, ya que al retirar la arista en cada conjunto no se altera el numero de componentes conexas del grafo (Figura \ref{fig:grafo}c).
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=8cm]{grafo.png}
+	\caption{Ejemplo de un grafo con 3 vértices y 3 aristas}
+	\label{fig:grafo}
+\end{figure}
+
+Para un ciclo elemental con $n$-vértices, todos los subconjuntos de aristas conformados por exactamente dos aristas distintas del ciclo son dependientes minimales. En este caso, no existen dependiente minimales de cardinalidad mayor a 2, puesto que cualquier conjunto de aristas con mas de dos aristas contiene al menos un sub-conujunto de dos aristas que es un dependiente minimal.\\
+
+\noindent {\bf Problema \#5a:} Tiene usted que organizar un torneo con $n$ participantes. Cada participante tiene que competir exactamente una vez con todos los posibles oponentes. Además, cada participante tiene que jugar exactamente un partido cada día, con la posible excepción de un solo día en el cual no juega. (Ejercicio 7.38 del Brassard)\\
+
+\noindent {\bf a)} Si $n$ es una potencia de 2, dar un algoritmo para construir un horario que permita que el torneo concluya en $n - 1$ días.\\
+
+\noindent {\bf Solución:}\\
+
+En este caso ($n$ potencia de 2) es posible diseñar un algoritmo divide y vencerás. Este algoritmo consiste en dividir al conjunto de $n$ jugadores en dos partes iguales (digamos $A$ y $B$) y  se resuelven los partidos internos de cada grupo de forma recursiva, entonces sólo falta programar los partidos entre los jugadores del sub-grupo $A$ y el sub-grupo $B$. Esto es sencillamente, emparejar los jugadores de $A$ con los jugadores de $B$ en un cierto orden el primer día, y luego en los $n/2 - 1$ días rotando cíclicamente (o anti-cíclicamente) los jugadores de $B$ (Figura \ref{fig:rrdc}).
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=12cm]{roundrobin.jpg}
+	\caption{Solución divide y vencerás para $n = 8$}
+	\label{fig:rrdc}
+\end{figure}
+
+El pseudo-código de dicho algoritmo, $\proc{PLANIFICAR-TORNEO}$, se muestra a continuación. Los parámetros del procedimiento son una matriz $T$ de $(n-1) \times n$ donde se almacena el oponente del par (día, jugador); el día inicial ($d_0$) de emparejamiento de los jugadores $j_0$ hasta $j_f$; y los índices $(j_0, j_f)$ que definen el conjunto de jugadores a emparejar. Los resultados de un ejemplo sencillo para $n=8$ [llamada $\proc{PLANIFICAR-TORNEO}(T, 1, 1, 8)$] se muestra en el cuadro \ref{tab:rrdc}.
+
+\begin{codebox}
+	\Procname{$\proc{PLANIFICAR-TORNEO}(T[1 \ldots n-1][1 \ldots n], d_0, j_0, j_f)$}
+
+\zi \Comment{El algoritmo supone que $n$  es potencia de 2.}
+\zi \Comment{ $1 \leq d_0 < (n-1) \,\,\,\,\wedge\,\,\,\, 1 \leq j_0 < n \,\,\,\,\wedge\,\,\,\, 1 < j_f \leq n$ }
+\zi
+\li $m \gets \frac{j_f - j_0 + 1}{2}$ \RComment{Divide el conjunto de jugadores en dos partes iguales.}
+\zi
+\li \For $d \gets 0$ \To $m-1$ \Do
+\li 	\For $i \gets 0$ \To $m-1$ \Do
+\li			$j_1 \gets j_0 + i$
+\li			$j_2 \gets j_0 + m + (d + i) \; \text{mod} \; m$
+\li			$T[d_0 + d][j_1] \gets j_2$
+\li			$T[d_0 + d][j_2] \gets j_1$
+			\End
+		\End
+
+\zi
+
+\li	\If $m > 1$ \Then
+\li		$\proc{PLANIFICAR-TORNEO}(T, d_0 + m, j_0, j_0 + m - 1)$
+\li		$\proc{PLANIFICAR-TORNEO}(T, d_0 + m, j_0 + m, j_f)$
+		\End
+
+	\End
+\end{codebox}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{ | c || c c c c c c c c | }
+	\hline
+	\backslashbox{Día}{Jugador} & $1$ & $2$ & $3$ & $4$ & $5$ & $6$ & $7$ & $8$ \\
+	\hline
+	1 & 5  & 6  & 7  & 8  & 1  & 2  & 3  & 4 \\
+	2 & 6  & 7  & 8  & 5  & 4  & 1  & 2  & 3 \\
+	3 & 7  & 8  & 5  & 6  & 3  & 4  & 1  & 2 \\
+	4 & 8  & 5  & 6  & 7  & 2  & 3  & 4  & 1 \\
+	5 & 3  & 4  & 1  & 2  & 7  & 8  & 5  & 6 \\
+	6 & 4  & 3  & 2  & 1  & 8  & 7  & 6  & 5 \\
+	7 & 2  & 1  & 4  & 3  & 6  & 5  & 8  & 7 \\
+  \hline
+\end{tabular}
+\caption{Una solución del problema de planificación para $n = 8$}
+\label{tab:rrdc}
+\end{table}
+
+\noindent {\bf b)} Para todo entero $n > 1$, dar un algoritmo para construir un horario que permita que finalice el torneo en $n-1$ días si $n$ es par, o en $n$ días si $n$ es impar.\\
+
+\noindent {\bf Solución:}\\
+
+Un algoritmo que da una solución al caso en que $n$ es par, consiste en emparejar el primer día, a los primeros $n/2$ jugadores con los últimos $n/2$ en orden inverso. Luego para el siguiente día se fija el primer jugador y se permutan los $n-1$ jugadores restantes. Al finalizar la permutación, se emparejan los jugadores de la misma manera que en la primera fecha. Este proceso se repite hasta que se llega de nuevo a la secuencia de jugadores original. Por ejemplo, para $n = 4$, \\
+
+\begin{table}[h]
+\centering
+\begin{tabular}{ | c || c | c | c | }
+	\hline
+	día &  1 &  2 & 3 \\
+	\hline
+	secuencia & 1 2 3 4 & 1 3 4 2 & 1 4 2 3 \\
+  \hline
+  \multirow{2}{*}{encuentros}
+  & 1 vs. 4 & 1 vs. 2 & 1 vs. 3 \\
+	 & 2 vs. 3 & 3 vs. 4 & 4 vs. 2 \\
+  \hline
+\end{tabular}
+\end{table}
+
+\noindent Si el número de jugadores es impar, entonces sólo hace falta insertar un jugador más, que marca el día libre de los demas jugadores. A continuación se muestra el pseudo-código del algoritmo. Obsérvese que el algoritmo coloca $-1$ para indicar el día libre en el caso de $n$ impar, y que en las líneas 12 y 13 se calcula directamente las operaciones de permutación e inversión, mencionadas anteriormente, de los últimos $n-1$ jugadores.
+
+%\begin{table}[h]
+%\centering
+%\begin{tabular}{ | c || c c c c c | }
+%	\hline
+%	\backslashbox{dia}{jugador} & $1$ & $2$ & $3$ & $4$ & $5$ \\
+%	\hline
+%	1 & -  & 5  & 4  & 3  & 2 \\
+%	2 & 2  & 1  & -  & 5  & 4 \\
+%	3 & 3  & 4  & 1  & 2  & - \\
+%	4 & 4  & -  & 5  & 1  & 3 \\
+%	5 & 5  & 3  & 2  & -  & 1 \\
+%  \hline
+%\end{tabular}
+%\caption{Una solución del problema de planificación para $n = 5$}
+%\label{tab:rr5}
+%\end{table}
+
+\begin{codebox}
+	\Procname{$\proc{PLANIFICAR-TORNEO}(T[1 \ldots n][1 \ldots n])$}
+\li \If $n \,\text{mod}\, 2 = 0$ \Then
+\li 	$jugadores \gets n$
+\li	\Else
+\li		$jugadores \gets n + 1$
+		\End
+\zi
+\li $dias \gets jugadores-1$
+\li $m \gets \frac{jugadores}{2}$
+\zi
+\li \For $d \gets 0$ \To $dias-1$ \Do
+\li    \For $i \gets 0$ \To $m-1$ \Do
+\li      \If $i = 0$ \Then
+\li        $ip \gets 0$
+\li      \Else
+\li        $ip \gets 1 + (i + d - 1) \,\text{mod}\, (jugadores-1)$
+				 \End
+\zi
+\li        $jp \gets 1 + (jugadores - i + d - 2) \,\text{mod}\, (jugadores-1)$
+\zi
+\li      \If $jp = n$ \Then
+\li      		$T[d+1][ip+1] \gets -1$
+\li      \Else
+\li      		$T[d+1][ip+1] \gets jp+1$
+				 \End
+\zi
+\li      \If $ip = n$ \Then
+\li      		$T[d+1][jp+1] \gets -1$
+\li      \Else
+\li      		$T[d+1][jp+1] \gets ip+1$
+				 \End
+			 \End
+		\End
+	\End
+\end{codebox}
+
+\noindent {\bf Problema \#5b:} Considere una matriz $T[1 \ldots n]$ y un entero $k$ entre $1$ y $n$. Utilice una simplificación para diseñar un algoritmo eficiente que intercambie los $k$ primeros elementos de $T$ con los $n-k$ últimos, sin hacer uso de una matriz auxiliar. Analice el tiempo de ejecución de su algoritmo. (Ejercicio 7.40 del Brassard)\\
+
+Salvo el caso $k = n/2$ y $n$ par, no es posible intercambiar directamente a su posición final los elementos del arreglo. Una posible solución a este problema es el uso de una simplificación que funciona de la siguiente manera:
+
+\begin{enumerate}
+	\item Si $k \leq n-k$ se intercambian los primeros $k$ elementos de arreglo con los siguiente $k$ elementos, sino, se intercambian los primeros $n-k$ con los últimos $n-k$ elementos.
+	\item Luego se repite el paso 1, para el sub-arreglo de los últimos $n - \Delta$ elementos, donde $\Delta$ es el número de elementos intercambiados anteriormente, hasta culminar en un sub-arreglo de un solo elemento.
+\end{enumerate}
+
+\noindent A continuación se ilustra un ejemplo sencillo ($n = 8$; $k = 3$), seguido del pseudo-código del algoritmo.
+
+\begin{table}[h]
+\centering
+
+\begin{tabular}{ | p{2cm} | c | c | c || c | c | c | c | c | }
+	\hline
+	Arreglo     & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
+	Intercambio & 4 & 5 & 6 & 1 & 2 & 3 & 7 & 8 \\
+  \hline
+\end{tabular}
+
+\smallskip
+\hspace{-1.99cm}
+\begin{tabular}{ | p{2cm} | c | c | c || c | c | }
+	\hline
+	Arreglo     & 1 & 2 & 3 & 7 & 8 \\
+	Intercambio & 7 & 8 & 3 & 1 & 2 \\
+  \hline
+\end{tabular}
+
+\smallskip
+\hspace{-3.2cm}
+\begin{tabular}{ | p{2cm} | c || c | c | }
+	\hline
+	Arreglo     & 3 & 1 & 2 \\
+	Intercambio & 1 & 3 & 2 \\
+  \hline
+\end{tabular}
+
+\smallskip
+\hspace{-3.8cm}
+\begin{tabular}{ | p{2cm} | c || c | }
+	\hline
+	Arreglo     & 3 & 2 \\
+	Intercambio & 2 & 3 \\
+  \hline
+\end{tabular}
+
+\smallskip
+\hspace{-0.2cm}
+\begin{tabular}{ | p{2cm} | c | c | c | c | c | c | c | c | }
+	\hline
+	Resultado & 4 & 5 & 6 & 7 & 8 & 1 & 2 & 3 \\
+  \hline
+\end{tabular}
+
+\caption{Ejemplo del algoritmo de intercambio. Llamada $\proc{INTERCAMBIO}(T[1 \ldots 8], 3, 1)$}
+\end{table}
+
+\begin{codebox}
+	\Procname{$\proc{INTERCAMBIO}(T[1 \ldots n], k, i)$}
+
+\zi \Comment{ $1 \leq k < n \,\,\,\,\wedge\,\,\,\, 1 \leq i \leq k$ }
+\zi
+\li	\If $(N - k) < (k - i + 1)$ \Then
+\li		$\Delta \gets N - k$
+\li \Else
+\li		$\Delta \gets k - i + 1$
+		\End
+\zi
+\li \For $j \gets 0$ \To $\Delta$ \Do
+\li			$r            \gets T[i + j]$
+\li			$T[i + j]     \gets T[k + 1 + j]$
+\li			$T[k + 1 + j] \gets r$
+		\End
+\zi
+\li	$i_p \gets i + \Delta$
+\li	\If $k < i_p$ \Then
+\li		$k_p \gets k + \Delta$
+\li \Else
+\li		$k_p \gets k$
+		\End
+\zi
+\li	\If $k_p < n$ \Then
+\li		$\proc{INTERCAMBIO}(T, k_p, i_p)$
+		\End
+
+	\End
+\end{codebox}
+
+No es difícil observar que el peor caso se da cuando $k=1$. En esta situación, la simplificación siempre es un arreglo con sólo un elemento menos, por lo cual la ejecución completa del algoritmo debe intercambiar $n-1$ veces el primer y el segundo elemento del arreglo. Esto indica que $\proc{INTERCAMBIO}$ es $O(n)$.
+
+\end{document}
