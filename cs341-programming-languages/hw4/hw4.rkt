@@ -64,5 +64,15 @@
 
 ; Problem 10
 (define (cached-assoc xs n)
-  (lambda (v)
-    v))
+  (letrec([memo (make-vector n #f)]
+          [position 0]
+          [f (lambda (v)
+            (let ([ans (vector-assoc v memo)])
+              (if ans
+                  (cdr ans)
+                  (let ([new-ans (assoc v xs)])
+                    (begin
+                      (vector-set! memo position new-ans)
+                      (set! position (remainder (+ position 1) n))
+                      new-ans)))))])
+    f))
