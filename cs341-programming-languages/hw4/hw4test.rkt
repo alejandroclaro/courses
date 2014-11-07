@@ -17,7 +17,7 @@
    "Sample tests for Assignment 4"
 
    ; sequence test
-   (check-equal? (sequence 0 5 1) (list 0 1 2 3 4 5) "Sequence test")
+   (check-equal? (sequence 0 5 1) (list 0 1 2 3 4 5) "sequence test")
 
    ; string-append-map test
    (check-equal? (string-append-map
@@ -29,15 +29,20 @@
 
    ; stream-for-n-steps test
    (check-equal? (stream-for-n-steps (lambda () (cons 1 ones)) 1) (list 1) "stream-for-n-steps test")
+   (check-equal? (stream-for-n-steps (lambda () (cons 1 ones)) 3) (list 1 1 1) "stream-for-n-steps test")
+   (check-equal? (stream-for-n-steps (lambda () (cons 1 ones)) 0) (list ) "stream-for-n-steps test")
 
    ; funny-number-stream test
    (check-equal? (stream-for-n-steps funny-number-stream 16) (list 1 2 3 4 -5 6 7 8 9 -10 11 12 13 14 -15 16) "funny-number-stream test")
 
    ; dan-then-dog test
    (check-equal? (stream-for-n-steps dan-then-dog 1) (list "dan.jpg") "dan-then-dog test")
+   (check-equal? (stream-for-n-steps dan-then-dog 2) (list "dan.jpg" "dog.jpg") "dan-then-dog test")
+   (check-equal? (stream-for-n-steps dan-then-dog 3) (list "dan.jpg" "dog.jpg" "dan.jpg") "dan-then-dog test")
 
    ; stream-add-zero test
    (check-equal? (stream-for-n-steps (stream-add-zero ones) 1) (list (cons 0 1)) "stream-add-zero test")
+   (check-equal? (stream-for-n-steps (stream-add-zero funny-number-stream) 2) (list (cons 0 1) (cons 0 2)) "stream-add-zero test")
 
    ; cycle-lists test
    (check-equal? (stream-for-n-steps (cycle-lists (list 1 2 3) (list "a" "b")) 3) (list (cons 1 "a") (cons 2 "b") (cons 3 "a"))
@@ -45,12 +50,14 @@
 
    ; vector-assoc test
    (check-equal? (vector-assoc 4 (vector (cons 2 1) (cons 3 1) (cons 4 1) (cons 5 1))) (cons 4 1) "vector-assoc test")
+   (check-equal? (vector-assoc 1 (vector (cons 2 1) (cons 3 1) (cons 4 1) (cons 5 1))) #f "vector-assoc test")
 
    ; cached-assoc tests
    (check-equal? ((cached-assoc (list (cons 1 2) (cons 3 4)) 3) 3) (cons 3 4) "cached-assoc test")
+   (check-equal? (let ([a1 (cached-assoc (quote ((5 . 2) (blah . 4))) 1)]) (begin (a1 5) (a1 5))) (cons 5 2) "cached-assoc test")
 
    ; while-less test
-;   (check-equal? (while-less 7 do (begin (set! a (+ a 1)) a)) #t "while-less test")
+   (check-equal? (while-less 7 do (begin (set! a (+ a 1)) a)) #t "while-less test")
 
    ))
 

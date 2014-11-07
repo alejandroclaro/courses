@@ -22,10 +22,9 @@
       
 ; Problem 4
 (define (stream-for-n-steps s n)
-  (let ([pr (s)])
-    (if (< n 2)
-        (list (car pr))
-        (cons (car pr) (stream-for-n-steps (cdr pr) (- n 1))))))
+  (if (= n 0)
+      (list )
+      (let ([pr (s)]) (cons (car pr) (stream-for-n-steps (cdr pr) (- n 1))))))
 
 ; Problem 5
 (define funny-number-stream 
@@ -69,10 +68,18 @@
           [f (lambda (v)
             (let ([ans (vector-assoc v memo)])
               (if ans
-                  (cdr ans)
+                  ans
                   (let ([new-ans (assoc v xs)])
                     (begin
                       (vector-set! memo position new-ans)
                       (set! position (remainder (+ position 1) n))
                       new-ans)))))])
     f))
+
+; Problem 11
+(define-syntax while-less
+  (syntax-rules (do)
+    [(while-less e1 do e2)
+     (letrec ([value1 e1]
+              [loop (lambda (value2) (if (>= value2 value1)  #t (loop e2)))])
+       (loop e2))]))
