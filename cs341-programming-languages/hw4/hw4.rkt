@@ -19,7 +19,7 @@
   (cond [(< n 0)    (error "list-nth-mod: negative number")]
         [(null? xs) (error "list-nth-mod: empty list")]
         [#t         (list-ref xs (remainder n (length xs)))]))
-      
+
 ; Problem 4
 (define (stream-for-n-steps s n)
   (if (= n 0)
@@ -27,7 +27,7 @@
       (let ([pr (s)]) (cons (car pr) (stream-for-n-steps (cdr pr) (- n 1))))))
 
 ; Problem 5
-(define funny-number-stream 
+(define funny-number-stream
   (letrec ([divisible-by? (lambda (n m) (= 0 (modulo n m)))]
            [funny-number (lambda (x) (if (divisible-by? x 5) (- x) x))]
            [stream (lambda (x) (cons (funny-number x) (lambda () (stream (+ x 1)))))])
@@ -43,7 +43,7 @@
   (lambda ()
     (let ([pr (s)])
       (cons (cons 0 (car pr)) (stream-add-zero (cdr pr))))))
-  
+
 ; Problem 8
 (define (cycle-lists xs ys)
   (letrec ([make-pair (lambda (n) (cons (list-nth-mod xs n) (list-nth-mod ys n)))]
@@ -59,7 +59,7 @@
             (cond [(not (pair? pair)) (find (+ n 1))]
                   [(equal? v (car pair)) pair]
                   [#t(find (+ n 1))]))))])
-    (find 0))) 
+    (find 0)))
 
 ; Problem 10
 (define (cached-assoc xs n)
