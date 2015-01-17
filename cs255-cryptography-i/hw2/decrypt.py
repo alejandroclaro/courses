@@ -1,5 +1,4 @@
 import sys
-from Crypto        import Random
 from Crypto.Util   import Counter
 from Crypto.Cipher import AES
 
@@ -15,22 +14,30 @@ def compute_cbc(cipher, blocksize, iv, text):
 
   return result
 
+def compute_ctr(cipher, blocksize, iv, text):
+  counter = Counter.new(128, initial_value=int(iv.encode("hex"), 16))
+  blocks  = [ text[i : (i + blocksize)] for i in range(0, len(text), blocksize) ]
+  result  = ""
+
+  for b in blocks:
+    result += xor_blocks(b, cipher.encrypt(counter()))
+
+  return result
+
 def pkcs5_unpad(text):
   return text[:-ord(text[-1])]
 
 def decrypt(mode, key, text):
   iv     = text[0 : AES.block_size]
   text   = text[AES.block_size : len(text)]
+  cipher = AES.new(key)
   result = ""
 
   if mode == "CBC":
-    cipher  = AES.new(key)
-    result  = compute_cbc(cipher, AES.block_size, iv, text)
-    result  = pkcs5_unpad(result)
+    result = compute_cbc(cipher, AES.block_size, iv, text)
+    result = pkcs5_unpad(result)
   elif mode == "CTR":
-    ctr     = Counter.new(128, initial_value=int(iv.encode("hex"), 16))
-    cipher  = AES.new(key, AES.MODE_CTR, counter=ctr)
-    result  = cipher.decrypt(text)
+    result  = compute_ctr(cipher, AES.block_size, iv, text)
   else:
     print "Mode %s not supported." % mode
     exit(-1)
