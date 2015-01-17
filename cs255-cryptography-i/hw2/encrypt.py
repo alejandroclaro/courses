@@ -1,5 +1,6 @@
 import sys
 from Crypto        import Random
+from Crypto.Util   import Counter
 from Crypto.Cipher import AES
 
 def pkcs5_pad(text):
