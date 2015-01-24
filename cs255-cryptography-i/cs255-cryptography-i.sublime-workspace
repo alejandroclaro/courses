@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"de",
+				"decrypt"
+			],
+			[
 				"Int",
 				"Int64"
 			],
@@ -211,19 +215,31 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "hw2/decrypt.py",
+			"settings":
+			{
+				"buffer_size": 1597,
+				"line_ending": "Windows"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 352.0,
+		"height": 127.0,
 		"selected_items":
 		[
 			[
-				"git sta",
-				"Git: Status"
+				"git s",
+				"Set Syntax: SublimeGit Status"
 			],
 			[
 				"git st",
+				"Set Syntax: SublimeGit Status"
+			],
+			[
+				"git sta",
 				"Git: Status"
 			],
 			[
@@ -320,10 +336,6 @@
 			],
 			[
 				"git status",
-				"Git: Status"
-			],
-			[
-				"git s",
 				"Git: Status"
 			],
 			[
@@ -447,7 +459,7 @@
 				"Package Control: Install Package"
 			]
 		],
-		"width": 468.0
+		"width": 414.0
 	},
 	"console":
 	{
@@ -468,12 +480,20 @@
 	},
 	"expanded_folders":
 	[
-		"/home/aclaro64/SourceCode/github/courses/cs255-cryptography-i/hw1"
+		"/home/aclaro64/SourceCode/github/courses/cs255-cryptography-i/hw1",
+		"/home/aclaro64/SourceCode/github/courses/cs255-cryptography-i/hw2"
 	],
 	"file_history":
 	[
-		"/home/aclaro64/SourceCode/github/courses/cs255-cryptography-i/hw1/test_question1.py",
 		"/home/aclaro64/SourceCode/github/courses/cs255-cryptography-i/hw1/question1.py",
+		"/home/aclaro64/SourceCode/github/courses/cs255-cryptography-i/hw2/encrypt.py",
+		"/home/aclaro64/SourceCode/github/courses/cs255-cryptography-i/hw2/decrypt.py",
+		"/home/aclaro64/SourceCode/github/courses/cs255-cryptography-i/hw2/README.md",
+		"/home/aclaro64/SourceCode/github/courses/cs255-cryptography-i/hw2/encrypted.txt",
+		"/home/aclaro64/SourceCode/github/courses/cs255-cryptography-i/hw2/plaintext.txt",
+		"/home/aclaro64/SourceCode/github/courses/cs255-cryptography-i/hw2/test_encrypt.py",
+		"/home/aclaro64/SourceCode/github/courses/cs255-cryptography-i/hw2/test_decrypt.py",
+		"/home/aclaro64/SourceCode/github/courses/cs255-cryptography-i/hw1/test_question1.py",
 		"/home/aclaro64/SourceCode/github/courses/cs255-cryptography-i/hw1/README.md",
 		"/home/aclaro64/SourceCode/github/courses/cs255-cryptography-i/hw1/target.txt",
 		"/home/aclaro64/SourceCode/github/courses/cs000-cryptography-i/hw1/question1_test.py",
@@ -592,14 +612,7 @@
 		"/home/aclaro64/SourceCode/SAES_6_Linux/build/debug/election/SAES/Templates/audit-report.xsl",
 		"/home/aclaro64/SourceCode/SAES_6_Linux/build/debug/election/mirror/Data/voting-devices-pin-report.xml",
 		"/home/aclaro64/SourceCode/SAES_6_Linux/applications/election/share/SAES/voting-device.xml",
-		"/home/aclaro64/Desktop/1800/heider-20121201.txt",
-		"/tmp/file-encryptor/src/Makefile",
-		"/tmp/file-encryptor/src/main.cpp",
-		"/home/aclaro64/SourceCode/SAES_6_Linux/applications/election/share/SAES/tokens.xml",
-		"/media/aclaro64/a0962b63-998d-4ab5-b269-a74a18760f08/SAES/AudioFiles/93.wav",
-		"/home/aclaro64/SourceCode/SAES_6_Linux/build/debug/election/SAES/tokens.xml",
-		"/home/aclaro64/Desktop/1800/Ejemplo Memoria Universal/Data/UP_708000/MV_7080011/voting-device.xml",
-		"/home/aclaro/Desktop/1800/myspiii_dev.c"
+		"/home/aclaro64/Desktop/1800/heider-20121201.txt"
 	],
 	"find":
 	{
@@ -619,6 +632,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"cyp",
 			":\"",
 			"00",
 			"000",
@@ -745,8 +759,7 @@
 			"score_frame",
 			"frame_score",
 			"spare_bonus",
-			"strike_bonus",
-			"frames"
+			"strike_bonus"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -816,8 +829,125 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "hw2/decrypt.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1597,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"codeintel": true,
+							"codeintel_database_dir": "~/.codeintel",
+							"codeintel_enabled_languages":
+							[
+								"JavaScript",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Node.js",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_exclude_scopes_from_complete_triggers":
+							[
+								"comment"
+							],
+							"codeintel_language_settings":
+							{
+								"JavaScript":
+								{
+									"codeintel_max_recursive_dir_depth": 2,
+									"codeintel_scan_exclude_dir":
+									[
+										"/build/",
+										"/min/"
+									],
+									"codeintel_scan_extra_dir":
+									[
+									],
+									"codeintel_scan_files_in_project": false,
+									"codeintel_selected_catalogs":
+									[
+										"jQuery"
+									]
+								},
+								"PHP":
+								{
+									"codeintel_max_recursive_dir_depth": 15,
+									"codeintel_scan_exclude_dir":
+									[
+										"/Applications/MAMP/bin/php/php5.5.3/"
+									],
+									"codeintel_scan_extra_dir":
+									[
+									],
+									"codeintel_scan_files_in_project": true,
+									"php": "/Applications/MAMP/bin/php/php5.5.3/bin/php"
+								},
+								"Python3":
+								{
+									"codeintel_scan_extra_dir":
+									[
+										"/Applications/Sublime Text.app/Contents/MacOS",
+										"~/Library/Application Support/Sublime Text 3/Packages/SublimeCodeIntel/arch",
+										"~/Library/Application Support/Sublime Text 3/Packages/SublimeCodeIntel/libs"
+									],
+									"codeintel_scan_files_in_project": true,
+									"codeintel_selected_catalogs":
+									[
+									],
+									"python3": "/usr/local/bin/python3.3"
+								}
+							},
+							"codeintel_live": true,
+							"codeintel_max_recursive_dir_depth": 10,
+							"codeintel_scan_exclude_dir":
+							[
+							],
+							"codeintel_scan_files_in_project": true,
+							"codeintel_selected_catalogs":
+							[
+							],
+							"codeintel_snippets": false,
+							"codeintel_syntax_map":
+							{
+								"Python Django": "Python"
+							},
+							"codeintel_tooltips": "popup",
+							"codeintel_word_completions": "buffer",
+							"syntax": "Packages/Djaneiro/Syntaxes/Python Django.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
 			]
 		}
 	],
