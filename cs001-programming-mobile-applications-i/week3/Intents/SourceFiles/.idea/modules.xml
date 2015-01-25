@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/IntentsLab.iml" filepath="$PROJECT_DIR$/IntentsLab.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MyBrowser/MyBrowser.iml" filepath="$PROJECT_DIR$/MyBrowser/MyBrowser.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SourceFiles.iml" filepath="$PROJECT_DIR$/SourceFiles.iml" />
+    </modules>
+  </component>
+</project>
+
