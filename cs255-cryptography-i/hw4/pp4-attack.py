@@ -5,7 +5,7 @@ TARGET     = "http://crypto-class.appspot.com/po?er="
 CIPHERTEXT = "f20bdba6ff29eed7b046d1df9fb7000058b1ffb4210a580f748b4ac714c001bd4a61044426fb515dad3f21f18aa577c0bdf302936266926ff37dbf7035d5eeb4"
 BLOCK_SIZE = 16
 
-ALPHABET = "\x0F\x0E\x0D\x0C\x0B\x0A\x09\x08\x07\x06\x05\x04\x03\x02\x01 .ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+ALPHABET = "\x0F\x0E\x0D\x0C\x0B\x0A\x09\x08\x07\x06\x05\x04\x03\x02\x01 abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 #--------------------------------------------------------------
 # padding oracle
@@ -13,17 +13,15 @@ ALPHABET = "\x0F\x0E\x0D\x0C\x0B\x0A\x09\x08\x07\x06\x05\x04\x03\x02\x01 .ABCDEF
 class PaddingOracle(object):
   def query(self, q):
     try:
-      target = TARGET + urllib2.quote(q)    # Create query URL
-      req = urllib2.Request(target)         # Send HTTP request to server
+      target = TARGET + urllib2.quote(q) # Create query URL
+      req = urllib2.Request(target) # Send HTTP request to server
     except:
       return self.query(q)
 
     try:
-      f = urllib2.urlopen(req)          # Wait for response
-      #print "Valid"
+      f = urllib2.urlopen(req) # Wait for response
       return None
     except urllib2.HTTPError, e:
-      #print "We got: %d" % e.code       # Print response code
       if e.code == 404:
         return True # good padding
       return False # bad padding
@@ -36,8 +34,6 @@ class PaddingOracle(object):
 
     for index in range(len(blocks) - 1, 0, -1):
       plain_block = self.decrypt_block(index, blocks)
-
-      print "# PLAIN BLOCK: %s" % "".join(plain_block)
       result = plain_block + result
 
     return result
@@ -48,25 +44,24 @@ class PaddingOracle(object):
   def decrypt_block(self, index, blocks):
     result = []
 
-    for position in range(BLOCK_SIZE - 1, 0, -1):
+    for position in range(BLOCK_SIZE - 1, -1, -1):
       print "# block: %d byte: %d padding: %d " % (index, position, BLOCK_SIZE - position),
-      byte = self.decrypt_byte(position, result, blocks[0:index], blocks[index])
+      byte = self.decrypt_byte(position, result, blocks[index-1], blocks[index])
       result.insert(0, byte)
       print "%d (%s)" % (byte, chr(byte))
 
     return map(chr, result)
 
-  def decrypt_byte(self, position, know_bytes, prev_blocks, block):
-    prime       = list(prev_blocks[-1])
-    prev_blocks = reduce(lambda x,y: x + y, prev_blocks[0:len(prev_blocks)-1], [])
+  def decrypt_byte(self, position, know_bytes, iv, block):
+    iv_prime = list(iv)
 
     for k in range(0, len(know_bytes)):
-      prime[position + k + 1] = prime[position + k + 1] ^ know_bytes[k] ^ (BLOCK_SIZE - position)
+      iv_prime[position + k + 1] = iv_prime[position + k + 1] ^ know_bytes[k] ^ (BLOCK_SIZE - position)
 
     for guess in ALPHABET:
-      guess_block = list(prime)
-      guess_block[position] = prime[position] ^ ord(guess) ^ (BLOCK_SIZE - position)
-      q = "".join(map(chr, prev_blocks)) + "".join(map(chr, guess_block)) + "".join(map(chr, block))
+      iv_guess = list(iv_prime)
+      iv_guess[position] = iv_prime[position] ^ ord(guess) ^ (BLOCK_SIZE - position)
+      q = "".join(map(chr, iv_guess)) + "".join(map(chr, block))
 
       sys.stdout.write(".")
       sys.stdout.flush()
@@ -79,6 +74,5 @@ class PaddingOracle(object):
 
 if __name__ == "__main__":
   po = PaddingOracle()
-  #po.query(sys.argv[1])       # Issue HTTP query with the given argument
   result = po.attak(CIPHERTEXT.decode("hex"))
   print "".join(result)
