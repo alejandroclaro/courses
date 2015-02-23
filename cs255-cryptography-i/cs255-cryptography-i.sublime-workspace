@@ -4,6 +4,26 @@
 		"selected_items":
 		[
 			[
+				"at",
+				"attack_block"
+			],
+			[
+				"get",
+				"get_blocks"
+			],
+			[
+				"q",
+				"query	function"
+			],
+			[
+				"a",
+				"append	function"
+			],
+			[
+				"c",
+				"ciphertext"
+			],
+			[
 				"r",
 				"result"
 			],
@@ -14,10 +34,6 @@
 			[
 				"di",
 				"digest	function"
-			],
-			[
-				"a",
-				"argv	class"
 			],
 			[
 				"de",
@@ -239,12 +255,12 @@
 				"Git: Status"
 			],
 			[
-				"git s",
-				"Set Syntax: SublimeGit Status"
-			],
-			[
 				"git sta",
 				"Git: Status"
+			],
+			[
+				"git s",
+				"Set Syntax: SublimeGit Status"
 			],
 			[
 				"install",
@@ -486,13 +502,17 @@
 	[
 		"/home/aclaro64/SourceCode/github/courses/cs255-cryptography-i/hw1",
 		"/home/aclaro64/SourceCode/github/courses/cs255-cryptography-i/hw2",
-		"/home/aclaro64/SourceCode/github/courses/cs255-cryptography-i/hw3"
+		"/home/aclaro64/SourceCode/github/courses/cs255-cryptography-i/hw3",
+		"/home/aclaro64/SourceCode/github/courses/cs255-cryptography-i/hw4"
 	],
 	"file_history":
 	[
+		"/home/aclaro64/SourceCode/github/courses/cs255-cryptography-i/hw1/question1.py",
+		"/home/aclaro64/SourceCode/github/courses/cs255-cryptography-i/hw4/pp4-attack.py",
+		"/tmp/programming-4-1.py",
+		"/tmp/programming-4.py",
 		"/home/aclaro64/SourceCode/github/courses/cs255-cryptography-i/hw3/verify.py",
 		"/home/aclaro64/SourceCode/github/courses/cs255-cryptography-i/hw3/generate.py",
-		"/home/aclaro64/SourceCode/github/courses/cs255-cryptography-i/hw1/question1.py",
 		"/home/aclaro64/SourceCode/github/courses/cs255-cryptography-i/hw2/decrypt.py",
 		"/home/aclaro64/SourceCode/github/courses/cs255-cryptography-i/hw2/encrypt.py",
 		"/home/aclaro64/SourceCode/github/courses/cs255-cryptography-i/hw2/README.md",
@@ -614,10 +634,7 @@
 		"/home/aclaro64/Downloads/GPS._0_1.zip",
 		"/tmp/hos.lyric_3_0.zip",
 		"/tmp/hos.lyric_0_0.zip",
-		"/home/aclaro64/SourceCode/SAES_6_Linux/build/debug/election/SAES/Templates/first-run-report.xsl",
-		"/tmp/tools/bin/hash-extractor/hash-extrator.sh",
-		"/home/aclaro64/SourceCode/SAES_6_Linux/build/debug/election/SAES/Templates/audit-report.xsl",
-		"/home/aclaro64/SourceCode/SAES_6_Linux/build/debug/election/mirror/Data/voting-devices-pin-report.xml"
+		"/home/aclaro64/SourceCode/SAES_6_Linux/build/debug/election/SAES/Templates/first-run-report.xsl"
 	],
 	"find":
 	{
@@ -637,6 +654,18 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"guess_block",
+			"prime",
+			"prev_blocks",
+			"prev",
+			"iv_guess",
+			"iv_prime",
+			"attack_block_byte",
+			"get_blocks",
+			"attack_block",
+			"plain_block",
+			"print",
+			"\n    ",
 			"cyp",
 			":\"",
 			"00",
@@ -752,19 +781,7 @@
 			"find-closest-symbol",
 			"closest",
 			"findClosestSymbol",
-			"\n ",
-			"Loading",
-			"III",
-			"image",
-			" )",
-			"roman_digit",
-			"value",
-			"score_strike",
-			"score_spare",
-			"score_frame",
-			"frame_score",
-			"spare_bonus",
-			"strike_bonus"
+			"\n "
 		],
 		"highlight": true,
 		"in_selection": false,

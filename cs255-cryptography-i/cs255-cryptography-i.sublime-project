@@ -25,6 +25,10 @@
 		{
 			"follow_symlinks": true,
 			"path": "hw4"
+		},
+		{
+			"follow_symlinks": true,
+			"path": "hw5"
 		}
 	]
 }
