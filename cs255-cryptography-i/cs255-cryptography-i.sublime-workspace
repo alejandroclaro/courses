@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"max",
+				"max	function"
+			],
+			[
 				"at",
 				"attack_block"
 			],
@@ -255,12 +259,20 @@
 				"Git: Status"
 			],
 			[
-				"git sta",
+				"git s",
 				"Git: Status"
 			],
 			[
-				"git s",
-				"Set Syntax: SublimeGit Status"
+				"git",
+				"Git: Status"
+			],
+			[
+				"xml",
+				"Indent XML"
+			],
+			[
+				"git sta",
+				"Git: Status"
 			],
 			[
 				"install",
@@ -332,10 +344,6 @@
 			],
 			[
 				"ind",
-				"Indent XML"
-			],
-			[
-				"xml",
 				"Indent XML"
 			],
 			[
@@ -500,13 +508,35 @@
 	},
 	"expanded_folders":
 	[
-		"/home/aclaro64/SourceCode/github/courses/cs255-cryptography-i/hw1",
-		"/home/aclaro64/SourceCode/github/courses/cs255-cryptography-i/hw2",
 		"/home/aclaro64/SourceCode/github/courses/cs255-cryptography-i/hw3",
-		"/home/aclaro64/SourceCode/github/courses/cs255-cryptography-i/hw4"
+		"/home/aclaro64/SourceCode/github/courses/cs255-cryptography-i/hw4",
+		"/home/aclaro64/SourceCode/github/courses/cs255-cryptography-i/hw5"
 	],
 	"file_history":
 	[
+		"/home/aclaro64/java/WriteIButton/src/com/smartmatic/WriteIButton.java",
+		"/home/aclaro64/java/WriteIButton/src/com/smartmatic/OneWireMemoryToken.java",
+		"/home/aclaro64/SourceCode/esbu_dev_cpp_custom_test/alejandro_claro/file-encryptor/.project",
+		"/tmp/PDFlib-9.0.4-Linux-C-C++.tar.gz",
+		"/home/aclaro64/SourceCode/esbu_dev_cpp_custom_test/alejandro_claro/file-encryptor/encrypt-saes.sh",
+		"/home/aclaro64/SourceCode/esbu_dev_cpp_custom_test/alejandro_claro/file-encryptor/decrypt-saes.sh",
+		"/home/aclaro64/SourceCode/esbu_dev_cpp_custom_test/angel_castillo/ballot-information-validator/.project",
+		"/home/aclaro64/SourceCode/SAES_6_Linux/applications/election/po/election.pot",
+		"/home/aclaro64/.cache/.fr-5Qe1jV/decrypt-saes.sh",
+		"/home/aclaro64/.cache/.fr-IweIWP/decrypt-saes.sh",
+		"/tmp/encrypt-saes.sh",
+		"/tmp/decrypt-saes.sh",
+		"/tmp/SAES_DECRYPTED/tokens.xml",
+		"/tmp/SAES/tokens.xml",
+		"/tmp/SAES_DECRYPTED/machine-state.xml",
+		"/tmp/SAES_Maliciosa/machine-state.xml",
+		"/tmp/SAES_d/Logs/audit.log",
+		"/tmp/SAES_d/machine-state.xml",
+		"/tmp/SAES_d/tokens.xml",
+		"/tmp/SAES_d/workflows-status.xml",
+		"/home/aclaro64/Desktop/commonLetters.cpp",
+		"/home/aclaro64/SourceCode/github/courses/cs255-cryptography-i/hw5/dlog.py",
+		"/home/aclaro64/SourceCode/github/courses/cs255-cryptography-i/cs255-cryptography-i.sublime-project",
 		"/home/aclaro64/SourceCode/github/courses/cs255-cryptography-i/hw1/question1.py",
 		"/home/aclaro64/SourceCode/github/courses/cs255-cryptography-i/hw4/pp4-attack.py",
 		"/tmp/programming-4-1.py",
@@ -587,7 +617,6 @@
 		"/home/aclaro64/SourceCode/github/katas/julia/PrimeFactors/src/PrimeFactors.jl",
 		"/home/aclaro64/SourceCode/github/katas/julia/RomanNumerals/src/RomanNumerals.jl",
 		"/home/aclaro64/SourceCode/SAES_A3_API/saes/include/Saes/Convert.inl",
-		"/home/aclaro64/Desktop/commonLetters.cpp",
 		"/tmp/prime.cpp",
 		"/home/aclaro64/SourceCode/github/katas/python/bowling/bowling.py",
 		"/home/aclaro64/SourceCode/github/katas/julia/PrimeFactors/runtests.jl",
@@ -612,33 +641,11 @@
 		"/home/aclaro64/.config/sublime-text-3/Packages/IJulia/Sublime-IJulia.sublime-settings",
 		"/home/aclaro64/.config/sublime-text-3/Packages/User/Sublime-IJulia.sublime-settings",
 		"/home/aclaro64/Downloads/Fifth-Elephant-2013.pdf",
-		"/tmp/Fifth-Elephant-2013.pdf",
-		"/home/aclaro64/SourceCode/github/courses/cs341-programming-languages/hw7/hw7testsprovided.rb",
-		"/home/aclaro64/SourceCode/github/courses/cs341-programming-languages/hw7/hw7.rb",
-		"/home/aclaro64/SourceCode/github/courses/cs341-programming-languages/hw7/hw7.sml",
-		"/home/aclaro64/SourceCode/github/courses/cs341-programming-languages/hw7/hw7testsprovided.sml",
-		"/home/aclaro64/SourceCode/github/courses/cs341-programming-languages/hw2/hw2provided.sml",
-		"/tmp/22691a806e2b11e4b364ab60274ca2c9.rb",
-		"/tmp/da742ec06e4a11e48407f95d6c9a4b90.rb",
-		"/tmp/ebd9075071d111e4bfb9bb621628416d.rb",
-		"/home/aclaro64/SourceCode/SAES_6_Linux/build/debug/election/SAES/Logs/audit.log",
-		"/home/aclaro64/SourceCode/SAES_6_Linux/build/debug/election/SAES/machine-state.xml",
-		"/home/aclaro64/SourceCode/SAES_6_Linux/applications/election/share/SAES/Templates/statistical-report.xsl",
-		"/home/aclaro64/SourceCode/SAES_6_Linux/applications/election/share/etc/election/SAES1800+/rezero.xml",
-		"/home/aclaro/workspace/code-jam-cpp-r1b/problem-c/c.cpp",
-		"/home/aclaro64/.cache/.fr-fVNrsi/Round1B-20140503/FirstExercise/Program.cs",
-		"/home/aclaro64/.cache/.fr-Sdf64X/a.cpp",
-		"/home/aclaro64/.cache/.fr-rznPAx/A.cpp",
-		"/home/aclaro64/.cache/.fr-LowhiA/B.cpp",
-		"/home/aclaro64/.cache/.fr-jLfFRy/C.cpp",
-		"/home/aclaro64/Downloads/GPS._0_1.zip",
-		"/tmp/hos.lyric_3_0.zip",
-		"/tmp/hos.lyric_0_0.zip",
-		"/home/aclaro64/SourceCode/SAES_6_Linux/build/debug/election/SAES/Templates/first-run-report.xsl"
+		"/tmp/Fifth-Elephant-2013.pdf"
 	],
 	"find":
 	{
-		"height": 33.0
+		"height": 35.0
 	},
 	"find_in_files":
 	{
@@ -654,6 +661,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			".project",
 			"guess_block",
 			"prime",
 			"prev_blocks",
@@ -780,8 +788,7 @@
 			".c",
 			"find-closest-symbol",
 			"closest",
-			"findClosestSymbol",
-			"\n "
+			"findClosestSymbol"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -858,7 +865,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 33.0
+		"height": 35.0
 	},
 	"input":
 	{
@@ -893,7 +900,7 @@
 	},
 	"output.git-commit":
 	{
-		"height": 27.0
+		"height": 124.0
 	},
 	"output.haskell_sublime_load":
 	{
@@ -936,7 +943,7 @@
 	"show_minimap": true,
 	"show_open_files": true,
 	"show_tabs": true,
-	"side_bar_visible": true,
+	"side_bar_visible": false,
 	"side_bar_width": 177.0,
 	"status_bar_visible": true,
 	"template_settings":
