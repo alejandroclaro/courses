@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Weather Service Application</string>
+    <string name="city_name">City name or Country Code:</string>
+    <string name="get_weather_sync">Get weather sync</string>
+    <string name="get_weather_async">Get weather async</string>
+    <string name="title_activity_display_weather">Weather Information</string>
+</resources>
