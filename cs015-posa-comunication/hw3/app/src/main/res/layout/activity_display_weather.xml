@@ -26,7 +26,7 @@
                 android:id="@+id/nameLabel"
                 android:layout_column="0"
                 android:textStyle="bold"
-                android:textSize="25sp"
+                android:textSize="15sp"
                 android:paddingRight="10dp"/>
 
             <TextView
@@ -35,7 +35,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/nameView"
                 android:layout_column="5"
-                android:textSize="25sp"
+                android:textSize="15sp"
                 android:paddingLeft="10dp"/>
 
         </TableRow>
@@ -48,11 +48,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Speed"
+                android:text="Wind speed (meter/sec)"
                 android:id="@+id/speedLabel"
                 android:layout_column="0"
                 android:textStyle="bold"
-                android:textSize="25sp"
+                android:textSize="15sp"
                 android:paddingRight="10dp"/>
 
             <TextView
@@ -61,7 +61,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/speedView"
                 android:layout_column="5"
-                android:textSize="25sp"
+                android:textSize="15sp"
                 android:paddingLeft="10dp"/>
         </TableRow>
 
@@ -79,11 +79,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Deg"
+                android:text="Wind direction (°)"
                 android:id="@+id/degLabel"
                 android:layout_column="0"
                 android:textStyle="bold"
-                android:textSize="25sp"
+                android:textSize="15sp"
                 android:paddingRight="10dp"/>
 
             <TextView
@@ -92,7 +92,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/degView"
                 android:layout_column="5"
-                android:textSize="25sp"
+                android:textSize="15sp"
                 android:paddingLeft="10dp"/>
         </TableRow>
 
@@ -104,11 +104,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Temp"
+                android:text="Temperature  (Kelvin)"
                 android:id="@+id/tempLabel"
                 android:layout_column="0"
                 android:textStyle="bold"
-                android:textSize="25sp"
+                android:textSize="15sp"
                 android:paddingRight="10dp"/>
 
             <TextView
@@ -117,7 +117,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/tempView"
                 android:layout_column="5"
-                android:textSize="25sp"
+                android:textSize="15sp"
                 android:paddingLeft="10dp"/>
         </TableRow>
 
@@ -129,11 +129,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Humidity"
+                android:text="Humidity (%)"
                 android:id="@+id/humidityLabel"
                 android:layout_column="0"
                 android:textStyle="bold"
-                android:textSize="25sp"
+                android:textSize="15sp"
                 android:paddingRight="10dp"/>
 
             <TextView
@@ -142,7 +142,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/humidityView"
                 android:layout_column="5"
-                android:textSize="25sp"
+                android:textSize="15sp"
                 android:paddingLeft="10dp"/>
         </TableRow>
 
@@ -154,11 +154,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Sunrise"
+                android:text="Sunrise time  (UTC)"
                 android:id="@+id/sunriseLabel"
                 android:layout_column="0"
                 android:textStyle="bold"
-                android:textSize="25sp"
+                android:textSize="15sp"
                 android:paddingRight="10dp"/>
 
             <TextView
@@ -167,7 +167,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/sunriseView"
                 android:layout_column="5"
-                android:textSize="25sp"
+                android:textSize="15sp"
                 android:paddingLeft="10dp"/>
         </TableRow>
 
@@ -179,11 +179,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Sunset"
+                android:text="Sunset time (UTC)"
                 android:id="@+id/sunsetLabel"
                 android:layout_column="0"
                 android:textStyle="bold"
-                android:textSize="25sp"
+                android:textSize="15sp"
                 android:paddingRight="10dp"/>
 
             <TextView
@@ -192,7 +192,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/sunsetView"
                 android:layout_column="5"
-                android:textSize="25sp"
+                android:textSize="15sp"
                 android:paddingLeft="10dp"/>
         </TableRow>
 
