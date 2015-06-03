@@ -24,7 +24,7 @@ class WeatherServiceUtils
 
   private static Map<String, CacheData> mWeatherCache = new HashMap<>();
 
-  static public List<WeatherData> getResults(String location)
+  static public synchronized List<WeatherData> getResults(String location)
   {
     CacheData cache = mWeatherCache.get(location);
 
@@ -32,7 +32,7 @@ class WeatherServiceUtils
     {
       cache = new CacheData();
       cache.mResults = downloadResults(location);
-      cache.mTime    = System.currentTimeMillis();
+      cache.mTime = System.currentTimeMillis();
 
       mWeatherCache.put(location, cache);
     }
