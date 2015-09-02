@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/videoListItem"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="horizontal"
+    android:padding="5dp" >
+
+    <TextView
+        android:id="@+id/tvVideoTitle"
+        android:layout_width="210dp"
+        android:layout_height="50dp"
+        android:gravity="center_vertical|start"
+        android:ellipsize="end"
+        android:padding="3dp"
+        android:singleLine="true"
+        android:textColor="@android:color/black"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvVideoLikes"
+        android:layout_width="40dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:gravity="center_vertical|center_horizontal"
+        android:textAppearance="@android:color/black"
+        android:textSize="14sp" />
+
+    <ToggleButton
+        android:id="@+id/tvVideoToggle"
+        android:layout_width="65dp"
+        android:layout_height="50dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:textSize="10sp"
+        android:text="@string/togglebutton"
+        android:textOn="LIKE"
+        android:textOff="UNLIKE" />
+
+</LinearLayout>
